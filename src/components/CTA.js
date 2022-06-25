@@ -12,7 +12,7 @@ function CTA(params) {
         <div className="lg:w-3/5 mx-auto ">
             <div className=" mt-10 shadow-2 border-4 border-black">
                 <div className="flex justify-between">
-                    <div className="w-4/12">
+                    {/* <div className="w-4/12">
                     <Card variant="outlined" className="shadow-2" sx={{ maxWidth: 200, minWidth: 200 ,minHeight: 150}}>
                             <CardMedia
                         sx={{
@@ -24,7 +24,7 @@ function CTA(params) {
                         alt="green iguana"
                         />
                     </Card>
-                    </div>
+                    </div> */}
 
                     <div className="6/12">
                         <div className="lg:text-6xl text-3xl md:text-5xl" >

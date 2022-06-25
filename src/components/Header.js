@@ -5,11 +5,13 @@ import {Link} from "react-router-dom"
 import {makeStyles} from "@mui/styles";
 
 
-import {SearchRounded, HorizontalSplitIcon} from "@material-ui/icons"
+import {SearchRounded, HorizontalSplitIcon, ShoppingBasketRounded, ShoppingCartRounded} from "@material-ui/icons"
 import { useRef } from "react";
 
 
+
 import testimage from '../image/testecom.png'
+
 
 
 function Header(params) {
@@ -20,7 +22,7 @@ function Header(params) {
             {
                input: !prop.isSearchbar? 'hidden bg-green-200 border border-b border-white': ' border-4 border border-white text-black bg-white' ,
                cancel: prop.isSearchbar? 'hover:bg-opacity-25 p-0 rounded-full': 'hidden hover:bg-opacity-25 p-0 rounded-full',
-               menu: prop.isSearchbar? 'hidden': 'block text-blue-600',
+               menu: prop.isSearchbar? 'hidden': ' text-blue-600 self-center ',
                navbar: prop.Navbar? 'bg-black text-white':'',
                navbarText: prop.Navbar? 'text-white': 'text-white',
             }
@@ -85,7 +87,11 @@ function Header(params) {
     <div className="lg:hidden md:hidden mb-20">
      <div className="bg-black text-white  fixed top-0  w-full z-20">
         <div className="flex justify-around mx-3 items-center" >   
-        <div className= {`${classes.menu}`} >MENU</div>
+        <div className= {`${classes.menu}`} >
+                <IconButton className="text-gray-400" >
+                <ShoppingCartRounded/>
+                </IconButton>
+              MENU</div>
         <div className={`text-4xl font-gothic my-2 `} >{Name}©</div>
 
         <div className= {`${classes.input}`}>
@@ -125,7 +131,12 @@ function Header(params) {
         // backgroundImage: `url(${testimage})`
     }} className="hidden lg:block md:block flex flex-col items-center h-screen md:h-1/2 relative md:mb-60 lg:mb-28" >
      <div className={`flex static justify-around items-center z-20 hover:bg-black hover:text-white fixed top-0  w-full ${classes.navbar}`} >   
-            <div className= {`${classes.menu}`} ><Button className="text-blue-600" >MENU</Button> </div>
+            <div className= {`${classes.menu}`} >
+                <IconButton className="text-blue-600" >
+                <ShoppingCartRounded/>
+                </IconButton>
+                <Button className="text-blue-600" >
+                MENU</Button> </div>
             <div className="text-4xl  font-gothic my-2 "  >{Name}©</div>
 
             <div className= {`${classes.input}`}>
