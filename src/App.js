@@ -9,6 +9,7 @@ import { makeStyles } from '@mui/styles';
 import { ThemeProvider } from '@mui/styles';
 import { green } from '@mui/material/colors';
 import Header from './components/Header';
+import Footer from './components/footer';
 
 import Homepage from './pages/homepage';
 import NewArrivalpage from './pages/newArrivalpage';
@@ -55,6 +56,7 @@ const classes = usestyle()
       <Route path='products/:productID' element = {<Productdetailspage/>}/>
    </Routes>
    {/* <div><Link to = '/newarrival' >new arr</Link></div> */}
+   <Footer/>
    </div>
    ) 
   

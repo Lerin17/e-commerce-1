@@ -11,9 +11,9 @@ module.exports = {
 
       // that is actual animation
       keyframes: (theme) => ({
-        fadeOut: {
-          "0%": { backgroundColor: theme("colors.amber.300") },
-          "100%": { backgroundColor: theme("colors.transparent") },
+        'fadeOut': {
+          "0%": { backgroundColor: theme("colors.transparent") },
+          "100%": { backgroundColor: theme("colors.blue.600") },
         },
       }),
     },

@@ -34,12 +34,20 @@ function Camp(params) {
                             </div> */}
                         </div>
 
-                        <div className="bg-blue-600 w-1/2 text-white" >
-                            <div className="text-3xl">
-                                 ddddd
+                        <div className="bg-blue-600 w-1/2 text-white  px-3 py-3" >
+
+                            <div className="text-3xl font-gothic">
+                                 SYMBOLE!
                             </div>
-                            <div>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam eaque esse itaque corrupti voluptates perspiciatis
+
+                            <div className="text-sm " >
+                            The Prada Symbole handbag is inspired by Pradas iconic Triangle. A triptych in its conception, the campaign starring Hunter Schafer is created by three of contemporary arts modern masters
+                                <span className="text-lg lg:hidden md:hidden" >
+                                    .....
+                                </span>
+                                 <span className="hidden lg:block md:block" >
+                                Catherine Opie, Thomas Ruff and Carrie Mae Weems, approaching the same subject matters in a series of divergent and distinct portraits.
+                            </span>
                             </div>
                           
                         </div> 
@@ -50,8 +58,14 @@ function Camp(params) {
 
                  <div  className="flex lg:w-7/12 mx-auto">
 
-                   <div className="bg-blue-600 w-1/2 text-white" >
-                        ddddd
+                   <div className="bg-blue-600 w-1/2 text-white  px-3 py-3" >
+                        <div className="uppercase text-3xl font-gothic" >
+                        persona!
+                        </div>
+                    
+                        <div className="text-sm">
+                        Drawn from Prada’s heritage, in the Symbole handbag the iconic Triangle is reinvented for today into a luxurious jacquard. Geometric, modern, multi-faceted, it is a wordless assertion of Prada’s unmistakable persona. 
+                        </div>
                     </div> 
 
                     <div className="bg-black w-1/2">

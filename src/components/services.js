@@ -15,3 +15,5 @@ function Services(params) {
         </div>
     )
 }
+
+export default Services

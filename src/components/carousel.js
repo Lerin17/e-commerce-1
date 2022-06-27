@@ -78,13 +78,18 @@ function Newarrivalcarousel(params) {
   ()=> setwindowWidth(window.innerWidth)
   )
   console.log(windowWidth)
-  React.useEffect(() => {
  
-  
+  const visibleSlides = () => {
+    if(windowWidth <= 500 ){
+      return 1
+    }if(windowWidth > 400 && windowWidth <= 770){
+      return 2
+    }
+     if(windowWidth > 770 )
+     {return 3}
+  }
 
-    
-  }, [windowWidth]);
-
+  console.log(visibleSlides())
 
   return (
     <div className=" lg:w-3/5 lg:mx-auto mx-16">
@@ -97,7 +102,7 @@ function Newarrivalcarousel(params) {
       naturalSlideWidth={100}
       naturalSlideHeight={125}
       totalSlides={8}
-      visibleSlides={windowWidth >= 400? 1: windowWidth > 400? 2: windowWidth >= 770? 3: 1 }
+      visibleSlides={visibleSlides() }
       currentSlide={1}
     >
 

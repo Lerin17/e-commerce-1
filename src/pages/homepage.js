@@ -4,6 +4,7 @@ import Newarrival from "../components/Newarrival";
 
 import Camp from "../components/Camp";
 import CTA from "../components/CTA";
+import Services from "../components/services";
 
 
 function Homepage(params) {
@@ -13,6 +14,7 @@ function Homepage(params) {
            <Newarrival/>
            <Camp/>
            <CTA/>
+           <Services/>
         </div>
         // <div className="hover:animate-fade hover:text-amber-500 mt-10" >Home page</div>
     )
