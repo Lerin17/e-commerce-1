@@ -1,9 +1,11 @@
 import React from "react";
 import { useParams } from "react-router";
+import { UserItemsContext } from "../context/Items";
 import Newarrivaldata from "../image/new arrival/newarrivaldata";
 // import Newarrivaldata from "../image/new arrival/newarrivaldata";
 import Navbar from "../components/Navbar";
 import { Button, Card, CardMedia } from "@mui/material";
+
 
 
 
@@ -18,7 +20,9 @@ import {
 
 
 
+
 function Productdetailspage(params) {
+const {Allproducts, setFavourite, setCartitems} = React.useContext   (UserItemsContext)
 
 const style = () => (
     {
@@ -29,23 +33,23 @@ const style = () => (
     }
 )
 
-    console.log(useParams())
+    // console.log(useParams())
    const {productID} = useParams()
    const productData =  Newarrivaldata()
 
-   console.log(productID)
+//    console.log(productID)
 
    const currentProduct = productData.find(item => item.ProductID == productID)
 
-   console.log(currentProduct)
+//    console.log(currentProduct)
 
     
   let index = 0
   const imagesarray = [1, 2, 3, 4]
 
-const productdetailsimg = imagesarray.map(item => {
+const productdetailsimg = imagesarray.map((item, i) => {
   return (
-    <Slide className="" index={index++}>
+    <Slide key={i} className="" index={index++}>
       <div className="mx-auto p-1" style={{maxWidth: 300, minWidth: 200 ,minHeight: 150}}> 
           <Card variant="outlined" className="border-none" sx={{ maxWidth: 300, minWidth: 200 ,minHeight: 150}}>
             <CardMedia
@@ -135,7 +139,7 @@ const productdetailsimg = imagesarray.map(item => {
                     <div className="w-screen lg:w-full md:w-full bg-blue-600" >
                         BOYISH BOYISH BOYISH
                     </div>
-                    <div className="px-4 lg:px-0 md:px-0" >
+                    <div className="px-4 lg:px-0 md:px-0" id={currentProduct.ProductID} >
                         <div className="text-lg uppercase font-bold border-black" >
                             {currentProduct.name}
                         </div>
@@ -154,9 +158,9 @@ const productdetailsimg = imagesarray.map(item => {
                             <div >Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae iusto ex mollitia inventore suscipit, in similique molestiae </div>
                         </div>
 
-                        <div>
-                            <Button className="text-blue-600" >
-                                Add to cart
+                        <div  >
+                            <Button onClick={(event)=>setCartitems(event)} className={currentProduct.isCartItem?'text-red-600':'text-blue-600'} >
+                                {currentProduct.isCartItem? 'REMOVE FROM CART': 'ADD TO CART'}
                             </Button>
                         </div>
                     </div>

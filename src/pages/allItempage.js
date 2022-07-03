@@ -16,12 +16,12 @@ import { Slider } from "@material-ui/core";
 function CurrentCollection(props) {
 
 
-    const productsdatacards = Newarrivaldata().map(item => {
+    const productsdatacards = Newarrivaldata().map((item,i) => {
 
         if(props.category == item.type || !props.category){
 
             return (
-                <div className="mx-5  p-1 flex flex-col" style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}}> 
+                <div key={i} className="mx-5  p-1 flex flex-col" style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}}> 
                     <Card variant="outlined" className="shadow-2 border-black border-2" sx={{ maxWidth: 200, minWidth: 200 ,minHeight: 150, borderRadius: 0}}>
                     <Link to= {`/products/${item.ProductID}`} >
                     <CardMedia

@@ -8,13 +8,13 @@ const UserItemsContext = createContext()
 
 
 function UserItemsContextProvider(props) {
-    console.log(Alldata())
+    // console.log(Alldata())
     const allproductx = Alldata()
     const [Allproducts, setAllproducts] = React.useState(allproductx);
     const [FavouriteItems, setFavouriteItems] = React.useState([]);
     const [CartItems, setCartItems] = React.useState([]);
 
-    console.log(Allproducts)
+    // console.log(Allproducts)
    
 
      const setFavourite = (event) => {
@@ -29,14 +29,14 @@ function UserItemsContextProvider(props) {
      }
      
      const setCartitems = (event) => {
-        console.log(event.target)
+        console.log(event.target.parentElement.parentElement)
        const uniqueIDx= event.target.parentElement.parentElement.id
        console.log(uniqueIDx)
-       console.log(Allproducts)
+    //    console.log(Allproducts)
 
-       setAllproducts(prev => prev.map(item => (
-        item.ProductID == uniqueIDx? {...item, isCartItem: !item.isCartItem}: item
-    )))   
+    //    setAllproducts(prev => prev.map(item => (
+    //     item.ProductID == uniqueIDx? {...item, isCartItem: !item.isCartItem}: item
+    // )))   
      }
      
 
@@ -44,7 +44,7 @@ function UserItemsContextProvider(props) {
     
 
     return(
-       <UserItemsContext.Provider value={{Allproducts, setFavourite}} >
+       <UserItemsContext.Provider value={{Allproducts, setFavourite,setCartitems}} >
         {props.children}
        </UserItemsContext.Provider>
     )
