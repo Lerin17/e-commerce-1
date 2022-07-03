@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import pile from '../image/CTA/pile.jpg'
 
 import pile2 from '../image/new arrival/new3.png'
-import Allitems from "../pages/allItempage";
+// import Allitems from "../pages/allItempage";
 
 
 

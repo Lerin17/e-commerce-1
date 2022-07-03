@@ -39,9 +39,10 @@ const style = () => (
 
 //    console.log(productID)
 
-   const currentProduct = productData.find(item => item.ProductID == productID)
+   const currentProduct = Allproducts.find(item => item.ProductID == productID)
 
 //    console.log(currentProduct)
+console.log(currentProduct.isCartItem)
 
     
   let index = 0
