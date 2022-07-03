@@ -86,6 +86,7 @@ function Newarrivalcarousel(params) {
  
   const [windowWidth, setwindowWidth] = React.useState();
   const [visibleItems, setvisibleItems] = React.useState();
+  
   const visibleSlides = () => {
     
     if(windowWidth <= 500 ){
