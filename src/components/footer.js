@@ -4,22 +4,22 @@ import React from "react";
 
 function Footer(params) {
     return (
-        <div className="bg-gray-200 mt-12">
+        <div className="bg-gray-200 mt-12 z-20 ">
             
             <div className="text-5xl text-white font-gothic text-center" >B</div>
 
             <div className="flex border justify-center" >
                 <div>
-                    <IconButton className="hover:bg-transparent" ><div><i class="ri-instagram-fill"></i></div></IconButton>
+                    <IconButton className="hover:bg-transparent" ><div><i className="ri-instagram-fill"></i></div></IconButton>
                 </div>
                 <div>
-                    <IconButton className="hover:bg-transparent"><div><i class="ri-twitter-fill"></i></div></IconButton>
+                    <IconButton className="hover:bg-transparent"><div><i className="ri-twitter-fill"></i></div></IconButton>
                 </div>
                 <div>
-                    <IconButton className="hover:bg-transparent"><div><i class="ri-facebook-fill"></i></div></IconButton>
+                    <IconButton className="hover:bg-transparent"><div><i className="ri-facebook-fill"></i></div></IconButton>
                 </div>
                 <div>
-                    <IconButton className="hover:bg-transparent"><div><i class="ri-youtube-fill"></i></div></IconButton>
+                    <IconButton className="hover:bg-transparent"><div><i className="ri-youtube-fill"></i></div></IconButton>
                 </div>
             </div>
 

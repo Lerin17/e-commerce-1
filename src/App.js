@@ -14,10 +14,15 @@ import Footer from './components/footer';
 import Homepage from './pages/homepage';
 import NewArrivalpage from './pages/newArrivalpage';
 import Productdetailspage from './pages/productdetails';
+import Allitems from './pages/allItempage';
+import Checkout from './pages/checkoutpage';
+
 
 import { Routes, Route, Link} from "react-router-dom"
 import Newarrival from './components/Newarrival';
 import Navbar from './components/Navbar';
+
+
 
 
 
@@ -54,6 +59,8 @@ const classes = usestyle()
       <Route exact path="/" element ={<Homepage />} />
       <Route exact path = '/newarrival' element = {<NewArrivalpage/>} />
       <Route path='products/:productID' element = {<Productdetailspage/>}/>
+      <Route exact path='/collection/:category' element = {<Allitems/>}/>
+      <Route exact path='/checkout' element ={<Checkout/>}/>
    </Routes>
    {/* <div><Link to = '/newarrival' >new arr</Link></div> */}
    <Footer/>

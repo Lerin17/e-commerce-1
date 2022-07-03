@@ -46,11 +46,12 @@ const style = () => (
 const productdetailsimg = imagesarray.map(item => {
   return (
     <Slide className="" index={index++}>
-      <div className="mx-auto p-1" style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}}> 
-          <Card variant="outlined" className="border-none" sx={{ maxWidth: 200, minWidth: 200 ,minHeight: 150}}>
+      <div className="mx-auto p-1" style={{maxWidth: 300, minWidth: 200 ,minHeight: 150}}> 
+          <Card variant="outlined" className="border-none" sx={{ maxWidth: 300, minWidth: 200 ,minHeight: 150}}>
             <CardMedia
             sx={{
-                maxHeight: 250
+                maxHeight: 250,
+                maxWidth: 300
             }}
             component="img"
             height="80"

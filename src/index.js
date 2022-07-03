@@ -9,6 +9,7 @@ import { StyledEngineProvider, ThemeProvider } from '@mui/material';
 import theme from './theme';
 
 import { BrowserRouter as Router } from 'react-router-dom';
+import {UserItemsContextProvider} from './context/Items';
 
 
 
@@ -19,7 +20,9 @@ root.render(
   <Router>
   <StyledEngineProvider injectFirst>
     <ThemeProvider theme = {theme}>
+    <UserItemsContextProvider>
     <App />
+    </UserItemsContextProvider> 
     </ThemeProvider >   
     </StyledEngineProvider>
     </Router>

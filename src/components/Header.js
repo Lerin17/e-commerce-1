@@ -51,6 +51,7 @@ function Header(params) {
     
    
    function toggleIsSearchBar() {
+
     setisSearchbar(prev => !prev)
     console.log(textBoxRef.current)
    }
@@ -88,9 +89,11 @@ function Header(params) {
      <div className="bg-black text-white  fixed top-0  w-full z-20">
         <div className="flex justify-around mx-3 items-center" >   
         <div className= {`${classes.menu}`} >
+            <Link to = {'/checkout'} >
                 <IconButton className="text-gray-400" >
                 <ShoppingCartRounded/>
                 </IconButton>
+            </Link>
               MENU</div>
         <div className={`text-4xl font-gothic my-2 `} >{Name}©</div>
 
@@ -127,41 +130,57 @@ function Header(params) {
 
 {/* new screen width and height settings responsive*/}
 
-    <div style={{
-        // backgroundImage: `url(${testimage})`
-    }} className="hidden lg:block md:block flex flex-col items-center h-screen md:h-1/2 relative md:mb-60 lg:mb-28" >
-     <div className={`flex static justify-around items-center z-20 hover:bg-black hover:text-white fixed top-0  w-full ${classes.navbar}`} >   
-            <div className= {`${classes.menu}`} >
-                <IconButton className="text-blue-600" >
-                <ShoppingCartRounded/>
-                </IconButton>
-                <Button className="text-blue-600" >
-                MENU</Button> </div>
-            <div className="text-4xl  font-gothic my-2 "  >{Name}©</div>
-
-            <div className= {`${classes.input}`}>
-            <input
-            style={{
-                outline: 'none',
-            }}
-            value={searchinput}
-            onChange = {handleinput}
-            ref ={textBoxRef}
-            autoFocus
-            />
-            </div>
-            
-            <div className="flex " >
-                <IconButton onClick={toggleIsSearchBar} className=" text-blue-500" ><SearchRounded/></IconButton> 
-
-                <div>
-                <IconButton onClick={toggleIsSearchBar} className= {`${classes.cancel}`} > <p className="text-blue-500">X</p> </IconButton> 
+    <div className="hidden lg:block md:block flex flex-col items-center h-screen md:h-1/2 relative md:mb-60 lg:mb-28" >
+ 
+     <div className={`flex flex-col z-20 hover:bg-black hover:text-white fixed top-0  w-full ${classes.navbar}`} >    
+           <div className={`flex  justify-around items-center  w-full `} >
+                <div className= {`${classes.menu}`} >
+                   
+                   <Link to={'/checkout'} >
+                   <IconButton className="text-blue-600" >
+                    <ShoppingCartRounded/>
+                    </IconButton>
+                   </Link>
+                   
+                    
+                    <Button className="text-blue-600" >
+                    MENU</Button> 
                 </div>
-            </div>
-    
 
+                <div className="text-4xl md:-ml-8 lg:-ml-10  font-gothic my-2 "  >{Name}©</div>
+
+                <div className= {`${classes.input}`}>
+                <input
+                style={{
+                    outline: 'none',
+                }}
+                value={searchinput}
+                onChange = {handleinput}
+                ref ={textBoxRef}
+                autoFocus
+                />
+                </div>
+                
+                <div className="flex " >
+                    <IconButton onClick={toggleIsSearchBar} className=" text-blue-500" ><SearchRounded/></IconButton> 
+
+                    <div>
+                    <IconButton onClick={toggleIsSearchBar} className= {`${classes.cancel}`} > <p className="text-blue-500">X</p> </IconButton> 
+                    </div>
+                </div>
+
+            </div>
+
+            <div className="flex hidden" >
+                <div>Favorite</div>
+                <div>NECKLACES</div>
+                <div>RINGS</div>
+                <div>EARRINGS</div>
+            </div>
             
         </div>
+
+       
 
         <div>
             <div style={{
