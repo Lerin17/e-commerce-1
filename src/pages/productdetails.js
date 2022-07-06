@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router";
 import { UserItemsContext } from "../context/Items";
-import Newarrivaldata from "../image/new arrival/newarrivaldata";
+// import Newarrivaldata from "../image/new arrival/newarrivaldata";
 // import Newarrivaldata from "../image/new arrival/newarrivaldata";
 import Navbar from "../components/Navbar";
 import { Button, Card, CardMedia } from "@mui/material";
@@ -22,12 +22,12 @@ import {
 
 
 function Productdetailspage(params) {
-const {Allproducts, setFavourite, setCartitems} = React.useContext   (UserItemsContext)
+const {Allproducts, setFavourite, setCartitems} = React.useContext(UserItemsContext)
 
 const style = () => (
     {
         image: {
-            maxWidth: 350
+            maxWidth: 220
             // width: 300,
         }
     }
@@ -35,7 +35,7 @@ const style = () => (
 
     // console.log(useParams())
    const {productID} = useParams()
-   const productData =  Newarrivaldata()
+//    const productData =  Newarrivaldata()
 
 //    console.log(productID)
 
@@ -51,12 +51,13 @@ console.log(currentProduct.isCartItem)
 const productdetailsimg = imagesarray.map((item, i) => {
   return (
     <Slide key={i} className="" index={index++}>
-      <div className="mx-auto p-1" style={{maxWidth: 300, minWidth: 200 ,minHeight: 150}}> 
-          <Card variant="outlined" className="border-none" sx={{ maxWidth: 300, minWidth: 200 ,minHeight: 150}}>
+      <div className="mx-auto p-1" style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}}> 
+          <Card variant="outlined" className="border-none" sx={{ maxWidth: 200, minWidth: 200 ,minHeight: 150}}>
             <CardMedia
             sx={{
-                maxHeight: 250,
-                maxWidth: 300
+                maxHeight: 280,
+                maxWidth: 200,
+                // backgroundColor: 'red'
             }}
             component="img"
             height="80"
@@ -74,9 +75,9 @@ const productdetailsimg = imagesarray.map((item, i) => {
     return (
         <div>
             <Navbar/>
-            <div className="lg:flex-row md:flex-row flex flex-col  md:h-7/12 border-b-2 border-black  mt-16" >
-                <div className=" lg:block md:block  hidden flex flex-col lg:w-8/12 md:w-8/12 ">
-                    <div className="p-10 mx-auto">
+            <div className="lg:flex-row md:flex-row flex flex-col  md:h-7/12  border-b-2 border-black  mt-16" >
+                <div className=" lg:block md:block  hidden flex flex-col lg:w-5/12 md:w-8/12 ">
+                    <div className="p-10 mx-auto  lg:w-8/12">
                         <div className="flex" >
                             <div style={classesx.image} >
                                 <img src={currentProduct.image}
