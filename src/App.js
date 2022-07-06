@@ -21,11 +21,11 @@ import Checkout from './pages/checkoutpage';
 import { Routes, Route, Link} from "react-router-dom"
 import Newarrival from './components/Newarrival';
 import Navbar from './components/Navbar';
+import { LocationutilityContext } from './context/Location';
 
+// import ScrollToTop from './Utilities/ScrollToTop';
 
-
-
-
+// LocationutilityContext
 
 
 
@@ -47,7 +47,12 @@ const usestyle = makeStyles((theme)=>({
 
 
 function App() {
+   
+const {currentLocation} = React.useContext(LocationutilityContext)
+
+const displayfooter = currentLocation == '/collection/allitems'?false:true
   
+console.log(displayfooter)
 const classes = usestyle()
   
    return(
@@ -56,14 +61,15 @@ const classes = usestyle()
     
 
    <Routes>
+      
       <Route exact path="/" element ={<Homepage />} />
       <Route exact path = '/newarrival' element = {<NewArrivalpage/>} />
       <Route path='products/:productID' element = {<Productdetailspage/>}/>
-      <Route exact path='/collection/:category' element = {<Allitems/>}/>
+      <Route exact path='/collection/:category' element = { <Allitems/>}/>
       <Route exact path='/checkout' element ={<Checkout/>}/>
    </Routes>
    {/* <div><Link to = '/newarrival' >new arr</Link></div> */}
-   <Footer/>
+   {displayfooter && <Footer/>}
    </div>
    ) 
   

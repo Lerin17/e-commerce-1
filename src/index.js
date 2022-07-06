@@ -10,7 +10,8 @@ import theme from './theme';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 import {UserItemsContextProvider} from './context/Items';
-
+import ScrollToTop from './Utilities/ScrollToTop';
+import { LocationContextProvider } from './context/Location';
 
 
 
@@ -21,7 +22,10 @@ root.render(
   <StyledEngineProvider injectFirst>
     <ThemeProvider theme = {theme}>
     <UserItemsContextProvider>
-    <App />
+      <LocationContextProvider>
+      <ScrollToTop/>
+      <App />
+      </LocationContextProvider>
     </UserItemsContextProvider> 
     </ThemeProvider >   
     </StyledEngineProvider>

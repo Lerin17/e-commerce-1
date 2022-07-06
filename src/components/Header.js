@@ -187,12 +187,40 @@ function Header(params) {
                 // transform: "translate(-50%, -50%)",
                 position: 'relative',
                 zIndex: '-1'
-            }} className="w-2/5 mx-auto  -mt-16" >
-                <img src={testimage} alt="" />   
+            }} className="w-2/5 lg:w-6/12 mx-auto  -mt-16 lg:flex" >
+
+               <div>
+               <img src={testimage} alt="" /> 
+                </div>  
+                 
+                <div className="text-lg pt-32 hidden font-draft  lg:block w-3/5" >
+                    <div className="flex justify-between py-4  border-b border-gray-400 border-dotted" >
+                        <div>Name</div>
+                        <div>SUN SEEKER</div>
+                    </div>
+
+                    <div className="flex justify-between py-4 border-b border-gray-400 border-dotted" >
+                        <div>Designer</div>
+                        <div>PI'ERRE</div>
+                    </div>
+
+                    <div className="flex justify-between py-4 " >
+                        <div>Description</div>
+                        <div className="ml-8 text-end uppercase text-right" > excellent platnium </div>
+                    </div>
+
+           
+                </div> 
+                
+               
             </div>
 
-               <div className="absolute ml-32 lg:top-60 lg:ml-60 lg:mt-16 z-10 text-2xl">
-                <p>New collection</p>
+           
+            <div className="hidden lg:block right-1/4 absolute text-3xl" ><Button variant="text" className="text-black text-2xl font-bold" >Enter the collection</Button></div>
+            {/* hide the enter the collection on lg size */}
+
+               <div className="absolute ml-32 lg:hidden lg:top-60 lg:ml-60 lg:mt-16 z-10 text-2xl">
+                <p>Sun Seeker</p>
                 <p>a new collecting by boyish</p>
                <Button sx={{ minHeight: 0, minWidth: 0, padding: 0 }} className="text-blue-600" variant="text"  >Enter the collection</Button>
                 </div> 

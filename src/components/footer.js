@@ -4,7 +4,7 @@ import React from "react";
 
 function Footer(params) {
     return (
-        <div className="bg-gray-200 mt-12 z-20 ">
+        <div className="bg-gray-200 mt-20 z-20  bottom-0">
             
             <div className="text-5xl text-white font-gothic text-center" >B</div>
 

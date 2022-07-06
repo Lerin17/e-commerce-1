@@ -9,38 +9,39 @@ import {
 import "pure-react-carousel/dist/react-carousel.es.css";
 
 import { Button, Card, CardActions, CardContent, CardMedia, IconButton, Typography } from "@mui/material";
-import new1 from '../image/new arrival/new1.png'
+// import new1 from '../image/new arrival/new1.png'
 
 import { Link } from "react-router-dom";
 
 import Newarrivaldata from "../image/new arrival/newarrivaldata";
 // import newArrivalpage from  '../pages/newArrivalpage'
-import { FavoriteBorderOutlined } from "@material-ui/icons";
+import { ArrowLeftRounded, FavoriteBorderOutlined } from "@material-ui/icons";
 import { UserItemsContext } from "../context/Items";
+
 
 
 function SortItems(params) {
   const {Allproducts, setFavourite} = React.useContext(UserItemsContext)
-  const [SortedItems, setSortedItems] = React.useState([]);
+  // const [SortedItems, setSortedItems] = React.useState([]);
 
 let index = 0
 
-console.log(Allproducts)
+// console.log(Allproducts)
 
-React.useEffect(() => {
-  const arrivaldatacards = Allproducts.map((item, i) => {
-    return (
-      <Slide key={i} className="" index={index++}>
-        <div id={item.ProductID} productid= {item.ProductID} className="mx-auto p-1 flex flex-col" style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}}> 
-            <Card variant="outlined" className="shadow-2 border-black border-2" sx={{ maxWidth: 200, minWidth: 200 ,minHeight: 150, borderRadius: 0}}>
+const newArrivalDisplay = Allproducts.filter(item => item.isNewArrival == true).map((item, i) => (
+<Slide key={i} className="" index={index++}>
+        <div id={item.ProductID} productid= {item.ProductID} className="mx-auto p-1 flex flex-col" style={{maxWidth: 200, minWidth: 200 }}> 
+            <Card variant="outlined" className="shadow-2 border-none" sx={{ maxWidth: 200, minWidth: 200 , borderRadius: 0}}>
             <Link to= {`/products/${item.ProductID}`} >
             <CardMedia
           sx={{
-              maxHeight: 250
+              maxHeight: 300,
+              // backgroundColor: 'red'
+            
             }}
           component="img"
-          height="80"
-          image= {`${new1}`}
+          // height="80"
+          image= {`${item.image}`}
           alt="green iguana"
           />
             </Link>
@@ -65,16 +66,13 @@ React.useEffect(() => {
          </div>
       </div>
   </Slide>
-    )
-  })
+))
 
-  setSortedItems(arrivaldatacards)
-}, [Allproducts]);
 
 
 
 return (
- SortedItems
+ newArrivalDisplay
 )
 }
 
@@ -86,15 +84,16 @@ function Newarrivalcarousel(params) {
  
   const [windowWidth, setwindowWidth] = React.useState();
   const [visibleItems, setvisibleItems] = React.useState();
+  const totalSlides =  SortItems().length
   
   const visibleSlides = () => {
     
-    if(windowWidth <= 500 ){
+    if(windowWidth <= 400 ){
       return 1
-    }if(windowWidth > 400 && windowWidth <= 770){
+    }if(windowWidth > 500 && windowWidth <= 900){
       return 2
     }
-     if(windowWidth > 770 )
+     if(windowWidth > 900 )
      {return 3}
   }
 
@@ -102,7 +101,7 @@ function Newarrivalcarousel(params) {
   window.addEventListener('resize',
   ()=> setwindowWidth(window.innerWidth)
   )
-  console.log(windowWidth)
+  // console.log(windowWidth)
  
  
 
@@ -111,20 +110,20 @@ function Newarrivalcarousel(params) {
     setvisibleItems(visibleSlides())
   }, [windowWidth]);
  
-
-  // console.log(visibleSlides())
+ 
+ 
 
   return (
     <div className=" lg:w-3/5 lg:mx-auto mx-16">
 
    <Link to= "/newarrival" ><Button className="text-blue-600 text-2xl font-bold" variant="text" >NEW ARRIVALS</Button></Link>   
-    <div className=" relative shadow-inner h-72" >
+    <div className=" relative h-full" >
       
         <div className="mx-auto  ">
             <CarouselProvider
               naturalSlideWidth={100}
               naturalSlideHeight={125}
-              totalSlides={8}
+              totalSlides={totalSlides}
               visibleSlides={visibleItems}
               currentSlide={1}
             >
@@ -132,13 +131,17 @@ function Newarrivalcarousel(params) {
          <div className="mx-auto">
             <div className="flex justify-between" >
            
-                <div className="self-center" ><ButtonBack className="">B</ButtonBack></div>
+                <div className="self-center" ><ButtonBack className="w-10">
+                <i class="ri-arrow-left-circle-fill"></i>
+                  </ButtonBack></div>
                   <Slider style={{
-                    height: ''
-                  }} className="h-72 mx-auto w-full">    
+                    height: '350px'
+                  }} className=" mx-auto w-full">    
                     {<SortItems/>}      
                   </Slider>
-                <div className="self-center"><ButtonNext className="">N</ButtonNext></div>
+                <div className="self-center"><ButtonNext className="">
+                <i class="ri-arrow-right-circle-fill"></i>
+                  </ButtonNext></div>
                 
               </div>   
               

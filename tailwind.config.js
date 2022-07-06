@@ -2,7 +2,8 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     fontFamily: {
-  gothic: ['Uncial Antiqua']
+  gothic: ['Uncial Antiqua'],
+  draft: ['Courier Prime'],
     },
     extend: {
       animation: {
