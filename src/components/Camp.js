@@ -11,7 +11,7 @@ function Camp(params) {
         <div>
             <div className="w-full" >
                 <div className="lg:w-7/12 mx-auto" >
-                    <div className="text-3xl mb-2" >CAMP</div>
+                    <div className="text-3xl mb-2 font-bold md:pl-2" >CAMP</div>
                     <div  className="flex ">
                         <div className="bg-black w-1/2 flex">
                             <Card variant="" className="shadow-2 hover:scale-105 w-full " sx={{ minWidth: 100 ,minHeight: 300}}>

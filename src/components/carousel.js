@@ -48,7 +48,7 @@ const newArrivalDisplay = Allproducts.filter(item => item.isNewArrival == true).
     
         </Card>
          <div className="flex justify-between" >
-          <div className="" >
+          <div className="w-2/3" >
             <div className="font-bold uppercase border-b-2 border-black" >
                 {item.name}
               </div>
@@ -114,7 +114,7 @@ function Newarrivalcarousel(params) {
  
 
   return (
-    <div className=" lg:w-3/5 lg:mx-auto mx-16">
+    <div className=" lg:w-3/5 lg:mx-auto mx-8 ">
 
    <Link to= "/newarrival" ><Button className="text-blue-600 text-2xl font-bold" variant="text" >NEW ARRIVALS</Button></Link>   
     <div className=" relative h-full" >
@@ -128,11 +128,13 @@ function Newarrivalcarousel(params) {
               currentSlide={1}
             >
 
-         <div className="mx-auto">
+         <div className="mx-auto ">
             <div className="flex justify-between" >
            
                 <div className="self-center" ><ButtonBack className="w-10">
-                <i class="ri-arrow-left-circle-fill"></i>
+                    <IconButton className="hover:bg-transparent">
+                    <i class="ri-arrow-left-circle-fill"></i>
+                    </IconButton>
                   </ButtonBack></div>
                   <Slider style={{
                     height: '350px'
@@ -140,15 +142,14 @@ function Newarrivalcarousel(params) {
                     {<SortItems/>}      
                   </Slider>
                 <div className="self-center"><ButtonNext className="">
-                <i class="ri-arrow-right-circle-fill"></i>
+                    <IconButton className="hover:bg-transparent" >
+                    <i class="ri-arrow-right-circle-fill"></i>
+                    </IconButton>
                   </ButtonNext></div>
                 
               </div>   
               
-              {/* <div className=" flex justify-between absolute w-full top-28">
-              <ButtonBack className="">B</ButtonBack>
-              <ButtonNext className="">N</ButtonNext>
-              </div> */}
+   
           </div>     
             </CarouselProvider>
         </div>       

@@ -17,7 +17,7 @@ import Newarrivalcarousel from "./carousel";
 function Newarrival(params) {   
     return (
         
-        <div className="" >    
+        <div className="mx-auto" >    
             <Newarrivalcarousel/>
         </div>
       
