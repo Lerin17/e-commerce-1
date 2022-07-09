@@ -2,6 +2,7 @@ import { SearchRounded } from "@material-ui/icons";
 import { IconButton } from "@mui/material";
 import React from "react";
 import { useRef } from "react";
+import { LocationutilityContext } from "../context/Location";
 
 function Navbar(params) {
 
@@ -24,6 +25,8 @@ function Navbar(params) {
     const [Navbar, setNavbar] = React.useState();
     const [prevscrollheight, setprevscrollheight] = React.useState();
 
+    const {currentLocation} = React.useContext(LocationutilityContext)
+        
 
     const states = {
         isSearchbar,
