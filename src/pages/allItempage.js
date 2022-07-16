@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+
 import Newarrivaldata from "../image/new arrival/newarrivaldata";
 import { Routes, useLocation, useParams } from "react-router";
 import { Router, Route } from "react-router";
@@ -9,7 +11,6 @@ import Navbar from "../components/Navbar";
 import { Slider } from "@material-ui/core";
 import { UserItemsContext } from "../context/Items";
 import { blue, green, pink } from "@material-ui/core/colors";
-
 // Radio
 
 
@@ -23,6 +24,23 @@ function CurrentCollection(props) {
 
   //filter items based on items in the filter
 
+  const [allProducts, setallProducts] = React.useState();
+
+  React.useEffect(() => {
+     const getProducts = async () => {
+        try {
+        const res = await axios.get('http://localhost:5000/api/products')
+        console.log(res)
+        setallProducts(res.data)   
+        } catch (error) {
+          console.log(error) 
+        }
+     } 
+
+     getProducts()
+  }, []);
+   
+  console.log(allProducts)
 
 
   const ItemCard =({item, i})=>{
@@ -84,7 +102,7 @@ function CurrentCollection(props) {
     return filter
   }
 
-  console.log(filteredItemsPrice(), 'filtered')
+  // console.log(filteredItemsPrice(), 'filtered')
 
 
   const filteredItems = filteredItemsPrice().filter((item,i) => {
