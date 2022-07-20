@@ -1,8 +1,10 @@
-import { SearchRounded } from "@material-ui/icons";
+import { CancelRounded, SearchRounded } from "@material-ui/icons";
 import { IconButton } from "@mui/material";
 import React from "react";
 import { useRef } from "react";
 import { LocationutilityContext } from "../context/Location";
+
+
 
 function Navbar(params) {
 
@@ -10,7 +12,7 @@ function Navbar(params) {
         return (
             {
                input: !prop.isSearchbar? 'hidden bg-green-200 border border-b border-white': ' border-4 border border-white text-black bg-white' ,
-               cancel: prop.isSearchbar? 'hover:bg-opacity-25 p-0 rounded-full': 'hidden hover:bg-opacity-25 p-0 rounded-full',
+               cancel: prop.isSearchbar? 'hover:bg-opacity-25 rounded-full': 'hidden hover:bg-opacity-25 rounded-full',
                menu: prop.isSearchbar? 'hidden': 'block',
                navbar: prop.Navbar? 'bg-black text-white':'',
                navbarText: prop.Navbar? 'text-white': 'text-white',
@@ -91,12 +93,12 @@ function Navbar(params) {
          />
         </div>
          
-            <div className="flex " >
-                <IconButton onClick={toggleIsSearchBar} className="hover:bg-opacity-25 text-blue-500" ><SearchRounded/></IconButton> 
+            <div className="flex  py-0" >
+                <IconButton onClick={toggleIsSearchBar} className="hover:bg-opacity-25 text-blue-500 p-0 " ><SearchRounded/></IconButton> 
 
-                <div>
-                <IconButton onClick={toggleIsSearchBar} className= {`${classes.cancel}`} > <p className="text-black">X</p> </IconButton> 
-                </div>
+            
+                <IconButton onClick={toggleIsSearchBar} className= {`${classes.cancel}`} ><CancelRounded/> </IconButton> 
+             
             </div>    
             </div>
         </div>

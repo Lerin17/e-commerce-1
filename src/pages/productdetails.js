@@ -5,6 +5,8 @@ import { UserItemsContext } from "../context/Items";
 // import Newarrivaldata from "../image/new arrival/newarrivaldata";
 import Navbar from "../components/Navbar";
 import { Button, Card, CardMedia } from "@mui/material";
+import axios from 'axios'
+import Skeletoncomponent from "../components/skeleton";
 
 
 
@@ -17,6 +19,7 @@ import {
     ButtonNext
   } from "pure-react-carousel";
   import "pure-react-carousel/dist/react-carousel.es.css";
+import { IconButton } from "@material-ui/core";
 
 
 
@@ -39,16 +42,40 @@ const style = () => (
 
 //    console.log(productID)
 
-   const currentProduct = Allproducts.find(item => item.ProductID == productID)
+const [currentProduct, setcurrentProduct] = React.useState();
+const [allProducts, setallProducts] = React.useState([]);
 
-//    console.log(currentProduct)
-console.log(currentProduct.isCartItem)
+React.useEffect(() => {
+   const getProducts = async () => {
+      try {
+      const res = await axios.get('http://localhost:5000/api/products')
+      console.log(res)
+      setallProducts(res.data)   
+      } catch (error) {
+        console.log(error) 
+      }
+   } 
+
+   getProducts()
+}, []);
+
+React.useEffect(() => {
+    const getcurrentProduct = allProducts.find(item => item._id == productID)
+    setcurrentProduct(getcurrentProduct)
+}, [allProducts]);
+
+//    const currentProduct = Allproducts.find(item => item.ProductID == productID)
+
+   //new new
+   
+ console.log(currentProduct)
+// console.log(currentProduct.isCartItem)
 
     
   let index = 0
-  const imagesarray = [1, 2, 3, 4]
+  const imagesarray = [1,2,3,4]
 
-const productdetailsimg = imagesarray.map((item, i) => {
+const productdetailsimg = currentProduct? currentProduct.imagearray.map((item, i) => {
   return (
     <Slide key={i} className="" index={index++}>
       <div className="mx-auto p-1" style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}}> 
@@ -61,18 +88,21 @@ const productdetailsimg = imagesarray.map((item, i) => {
             }}
             component="img"
             height="80"
-            image= {`${currentProduct.image}`}
+            image= {item}
             alt="green iguana"
             />     
          </Card> 
          </div>
     </Slide>
   )
-})
+}): 'current product unavailable'
 
    const classesx = style()
 
-    return (
+   console.log(productdetailsimg, 'details')
+
+ 
+    return currentProduct? (
         <div>
             <Navbar/>
             <div className="lg:flex-row md:flex-row flex flex-col  md:h-7/12  border-b-2 border-black  mt-16" >
@@ -80,24 +110,24 @@ const productdetailsimg = imagesarray.map((item, i) => {
                     <div className="p-10 mx-auto  lg:w-8/12">
                         <div className="flex" >
                             <div style={classesx.image} >
-                                <img src={currentProduct.image}
+                                <img src={currentProduct.imagearray[0]}
                                 alt = 'JEWELRY IMG'/>
                             </div>
 
                             <div style={classesx.image} >
-                                <img src={currentProduct.image}
+                                <img src={currentProduct.imagearray[1]}
                                  alt = 'JEWELRY IMG'/>
                             </div>
                         </div>
 
                         <div className="flex" >
                             <div style={classesx.image} >
-                                <img src={currentProduct.image}
+                                <img src={currentProduct.imagearray[2]}
                                  alt = 'JEWELRY IMG'/>
                             </div>
 
                             <div style={classesx.image} >
-                                <img src={currentProduct.image}
+                                <img src={currentProduct.imagearray[1]}
                                  alt = 'JEWELRY IMG'/>
                             </div>
                         </div>
@@ -110,21 +140,29 @@ const productdetailsimg = imagesarray.map((item, i) => {
                     <CarouselProvider
                     naturalSlideWidth={100}
                     naturalSlideHeight={125}
-                    totalSlides={4}
+                    totalSlides={3}
                     visibleSlides={1}
                     currentSlide={1}
                     >
 
                     <div className="mx-auto">
                         <div className="flex justify-between" >
-                        <ButtonBack className="">B</ButtonBack>  
+                        <ButtonBack className="">
+                            <IconButton className="hover:bg-transparent">
+                            <i class="ri-arrow-left-circle-fill"></i>
+                            </IconButton>    
+                        </ButtonBack>  
                         <Slider style={{
                             height: ''
                         }} className="h-72 mx-auto w-full">    
                             {productdetailsimg}      
                         </Slider>
                         
-                        <ButtonNext className="">N</ButtonNext>
+                        <ButtonNext>
+                            <IconButton className="hover:bg-transparent">
+                            <i class="ri-arrow-right-circle-fill"></i>
+                            </IconButton>
+                        </ButtonNext>
                         </div>   
                         
                         {/* <div className=" flex justify-between absolute w-full top-1/2">
@@ -161,15 +199,20 @@ const productdetailsimg = imagesarray.map((item, i) => {
                         </div>
 
                         <div  >
-                            <Button onClick={(event)=>setCartitems(event)} className={currentProduct.isCartItem?'text-red-600':'text-blue-600'} >
-                                {currentProduct.isCartItem? 'REMOVE FROM CART': 'ADD TO CART'}
+                            <Button>
+                                ADD TO CART
                             </Button>
+                            {/* <Button onClick={(event)=>setCartitems(event)} className={currentProduct.isCartItem?'text-red-600':'text-blue-600'} >
+                                {currentProduct.isCartItem? 'REMOVE FROM CART': 'ADD TO CART'}
+                            </Button> */}
                         </div>
                     </div>
                 </div>
             </div> 
         </div>
-    )
+    ): <div className="animate-pulse" >
+        <Skeletoncomponent/>
+    </div> 
 }
 
 export default Productdetailspage

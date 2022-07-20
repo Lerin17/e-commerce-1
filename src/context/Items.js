@@ -1,4 +1,5 @@
 import { propsToClassKey } from "@mui/styles";
+import axios from "axios";
 import React, { createContext } from "react";
 import Alldata from "../image/new arrival/newarrivaldata";
 
@@ -13,8 +14,29 @@ function UserItemsContextProvider(props) {
     const [Allproducts, setAllproducts] = React.useState(allproductx);
     const [FavouriteItems, setFavouriteItems] = React.useState([]);
     const [CartItems, setCartItems] = React.useState([]);
+   //  const [allProducts, setallProducts] = React.useState();
 
+   // React.useEffect(() => {
+   //    const getProducts = async () => {
+   //       try {
+   //       const res = await axios.get('http://localhost:5000/api/products')
+   //       console.log(res)
+   //       setallProducts(res.data)   
+   //       } catch (error) {
+   //         console.log(error) 
+   //       }
+   //    } 
+
+   //    getProducts()
+   // }, []);
     
+   // console.log(allProducts)
+   
+
+
+
+
+
    //  console.log(Allproducts)
     const xcartitems = Allproducts.filter(item => item.isCartItem)
    

@@ -4,7 +4,7 @@ import axios from "axios";
 import Newarrivaldata from "../image/new arrival/newarrivaldata";
 import { Routes, useLocation, useParams } from "react-router";
 import { Router, Route } from "react-router";
-import { Card, CardMedia, IconButton, Radio, RadioGroup } from "@mui/material";
+import { Card, CardMedia, IconButton, Radio, RadioGroup, Skeleton } from "@mui/material";
 import { FavoriteBorderOutlined, ReplyTwoTone } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -13,6 +13,7 @@ import { UserItemsContext } from "../context/Items";
 import { blue, green, pink } from "@material-ui/core/colors";
 // Radio
 
+import Skeletoncomponent from "../components/skeleton";
 
 
 function CurrentCollection(props) {
@@ -24,7 +25,9 @@ function CurrentCollection(props) {
 
   //filter items based on items in the filter
 
-  const [allProducts, setallProducts] = React.useState();
+  const [allProducts, setallProducts] = React.useState([]);
+
+  console.log(allProducts.length)
 
   React.useEffect(() => {
      const getProducts = async () => {
@@ -120,6 +123,63 @@ function CurrentCollection(props) {
     )
   })
 
+  //new new new new new new new new  after done clear previous build//
+
+
+
+
+  
+  const ItemCardComponent =({item, i})=>{
+    return (
+      <div key={i} className="mx-auto md:mx-5  lg:mx-8 my-4  p-1 flex flex-col" style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}}> 
+          <Card variant="outlined" className="shadow-2 border rounded-lg" sx={{ maxWidth: 200, minWidth: 200 ,minHeight: 150, borderRadius: 0}}>
+          <Link to= {`/products/${item._id}`} >
+          <CardMedia
+        sx={{
+            maxHeight: 300
+          }}
+        component="img"
+        height="80"
+        image= {`${item.image}`}
+        alt="green iguana"
+        />
+          </Link>
+      </Card>
+       <div className="flex justify-between" >
+        <div className="w-2/3" >
+          <div className="font-bold uppercase border-b-2 border-black" >
+              {item.name}
+            </div>
+            <div className="border-b-2 border-black" >
+              {item.price}
+            </div>
+        </div>
+
+      <div id={item._id} productid = {item._id}     onClick={setFavourite}  className="self-center ">
+       <IconButton className= {`${true? 'text-red-600':'text-blue-600'}`} >
+        <FavoriteBorderOutlined/>
+         </IconButton>
+     </div>
+        
+       </div>
+    </div>
+
+  )
+  }
+
+  const productCards = allProducts.length? allProducts.map((item,i) => {
+    return <ItemCardComponent
+    item = {item}
+    i={i}
+    />
+  }):Array.from(new Array(22)).map((item ,i)=>
+  <div  style={{maxWidth: 200, minWidth: 180 ,minHeight: 150}} className=" "> 
+       <Skeleton key={i} className="bg-gray-400 mx-auto md:mx-5 w-full   lg:mx-8 my-4  p-1" variant="rectangular" width={180} height={280} />
+  </div>
+  )
+
+
+
 
   // console.log(filteredItems, 'filtered')
 
@@ -159,7 +219,7 @@ function CurrentCollection(props) {
     
     return (
         <div  className="flex flex-wrap " > 
-         {Finalproductcard()}
+         {productCards}
         </div>
     )
 }
