@@ -86,38 +86,45 @@ function Header(params) {
     return (
 <div>
     <div className="lg:hidden md:hidden mb-20">
-     <div className="bg-black text-white  fixed top-0  w-full z-20">
-        <div className="flex justify-around mx-3 items-center" >   
-        <div className= {`${classes.menu}`} >
-            <Link to = {'/checkout'} >
-                <IconButton className="text-gray-400" >
-                <ShoppingCartRounded/>
-                </IconButton>
-            </Link>
-              MENU</div>
-        <div className={`text-4xl font-gothic my-2 `} >{Name}©</div>
-
-        <div className= {`${classes.input}`}>
-         <input
-         style={{
-            outline: 'none',
-         }}
-         value={searchinput}
-         onChange = {handleinput}
-         ref ={textBoxRef}
-         autoFocus
-         />
-        </div>
-         
-            <div className="flex " >
-                <IconButton onClick={toggleIsSearchBar} className="hover:bg-opacity-25 text-blue-500" ><SearchRounded/></IconButton> 
-
-                <div>
-                <IconButton onClick={toggleIsSearchBar} className= {`${classes.cancel}`} > <p className="text-white">X</p> </IconButton> 
+        {/* START OF NAVBAR */}
+        <div className="bg-black text-white  fixed top-0  w-full z-20">
+            <div className="flex justify-around mx-3 items-center" >   
+                <div className= {`${classes.menu}`} >
+                    <Link to = {'/checkout'} >
+                        <IconButton className="text-gray-400" >
+                        <ShoppingCartRounded/>
+                        </IconButton>
+                    </Link>
+                    MENU
                 </div>
-            </div>    
+
+                <div className={`text-4xl font-gothic my-2 `} >{Name}©
+                </div>
+
+                <div className= {`${classes.input}`}>
+                <input
+                style={{
+                    outline: 'none',
+                }}
+                value={searchinput}
+                onChange = {handleinput}
+                ref ={textBoxRef}
+                autoFocus
+                />
+                </div>
+         
+                <div className="flex " >
+                    <IconButton onClick={toggleIsSearchBar} className="hover:bg-opacity-25 text-blue-500" ><SearchRounded/></IconButton> 
+
+                    <div>
+                    <IconButton onClick={toggleIsSearchBar} className= {`${classes.cancel}`} > <p className="text-white">X</p> </IconButton> 
+                    </div>
+                </div>    
             </div>
         </div>
+        {/* END OF NAVBAR */}
+
+        {/* NEW COLLECTION IMAGE*/}
 
         <div className=" mx-16 " >
             <div>
@@ -126,13 +133,14 @@ function Header(params) {
             
             <div className=" text-black bg-blue-400" ><p className="" >enter new collection</p></div> 
         </div>
+
+        {/* NEW COLLECTION IMAGE*/}
     </div>
 
-{/* new screen width and height settings responsive*/}
+{/* new screen width and height settings responsive based for large and medium screen sizes*/}
 
     <div className="hidden lg:block md:block flex flex-col items-center h-screen md:h-1/2 relative md:mb-60 lg:mb-28" >
- 
-     <div className={`flex flex-col z-20 hover:bg-black hover:text-white fixed top-0  w-full ${classes.navbar}`} >    
+        <div className={`flex flex-col z-20 hover:bg-black hover:text-white fixed top-0  w-full ${classes.navbar}`} >    
            <div className={`flex  justify-around items-center  w-full `} >
                 <div className= {`${classes.menu}`} >
                    
@@ -150,15 +158,15 @@ function Header(params) {
                 <div className="text-4xl md:-ml-8 lg:-ml-10  font-gothic my-2 "  >{Name}©</div>
 
                 <div className= {`${classes.input}`}>
-                <input
-                style={{
-                    outline: 'none',
-                }}
-                value={searchinput}
-                onChange = {handleinput}
-                ref ={textBoxRef}
-                autoFocus
-                />
+                    <input
+                    style={{
+                        outline: 'none',
+                    }}
+                    value={searchinput}
+                    onChange = {handleinput}
+                    ref ={textBoxRef}
+                    autoFocus
+                    />
                 </div>
                 
                 <div className="flex " >
@@ -171,12 +179,14 @@ function Header(params) {
 
             </div>
 
+            {/* drop menu for menu */}
+            {/* 
             <div className="flex hidden" >
                 <div>Favorite</div>
                 <div>NECKLACES</div>
                 <div>RINGS</div>
                 <div>EARRINGS</div>
-            </div>
+            </div> */}
             
         </div>
 

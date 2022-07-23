@@ -38,11 +38,11 @@ function Navbar(params) {
 
 
        //handle the left channel of the navbar
-       const leftSection = () => {
-        return (
-          
-        )
-       }
+      //  const leftSection = () => {
+      //   return (
+
+      //   )
+      //  }
 
    
 
