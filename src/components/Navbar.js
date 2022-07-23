@@ -28,6 +28,7 @@ function Navbar(params) {
     const [prevscrollheight, setprevscrollheight] = React.useState();
 
     const {currentLocation} = React.useContext(LocationutilityContext)
+   
         
 
     const states = {
@@ -35,6 +36,13 @@ function Navbar(params) {
         Navbar
        }
 
+
+       //handle the left channel of the navbar
+       const leftSection = () => {
+        return (
+          
+        )
+       }
 
    
 
@@ -76,22 +84,22 @@ function Navbar(params) {
    const Name = 'BOYISH!'
     return(
         <div>
-       <div className=" text-black bg-gray-300  fixed top-0  w-full z-20">
-        <div className="flex justify-around mx-3 items-center" >   
-        <div className= {`${classes.menu}`} >MENU</div>
-        <div className={`text-2xl font-gothic my-2 `} >{Name}©</div>
+          <div className=" text-black bg-gray-300  fixed top-0  w-full z-20">
+          <div className="flex justify-around mx-3 items-center" >   
+          <div className= {`${classes.menu}`} >MENU</div>
+          <div className={`text-2xl font-gothic my-2 `} >{Name}©</div>
 
-        <div className= {`${classes.input}`}>
-         <input
-         style={{
-            outline: 'none',
-         }}
-         value={searchinput}
-         onChange = {handleinput}
-         ref ={textBoxRef}
-         autoFocus
-         />
-        </div>
+          <div className= {`${classes.input}`}>
+          <input
+          style={{
+              outline: 'none',
+          }}
+          value={searchinput}
+          onChange = {handleinput}
+          ref ={textBoxRef}
+          autoFocus
+          />
+          </div>
          
             <div className="flex  py-0" >
                 <IconButton onClick={toggleIsSearchBar} className="hover:bg-opacity-25 text-blue-500 p-0 " ><SearchRounded/></IconButton> 

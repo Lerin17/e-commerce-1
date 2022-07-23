@@ -46,43 +46,43 @@ function CurrentCollection(props) {
   console.log(allProducts)
 
 
-  const ItemCard =({item, i})=>{
-    return (
-      <div key={i} className="mx-auto md:mx-5  lg:mx-8 my-4  p-1 flex flex-col" style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}}> 
-          <Card variant="outlined" className="shadow-2 border" sx={{ maxWidth: 200, minWidth: 200 ,minHeight: 150, borderRadius: 0}}>
-          <Link to= {`/products/${item.ProductID}`} >
-          <CardMedia
-        sx={{
-            maxHeight: 300
-          }}
-        component="img"
-        height="80"
-        image= {`${item.image}`}
-        alt="green iguana"
-        />
-          </Link>
-      </Card>
-       <div className="flex justify-between" >
-        <div className="w-2/3" >
-          <div className="font-bold uppercase border-b-2 border-black" >
-              {item.name}
-            </div>
-            <div className="border-b-2 border-black" >
-              {item.price}
-            </div>
-        </div>
+  // const ItemCard =({item, i})=>{
+  //   return (
+  //     <div key={i} className="mx-auto md:mx-5  lg:mx-8 my-4  p-1 flex flex-col" style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}}> 
+  //         <Card variant="outlined" className="shadow-2 border" sx={{ maxWidth: 200, minWidth: 200 ,minHeight: 150, borderRadius: 0}}>
+  //         <Link to= {`/products/${item.ProductID}`} >
+  //         <CardMedia
+  //       sx={{
+  //           maxHeight: 300
+  //         }}
+  //       component="img"
+  //       height="80"
+  //       image= {`${item.image}`}
+  //       alt="green iguana"
+  //       />
+  //         </Link>
+  //     </Card>
+  //      <div className="flex justify-between" >
+  //       <div className="w-2/3" >
+  //         <div className="font-bold uppercase border-b-2 border-black" >
+  //             {item.name}
+  //           </div>
+  //           <div className="border-b-2 border-black" >
+  //             {item.price}
+  //           </div>
+  //       </div>
 
-      <div id={item.ProductID} productid = {item.ProductID}     onClick={setFavourite}  className="self-center ">
-       <IconButton className= {`${item.isFavourite? 'text-red-600':'text-blue-600'}`} >
-        <FavoriteBorderOutlined/>
-         </IconButton>
-     </div>
+  //     <div id={item.ProductID} productid = {item.ProductID}     onClick={setFavourite}  className="self-center ">
+  //      <IconButton className= {`${item.isFavourite? 'text-red-600':'text-blue-600'}`} >
+  //       <FavoriteBorderOutlined/>
+  //        </IconButton>
+  //    </div>
         
-       </div>
-    </div>
+  //      </div>
+  //   </div>
 
-  )
-  }
+  // )
+  // }
 
   //above works as a way to filter
 
@@ -90,38 +90,15 @@ function CurrentCollection(props) {
 
   console.log(props.selectedPrice)
 
-  const filteredItemsPrice = () => {
-    const priceRangeless = props.selectedPrice[0]
-    const priceRangemore = props.selectedPrice[1]
 
-    const filter  = Allproducts.filter((item, i) => {
-      if(item.price >= priceRangeless && item.price <= priceRangemore ){
-        return (
-          item
-        )
-      }
-    })
 
-    return filter
-  }
+  
+
 
   // console.log(filteredItemsPrice(), 'filtered')
 
 
-  const filteredItems = filteredItemsPrice().filter((item,i) => {
-    if(props.selectedValue.includes(...item.color  )){
-      return item
-    }else if (props.selectedValue.includes( ...item.type )){
-      return item
-    }
-  }).map((item, i)=>{
-    return (
-      <ItemCard
-      item= {item}
-      i={i}
-      />
-    )
-  })
+
 
   //new new new new new new new new  after done clear previous build//
 
@@ -141,7 +118,7 @@ function CurrentCollection(props) {
         component="img"
         height="80"
         image= {`${item.image}`}
-        alt="green iguana"
+        alt="images images"
         />
           </Link>
       </Card>
@@ -173,53 +150,107 @@ function CurrentCollection(props) {
     i={i}
     />
   }):Array.from(new Array(22)).map((item ,i)=>
-  <div  style={{maxWidth: 200, minWidth: 180 ,minHeight: 150}} className=" "> 
-       <Skeleton key={i} className="bg-gray-400 mx-auto md:mx-5 w-full   lg:mx-8 my-4  p-1" variant="rectangular" width={180} height={280} />
+  <div  style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}} className="mx-auto md:mx-5 w-full   lg:mx-8 my-4  p-1 "> 
+       <Skeleton key={i} className="bg-gray-300 " variant="rectangular" width={200} height={280} />
   </div>
   )
 
+  const isSelectedvalue = props.selectedValue.length == 0?false:true
+  const isSelectedPrice = props.selectedPrice?true:false
 
+
+
+
+
+    const filteredItemsPrice = () => {
+      const priceRangeless = props.selectedPrice[0]
+      const priceRangemore = props.selectedPrice[1]
+  
+      const Filter  = allProducts.length? allProducts.filter((item, i) => {
+        if(item.price >= priceRangeless && item.price <= priceRangemore ){
+          return (
+            item
+          )
+        }
+      }):['error','error']
+  
+      return Filter
+    }
+
+    const filteredItems = isSelectedvalue? filteredItemsPrice().filter((item,i) => {
+      if(props.selectedValue.includes(...item.color  )){
+        return item
+      }else if (props.selectedValue.includes( ...item.type )){
+        return item
+      }
+    }).map((item, i)=>{
+      return (
+        <ItemCardComponent
+        item= {item}
+        i={i}
+        />
+      )
+    }): filteredItemsPrice().map((item, i)=>{
+      return(
+        <ItemCardComponent
+        item= {item}
+        i={i}
+        />
+      )
+    })
 
 
   // console.log(filteredItems, 'filtered')
 
 
     
-    const productsdatacards =filteredItemsPrice().map((item,i) => {
-          return (
-            <ItemCard
-            item= {item}
-            i={i}
-            />
-          )                     
-        }    
-      )
+    // const productsdatacards =filteredItemsPrice().map((item,i) => {
+    //       return (
+    //         <ItemCard
+    //         item= {item}
+    //         i={i}
+    //         />
+    //       )                     
+    //     }    
+    //   )
+
+      
+
 
 
     const Finalproductcard  = () => {
-       if(isSelectedvalue){
+      if(allProducts.length == 0){
+        return (Array.from(new Array(22)).map((item ,i)=>
+        <div  style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}} className="mx-auto md:mx-5 w-full   lg:mx-8 my-4  p-1 "> 
+             <Skeleton key={i} className="bg-gray-300 " variant="rectangular" width={200} height={280} />
+        </div>
+        ))
+      }
+      else if(isSelectedvalue || isSelectedPrice){
         if(filteredItems.length > 0){
           return filteredItems
         }else{
           return <div className="text-2xl lg:text-4xl md:text-3xl left-1/2 top-1/2 md:ml-10   -translate-x-1/2 -translate-y-1/2 absolute my-3 text-center text-gray-400" >No items match the parameters set</div>
         }
       }
-        else{
-          if(productsdatacards.length > 0){
-            return productsdatacards
-          }else{
-            return <div>No items match the parameters set</div>
-          }
-  
-      }
+      //   else{
+      //     if(allProducts.length > 0){
+      //       return productCards
+      //     }else{
+      //       return (Array.from(new Array(22)).map((item ,i)=>
+      //       <div  style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}} className="mx-auto md:mx-5 w-full   lg:mx-8 my-4  p-1 "> 
+      //            <Skeleton key={i} className="bg-gray-300 " variant="rectangular" width={200} height={280} />
+      //       </div>
+      //       ))
+      //     }
+      // }
     }
 
 
-    const isSelectedvalue = props.selectedValue.length == 0?false:true
     
     return (
         <div  className="flex flex-wrap " > 
-         {productCards}
+         <Finalproductcard/>
         </div>
     )
 }
