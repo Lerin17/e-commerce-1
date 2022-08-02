@@ -14,11 +14,18 @@ import { blue, green, pink } from "@material-ui/core/colors";
 // Radio
 
 import Skeletoncomponent from "../components/skeleton";
+import { UserContext } from "../context/user";
+import { toast, ToastContainer } from "react-toastify";
+
+
+
 
 
 function CurrentCollection(props) {
 
-  const {Allproducts, setFavourite, setCartitems} = React.useContext   (UserItemsContext)
+  const { setFavourite, setCartitems,} = React.useContext   (UserItemsContext)
+
+  const {getUserNameInfo, getUserPasswordInfo, userName, userPassword, Login, userFavourite, updateUserFavourite } = React.useContext(UserContext)
 
   // console.log(props.selectedValue, 'selected')
   // console.log(props.selectedValue.includes('gold'))
@@ -26,6 +33,8 @@ function CurrentCollection(props) {
   //filter items based on items in the filter
 
   const [allProducts, setallProducts] = React.useState([]);
+  const [favProducts, setfavProducts] = React.useState([]);
+  const [favProductslocal, setfavProductslocal] = React.useState([]);
 
   console.log(allProducts.length)
 
@@ -42,53 +51,18 @@ function CurrentCollection(props) {
 
      getProducts()
   }, []);
-   
-  console.log(allProducts)
+
+  React.useEffect(() => {
+    console.log('damn')
+    setfavProducts(userFavourite)
+  }, [userFavourite]);
 
 
-  // const ItemCard =({item, i})=>{
-  //   return (
-  //     <div key={i} className="mx-auto md:mx-5  lg:mx-8 my-4  p-1 flex flex-col" style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}}> 
-  //         <Card variant="outlined" className="shadow-2 border" sx={{ maxWidth: 200, minWidth: 200 ,minHeight: 150, borderRadius: 0}}>
-  //         <Link to= {`/products/${item.ProductID}`} >
-  //         <CardMedia
-  //       sx={{
-  //           maxHeight: 300
-  //         }}
-  //       component="img"
-  //       height="80"
-  //       image= {`${item.image}`}
-  //       alt="green iguana"
-  //       />
-  //         </Link>
-  //     </Card>
-  //      <div className="flex justify-between" >
-  //       <div className="w-2/3" >
-  //         <div className="font-bold uppercase border-b-2 border-black" >
-  //             {item.name}
-  //           </div>
-  //           <div className="border-b-2 border-black" >
-  //             {item.price}
-  //           </div>
-  //       </div>
 
-  //     <div id={item.ProductID} productid = {item.ProductID}     onClick={setFavourite}  className="self-center ">
-  //      <IconButton className= {`${item.isFavourite? 'text-red-600':'text-blue-600'}`} >
-  //       <FavoriteBorderOutlined/>
-  //        </IconButton>
-  //    </div>
-        
-  //      </div>
-  //   </div>
 
-  // )
-  // }
 
-  //above works as a way to filter
 
-  // console.log(test, 'test')
-
-  console.log(props.selectedPrice)
+ 
 
 
 
@@ -102,14 +76,25 @@ function CurrentCollection(props) {
 
   //new new new new new new new new  after done clear previous build//
 
+const FavouriteBtn = (props) => {
+
+  const favIDs = userFavourite.map(item => item.productID)
 
 
+  return (
+    <IconButton onClick={()=>updateUserFavourite(props.id)} className= {`${favIDs.includes(props.id)? 'text-red-600':'text-blue-600'}`} >
+    <FavoriteBorderOutlined/>
+     </IconButton>
+  )
+}
+
+console.log(favProducts, 'favx')
 
   
   const ItemCardComponent =({item, i})=>{
     return (
       <div key={i} className="mx-auto md:mx-5  lg:mx-8 my-4  p-1 flex flex-col" style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}}> 
-          <Card variant="outlined" className="shadow-2 border rounded-lg" sx={{ maxWidth: 200, minWidth: 200 ,minHeight: 150, borderRadius: 0}}>
+          <Card variant="outlined" className="shadow-2 border-white rounded-3xl" sx={{ maxWidth: 200, minWidth: 200 ,minHeight: 150, borderRadius: 0}}>
           <Link to= {`/products/${item._id}`} >
           <CardMedia
         sx={{
@@ -133,9 +118,9 @@ function CurrentCollection(props) {
         </div>
 
       <div id={item._id} productid = {item._id}     onClick={setFavourite}  className="self-center ">
-       <IconButton className= {`${true? 'text-red-600':'text-blue-600'}`} >
-        <FavoriteBorderOutlined/>
-         </IconButton>
+        <FavouriteBtn
+        id={item._id}
+        />
      </div>
         
        </div>
@@ -199,22 +184,6 @@ function CurrentCollection(props) {
       )
     })
 
-
-  // console.log(filteredItems, 'filtered')
-
-
-    
-    // const productsdatacards =filteredItemsPrice().map((item,i) => {
-    //       return (
-    //         <ItemCard
-    //         item= {item}
-    //         i={i}
-    //         />
-    //       )                     
-    //     }    
-    //   )
-
-      
 
 
 
