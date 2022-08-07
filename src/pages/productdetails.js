@@ -52,6 +52,7 @@ const [altcolor, setaltcolor] = React.useState([]);
 const [currentcolor, setcurrentcolor] = React.useState();
 const [startingColor, setstartingColor] = React.useState();
 const [currentColorArray, setcurrentColorArray] = React.useState([]);
+const [currentHDColorArray, setcurrentHDColorArray] = React.useState([]);
 // const [allColorsArray, setallColorsArray] = React.useState();
 
 
@@ -84,6 +85,9 @@ React.useEffect(() => {
         setaltcolor(getcurrentProduct.alt)
         setcurrentcolor(...getcurrentProduct.color)
         setstartingColor(...getcurrentProduct.color)
+        setcurrentHDColorArray(
+            getcurrentProduct.imagearrayHF
+         )
         // setstartingColor()
     }
     
@@ -112,6 +116,8 @@ React.useEffect(() => {
             setcurrentColorArray(
                 getcurrentColorobj.imagearray
              )
+
+         
     
        
 
@@ -126,6 +132,8 @@ React.useEffect(() => {
     
 }, [currentcolor]);
 
+// console.log(currentHDColorArray)
+
 // console.log(currentColorArray, 'currentarray')
 
 //    const currentProduct = Allproducts.find(item => item.ProductID == productID)
@@ -137,7 +145,8 @@ React.useEffect(() => {
     setcurrentcolor(color)
  }
    
-//  console.log(currentProduct)
+ console.log(currentProduct)
+ console.log(altcolor)
 // console.log(currentProduct.isCartItem)
 const ColorBtnComponent = () => {
     if(altcolor.length == 0){
@@ -149,6 +158,8 @@ const ColorBtnComponent = () => {
     }else{
         let colors = altcolor.map(item => item.altName)
         colors = [...currentProduct.color, ...colors]
+
+        console.log(colors)
 
         // console.log(colors, 'colors')
         const rgbacolors = [
@@ -170,13 +181,15 @@ const ColorBtnComponent = () => {
             {value: 'rgba(20, 184, 166, 1)',
             name: 'teal'},
             {value: 'rgba(236, 72, 153, 1)',
-            name: 'pink'}
+            name: 'pink'},
+            {value: 'rgba(250, 204, 21, 1)',
+            name: 'yellow'}
         ]
 
         const filteredcolors = rgbacolors.filter(item => colors.includes(item.name))
 
-        console.log(currentColorArray)
-        console.log(currentcolor, 'currentcoloe')
+        // console.log(currentColorArray)
+        // console.log(currentcolor, 'currentcoloe')
           
            
     
@@ -193,15 +206,21 @@ const ColorBtnComponent = () => {
             return percentageof/divider - 15
         })
 
+
+
     //arrange in ascending order
     gradientpercentage = [...gradientpercentage].sort((a, b) => a - b)
 
+    console.log(gradientpercentage)
+    console.log(filteredcolors)
+
     // console.log(gradientpercentage)
 
-    const gradientcolors =[]
+    let gradientColorsStyle = []
 
+    //this code causing errors with graident buttons
     for (let n = 0; n < colors.length; n++) {
-        gradientcolors.push(`${filteredcolors[n].value} ${gradientpercentage[n]}%  ` )
+        gradientColorsStyle.push(`${filteredcolors[n].value} ${gradientpercentage[n]}%  ` )
      }
 
     //  console.log(filteredcolors)
@@ -214,7 +233,7 @@ const ColorBtnComponent = () => {
         <Button  onClick={()=>changecolor(item.name)} sx={{ minHeight: 0, minWidth: 0, padding: 0 }} className={`w-1/${filteredcolors.length} text-white ${item.name == currentcolor?'opacity-100':'opacity-25'} rounded font-bold`} >{item.name}</Button>
      ))
 
-        const lingradient = `linear-gradient(90deg, ${gradientcolors}`
+        const lingradient = `linear-gradient(90deg, ${gradientColorsStyle}`
         // console.log(lingradient)
 
         return (
@@ -228,7 +247,22 @@ const ColorBtnComponent = () => {
 
 }
  
+const DisplayImageComponent = (props) => {
+    return (
+        <div className="mx-auto" style={{width: 350}} >
+        <img src={props.imgsrc}
+         alt = 'JEWELRY IMG'/>
+    </div>
+    )
    
+}
+
+const MiniDisplayImageComponent = (props) => (
+    <div style={{width: 150}} >
+        <img src={props.imgsrc}
+         alt = 'JEWELRY IMG'/>
+    </div>
+)
 
 
 const ImgComponent = (props) => (
@@ -240,17 +274,17 @@ const ImgComponent = (props) => (
 
     
   let index = 0
-  const imagesarray = [1,2,3,4]
+//   const imagesarray = [1,2,3,4]
 
 const productdetailsimg = currentProduct? currentColorArray.map((item, i) => {
   return (
     <Slide key={i} className="" index={index++}>
-      <div className="mx-auto p-1" style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}}> 
-          <Card variant="outlined" className="border-none" sx={{ maxWidth: 200, minWidth: 200 ,minHeight: 150}}>
+      <div className="mx-auto p-1" style={{maxWidth: 300, minWidth: 200 ,minHeight: 150}}> 
+          <Card variant="outlined" className="border-none" sx={{ maxWidth: 300, minWidth: 200 ,minHeight: 150}}>
             <CardMedia
             sx={{
                 maxHeight: 280,
-                maxWidth: 200,
+                maxWidth: 300,
                 // backgroundColor: 'red'
             }}
             component="img"
@@ -272,10 +306,36 @@ const productdetailsimg = currentProduct? currentColorArray.map((item, i) => {
     return currentProduct? (
         <div>
             <Navbar/>
-            <div className="lg:flex-row md:flex-row flex flex-col  md:h-7/12  border-b-2 border-black  mt-16" >
-                <div className=" lg:block md:block  hidden flex flex-col lg:w-5/12 md:w-8/12 ">
-                    <div className="p-10 mx-auto  lg:w-8/12">
-                        <div className="flex" >
+            <div>
+             
+                
+            <div className="lg:flex-row md:flex-row flex flex-col  md:h-7/12  border-b-2 border-black " >
+              
+                <div className=" lg:block md:block mt-10  hidden flex flex-col lg:w-5/12 md:w-8/12 ">
+                    <div className="p-10 mx-auto border lg:w-8/12">
+                    <div className="text-6xl font-headers uppercase font-bold text-gray-300 text-center" >
+                        {currentProduct.name}!
+                  </div>
+                        <div className="mx-auto" >
+                            <DisplayImageComponent
+                            imgsrc = {currentHDColorArray[0]}
+                            />
+                        </div>
+
+                        <div className=" h-32 flex justify-between" >
+                            <MiniDisplayImageComponent
+                            imgsrc = {currentColorArray[0]}
+                            />
+
+                            <MiniDisplayImageComponent
+                            imgsrc = {currentColorArray[1]}
+                            />
+
+                            <MiniDisplayImageComponent
+                            imgsrc = {currentColorArray[2]}
+                            />
+                            </div>
+                        {/* <div className="flex" >
                             <ImgComponent
                             imgsrc = {currentColorArray[0]}
                             />
@@ -293,7 +353,7 @@ const productdetailsimg = currentProduct? currentColorArray.map((item, i) => {
                             <ImgComponent
                             imgsrc = {currentColorArray[1]}
                             />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
@@ -305,6 +365,7 @@ const productdetailsimg = currentProduct? currentColorArray.map((item, i) => {
                     naturalSlideHeight={125}
                     totalSlides={3}
                     visibleSlides={1}
+                    infinite={true}
                     currentSlide={1}
                     >
 
@@ -341,13 +402,26 @@ const productdetailsimg = currentProduct? currentColorArray.map((item, i) => {
                 <div className="lg:w-4/12 md:w-4/12 w-full lg:mx-10 md:mx-10  lg:px-0 md:px-0 flex flex-col">
                 <div className="">
                     <div>
+                        <div className="flex lg:px-0 md:px-0 px-3 justify-between" >
+                            <div className="text-4xl lg:hidden md:hidden block uppercase font-bold text-gray-300 font-headers" >
+                                    {currentProduct.name}
+                                </div>
+
+                            <div className="text-2xl lg:mt-16 md:mt-16
+                             uppercase font-headers font-bold" >
+                                £{currentProduct.price}
+                            </div>
+                            
+                        </div>
+                  
+
                     <div className="w-screen lg:w-full md:w-full bg-blue-600" >
                         BOYISH BOYISH BOYISH
                     </div>
                     <div className="px-4 lg:px-0 md:px-0" id={currentProduct.ProductID} >
-                        <div className="text-lg uppercase font-bold border-black" >
+                        {/* <div className="text-2xl uppercase font-bold border-black" >
                             {currentProduct.name}
-                        </div>
+                        </div> */}
 
                         <div className=" border-t border-black" >
                             COLOUR
@@ -378,7 +452,7 @@ const productdetailsimg = currentProduct? currentColorArray.map((item, i) => {
                 </div>
 
                      <div className="hidden lg:block md:block self-center" >
-                        {!zoomimage?  <svg className="w-48" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ><path fill="none" d="M0 0h24v24H0z"/><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15zM10 10V7h2v3h3v2h-3v3h-2v-3H7v-2h3z"/></svg>: <div>
+                        {!zoomimage?  <svg className="w-48 hover:scale-110 transition-all" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ><path fill="none" d="M0 0h24v24H0z"/><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15zM10 10V7h2v3h3v2h-3v3h-2v-3H7v-2h3z"/></svg>: <div>
                         <Imagezoom
                         imgsrc = {zoomimage}
                         />
@@ -389,6 +463,7 @@ const productdetailsimg = currentProduct? currentColorArray.map((item, i) => {
                 </div>
                
             </div> 
+            </div>
         </div>
     ): <div className="animate-pulse" >
         <Skeletoncomponent/>

@@ -3,18 +3,26 @@ import React from "react";
 
 import model1 from '../image/camp/model1x.png'
 import model2 from '../image/camp/model2xx.png'
+import model3 from '../image/camp/model4xx.png'
 
 
 
 function Camp(params) {
     return (
         <div>
-            <div className="w-full" >
-                <div className="lg:w-7/12 mx-auto" >
+            <div className="w-full " >
+                <div className="lg:w-12/12 mx-auto " >
                     <div className="text-3xl mb-2 font-bold md:pl-2" >CAMP</div>
-                    <div  className="flex ">
-                        <div className="bg-black w-1/2 flex">
-                            <Card variant="" className="shadow-2 hover:scale-105 w-full " sx={{ minWidth: 100 ,minHeight: 300}}>
+                    <div  className="flex border border-8 border-blue-600">
+
+                    <div className="bg-blue-600 lg:w-1/4 font-gothic text-5xl flex items-center justify-center" >
+                            <div className="text-yellow-400">
+                                B
+                            </div>
+                        </div>
+
+                        <div className="bg-black lg:w-1/4 w-1/2 flex">
+                            <Card variant="" className="shadow-2 hover:scale-105 transition-all w-full " sx={{ minWidth: 100 ,minHeight: 300}}>
                                     <CardMedia
                                     className="w-full"
                                 sx={{
@@ -34,7 +42,7 @@ function Camp(params) {
                             </div> */}
                         </div>
 
-                        <div className="bg-blue-600 w-1/2 text-white  px-3 py-3" >
+                        <div className="bg-blue-600 lg:w-1/4 w-1/2 text-white  px-3 py-3" >
 
                             <div className="text-3xl font-gothic">
                                  SYMBOLE!
@@ -51,14 +59,55 @@ function Camp(params) {
                             </div>
                           
                         </div> 
+
+                        <div className="bg-blue-600 lg:w-1/4 font-gothic text-7xl flex items-center justify-center" >
+                            <div>
+                                B
+                            </div>
+                        </div>
+                        
                      </div>
                  </div>
 
                  {/* 2nd card  */}
 
-                 <div  className="flex lg:w-7/12 mx-auto">
+                 <div className="flex w-12/12">
 
-                   <div className="bg-blue-600 w-1/2 text-white  px-3 py-3" >
+                 {/* <div className="bg-blue-600 lg:w-2/12  font-gothic text-8xl flex items-center justify-center " >
+                            <div className="text-yellow-500" >
+                                B
+                            </div>
+                        </div> */}
+
+
+                        <div className="bg-blue-600  hidden lg:block lg:pl-10 lg:w-2/12">
+                        <Card variant="" className="shadow-2 hover:scale-110 transition-all mx-auto" sx={{ minWidth: 100 ,minHeight: 300}}>
+                                <CardMedia
+                                className="w-full"
+                            sx={{
+                                maxHeight: 300,
+                                height: 300,
+                                width: '100%'
+                                }}
+                            component="img"
+                            height="300"
+                            image= {`${model3}`}
+                            alt="green iguana"
+                            />
+                        </Card>
+                    </div>
+
+                 <div  className="flex lg:w-8/12 mx-auto border border-8 border-blue-600">
+
+           
+
+                 <div className="bg-blue-600   hidden lg:block lg:w-1/4 font-gothic text-8xl flex items-center justify-center " >
+                            <div className="text-yellow-500" >
+                                B
+                            </div>
+                        </div>
+
+                   <div className="bg-blue-600  lg:w-1/4 w-1/2 text-white  px-3 py-3" >
                         <div className="uppercase text-3xl font-gothic" >
                         persona!
                         </div>
@@ -67,9 +116,15 @@ function Camp(params) {
                         Drawn from Prada’s heritage, in the Symbole handbag the iconic Triangle is reinvented for today into a luxurious jacquard. Geometric, modern, multi-faceted, it is a wordless assertion of Prada’s unmistakable persona. 
                         </div>
                     </div> 
+{/* 
+                    <div className="bg-white lg:w-1/4 font-gothic text-7xl flex items-center justify-center" >
+                            <div>
+                                B
+                            </div>
+                        </div> */}
 
-                    <div className="bg-black w-1/2">
-                        <Card variant="" className="shadow-2 hover:scale-110 mx-auto" sx={{ minWidth: 100 ,minHeight: 300}}>
+                    <div className="bg-black lg:w-2/4 w-1/2">
+                        <Card variant="" className="shadow-2 hover:scale-110 transition-all mx-auto" sx={{ minWidth: 100 ,minHeight: 300}}>
                                 <CardMedia
                                 className="w-full"
                             sx={{
@@ -84,8 +139,22 @@ function Camp(params) {
                             />
                         </Card>
                     </div>
+
+                    <div className="bg-blue-600 hidden lg:block lg:w-1/4 font-gothic text-7xl flex items-center justify-center" >
+                            <div>
+                                B
+                            </div>
+                        </div>
+
+                        
                  </div>
-            
+
+                 <div className="bg-blue-600 lg:w-2/12  hidden lg:block  font-gothic text-8xl flex items-center justify-center " >
+                            <div className="text-yellow-500" >
+                                B
+                            </div>
+                        </div>
+                </div>
             </div>
         </div>
     )

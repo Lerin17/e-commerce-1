@@ -4,6 +4,8 @@ module.exports = {
     fontFamily: {
   gothic: ['Uncial Antiqua'],
   draft: ['Courier Prime'],
+  headers: ['Josefin Sans'],
+  options: ['Cinzel Decorative']
     },
     extend: {
       animation: {

@@ -39,7 +39,7 @@ function Imagezoom({imgsrc}){
     return (
             <div style={{width:300}} className='' >
                 <Zoom
-                img= {imgsrc}
+                img= {'https://cdn.shopify.com/s/files/1/0603/5688/6752/products/121605-1_1_1200x.jpg?v=1634273425'}
                 zoomScale={2}
                 width={250}
                 height={300}

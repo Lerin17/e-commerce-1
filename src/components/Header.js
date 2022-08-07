@@ -1,20 +1,24 @@
-import { Button, IconButton, InputBase } from "@mui/material";
+import { Box, Button, IconButton, InputBase, Menu, MenuItem, Modal, Typography } from "@mui/material";
 import React from "react";
 import {Link} from "react-router-dom"
 
 import {makeStyles} from "@mui/styles";
-
+import { toast, ToastContainer } from "react-toastify";
 
 import {SearchRounded, HorizontalSplitIcon, ShoppingBasketRounded, ShoppingCartRounded} from "@material-ui/icons"
 import { useRef } from "react";
+import "react-toastify/dist/ReactToastify.css";
 
 
 
 import testimage from '../image/testecom.png'
+import { UserContext } from "../context/user";
 
 
 
 function Header(params) {
+
+    const {getUserNameInfo, getUserPasswordInfo, userName, userPassword, Login, notificationMessage, setnotificationMessage} = React.useContext(UserContext)
     
 
     const styling = (prop) => {
@@ -23,23 +27,44 @@ function Header(params) {
                input: !prop.isSearchbar? 'hidden bg-green-200 border border-b border-white': ' border-4 border border-white text-black bg-white' ,
                cancel: prop.isSearchbar? 'hover:bg-opacity-25 p-0 rounded-full': 'hidden hover:bg-opacity-25 p-0 rounded-full',
                menu: prop.isSearchbar? 'hidden': ' text-blue-600 self-center ',
-               navbar: prop.Navbar? 'bg-black text-white':'',
-               navbarText: prop.Navbar? 'text-white': 'text-white',
+               navbar: `${prop.Navbardark? 'bg-black text-white ':''} ${prop.isSearchbar? 'bg-black text-white':''} ${prop.isDropMenu?'bg-blue-900 text-white':''}`,
+            //    navbarText: prop.Navbardark? 'text-white': 'text-white',
+               dropmenu: prop.isDropMenu? ' block':'flex hidden'
             }
         )
         }
 
 
+        const style = {
+            position: 'absolute',
+            top: '40%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 600,
+            bgcolor: 'background.paper',
+            border: '2px solid #000',
+            boxShadow: 24,
+          };
+
+
 
     const [isSearchbar, setisSearchbar] = React.useState(false);
     const [searchinput, setsearchinput] = React.useState('');
-    const [Navbar, setNavbar] = React.useState();
+
+    //navbardark is setoff when scrolling occurs
+    const [Navbardark, setNavbardark] = React.useState();
+      //navbardark is setoff when scrolling occurs
+    const [isDropMenu, setisDropMenu] = React.useState(false);
+    const [isLoginModal, setisLoginModal] = React.useState(false);
     const [prevscrollheight, setprevscrollheight] = React.useState();
+
+
 
 
     const states = {
         isSearchbar,
-        Navbar
+        Navbardark,
+        isDropMenu
        }
 
 
@@ -49,23 +74,57 @@ function Header(params) {
     
     const textBoxRef = useRef(null)
     
+    //handle ui changes for navbar
    
    function toggleIsSearchBar() {
-
     setisSearchbar(prev => !prev)
-    console.log(textBoxRef.current)
+   }
+
+   function toggleIsLoginModal(params) {
+    setisLoginModal(prev => !prev)
+   }
+
+   function handleCloseDropMenu(params) {
+    setisDropMenu(false) 
+   }
+
+   function toggleDropMenu(event) {
+    console.log(event)  
+    setisDropMenu(true) 
+    // console.log(textBoxRef.current)
    }
 
    function handleinput(event) {
     setsearchinput(event.target.value)
    }
 
+   const ErrorNotify = () => toast.error(notificationMessage.message, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    closeButton: true
+   })
+
+   const SuccessNotify = () => toast.success(notificationMessage.message, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    closeButton: true
+   })
+    
+
    const changeBackground = () => {
 
     if (window.scrollY >= 66) {
-      setNavbar(true)
+      setNavbardark(true)
     } else {
-      setNavbar(false)
+      setNavbardark(false)
     }
   }
 
@@ -81,10 +140,30 @@ function Header(params) {
     }
    }, [isSearchbar]);
 
+   React.useEffect(() => {
+    if(notificationMessage){
+        if(notificationMessage.messageType == 'error'){
+            ErrorNotify()
+            
+        }else if(notificationMessage.messageType == 'success'){
+            SuccessNotify()
+        }
+        setnotificationMessage()
+    }
+    
+   }, [notificationMessage]);
+
+//    React.useEffect(() => {
+//     document.body.style.overflow = "hidden";
+//   }, []);
+    //handle ui changes for navbar
+
    const Name = 'BOYISH!'
 
     return (
 <div>
+    {/* {notification} */}
+    <ToastContainer/>
     <div className="lg:hidden md:hidden mb-20">
         {/* START OF NAVBAR */}
         <div className="bg-black text-white  fixed top-0  w-full z-20">
@@ -137,10 +216,11 @@ function Header(params) {
         {/* NEW COLLECTION IMAGE*/}
     </div>
 
-{/* new screen width and height settings responsive based for large and medium screen sizes*/}
+{/* start of new screen width and height settings responsive based for large and medium screen sizes*/}
 
     <div className="hidden lg:block md:block flex flex-col items-center h-screen md:h-1/2 relative md:mb-60 lg:mb-28" >
-        <div className={`flex flex-col z-20 hover:bg-black hover:text-white fixed top-0  w-full ${classes.navbar}`} >    
+{/* START OF NAVBAR */}
+        <div className={`flex flex-col z-20 fixed top-0  w-full ${classes.navbar}`} >    
            <div className={`flex  justify-around items-center  w-full `} >
                 <div className= {`${classes.menu}`} >
                    
@@ -151,7 +231,7 @@ function Header(params) {
                    </Link>
                    
                     
-                    <Button className="text-blue-600" >
+                    <Button onClick={toggleDropMenu}  className="text-blue-600" >
                     MENU</Button> 
                 </div>
 
@@ -175,23 +255,69 @@ function Header(params) {
                     <div>
                     <IconButton onClick={toggleIsSearchBar} className= {`${classes.cancel}`} > <p className="text-blue-500">X</p> </IconButton> 
                     </div>
+
+                    <div>
+                        <IconButton onClick={toggleIsLoginModal} >
+                        <i className="ri-user-5-line text-blue-600"></i>
+                        </IconButton>
+                    
+                    </div>
                 </div>
 
             </div>
 
             {/* drop menu for menu */}
-            {/* 
-            <div className="flex hidden" >
-                <div>Favorite</div>
-                <div>NECKLACES</div>
-                <div>RINGS</div>
-                <div>EARRINGS</div>
-            </div> */}
+
+            {/* <Menu
+                id="demo-customized-menu"
+                MenuListProps={{
+                'aria-labelledby': 'demo-customized-button',
+                }}
+                // anchorEl={anchorEl}
+                open={isDropMenu}
+                onClose={handleCloseDropMenu}
+            >
+                    <MenuItem disableRipple>
+                    Edit
+                    </MenuItem>
+                    <MenuItem disableRipple>
+                    Duplicate
+                    </MenuItem>
+                    <MenuItem disableRipple>
+                    Archive
+                    </MenuItem>
+                    <MenuItem disableRipple>
+                    More
+                    </MenuItem>
+      </Menu> */}
+            
+             <div className={`${classes.dropmenu} bg-blue-900 h-screen text-white text-6xl font-bold flex flex-col`} >
+                <div className="ml-20 mt-10 w-full flex flex-col items-start">
+                     <Button variant="text" className="hover:bg-transparent transition-all hover:scale-110 text-white text-6xl font-bold">
+                     we are
+                    </Button>
+                    <Button variant="text" className="hover:bg-transparent transition-all hover:scale-110 text-white text-5xl font-bold">
+                    Favorite
+                    </Button>
+                    {/* <div className="hover:bg-red-500 cursor-pointer inline bg-red-300" >Favorite</div> */}
+                    <div>cart</div>
+                    <div>collections!</div>
+                    <div>campaigns!</div>
+                    <div>contact us</div>
+                    <div>Need help</div>
+                    <div>we are</div>
+                    <div>wish list</div>
+                    <div></div>
+                </div>
+
+            </div> 
+
+
             
         </div>
-
+{/* END OF NAVBAR */}
        
-
+{/* START OF IMAGE */}
         <div>
             <div style={{
                 // transform: "translate(-50%, -50%)",
@@ -217,26 +343,82 @@ function Header(params) {
                     <div className="flex justify-between py-4 " >
                         <div>Description</div>
                         <div className="ml-8 text-end uppercase text-right" > excellent platnium </div>
-                    </div>
-
-           
-                </div> 
-                
-               
+                    </div>           
+                </div>   
             </div>
 
            
             <div className="hidden lg:block right-1/4 absolute text-3xl" ><Button variant="text" className="text-black text-2xl font-bold" >Enter the collection</Button></div>
-            {/* hide the enter the collection on lg size */}
+            {/* hide the enter the collection below on lg size */}
 
-               <div className="absolute ml-32 lg:hidden lg:top-60 lg:ml-60 lg:mt-16 z-10 text-2xl">
-                <p>Sun Seeker</p>
-                <p>a new collecting by boyish</p>
-               <Button sx={{ minHeight: 0, minWidth: 0, padding: 0 }} className="text-blue-600" variant="text"  >Enter the collection</Button>
-                </div> 
+            <div className="absolute ml-32 lg:hidden lg:top-60 lg:ml-60 lg:mt-16 z-10 text-2xl font-bold uppercase font-headers">
+            <p>Sun Seeker</p>
+            <p>a new collecting by boyish</p>
+            <Button sx={{ minHeight: 0, minWidth: 0, padding: 0 }} className="text-blue-600 font-headers"  variant="text"  >Enter the collection</Button>
+            </div> 
+            
+             {/* hide the enter the collection above on lg size */}
+
+            <Modal
+    open={isLoginModal}
+    onClose={toggleIsLoginModal}
+    aria-labelledby="modal-modal-title"
+    aria-describedby="modal-modal-description"
+>
+  <Box sx={style}>
+
+  
+
+    <div className="flex" >
+        <div style={{
+           background:'linear-gradient(61deg, rgba(238,174,202,1) 0%, rgba(162,200,203,1) 37%, rgba(170,184,226,1) 75%, rgba(148,187,233,1) 100%)'
+        }} className="text-white text-8xl p-2 font-gothic flex items-center w-6/12 flex-col" >
+            <div>
+                B
+            </div>
+            <div>
+                !
+            </div>
+
+            <Button onClick={ErrorNotify} className="capitalize cursor-pointer rounded-none bg-transparent text-black font-bold hover:text-white  rounded" >
+            sign up
+            </Button>
+
+            {/* <div   className="capitalize cursor-pointer rounded-none bg-transparent text-black font-bold hover:text-white  rounded" >
+                    sign up
+            </div> */}
+         
+        </div>
+        <div className="p-4 flex flex-col w-full" >
+            <div className="text-4xl font-bold" >Login</div>
+            <div className="m-2 flex flex-col" >
+                {/* {notification} */}
+            <div className="text-red-500 font-bold" >error message</div>
+            <label className="font-bold capitalize" >name</label>
+            <input onChange={(event)=>getUserNameInfo(event)}  value={userName} className="border-2 border-black" type="text" />
+            <div className="text-red-500 font-bold" >error message</div>
+            <label className="font-bold capitalize" >password</label>
+            <input onChange={(event)=>getUserPasswordInfo(event)} value={userPassword} className="border-2 border-black" type="text" />
+            </div>
+
+            <div className="self-end" >
+                <Button onClick={Login} className="capitalize rounded-none bg-black text-white font-bold hover:text-black hover:bg-white" >
+                    sign in
+                </Button>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+  </Box>
+</Modal>
          
         </div>    
+ {/* END OF IMAGE */}       
     </div>
+    {/* end of new screen width and height settings responsive based for large and medium screen sizes*/}
 </div>
     )
 }

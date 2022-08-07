@@ -4,11 +4,11 @@ import axios from "axios";
 import Newarrivaldata from "../image/new arrival/newarrivaldata";
 import { Routes, useLocation, useParams } from "react-router";
 import { Router, Route } from "react-router";
-import { Card, CardMedia, IconButton, Radio, RadioGroup, Skeleton } from "@mui/material";
+import { Card, CardMedia, IconButton, Radio, RadioGroup, Skeleton, ThemeProvider} from "@mui/material";
 import { FavoriteBorderOutlined, ReplyTwoTone } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import { Slider } from "@material-ui/core";
+import { createTheme, Slider } from "@material-ui/core";
 import { UserItemsContext } from "../context/Items";
 import { blue, green, pink } from "@material-ui/core/colors";
 // Radio
@@ -16,6 +16,9 @@ import { blue, green, pink } from "@material-ui/core/colors";
 import Skeletoncomponent from "../components/skeleton";
 import { UserContext } from "../context/user";
 import { toast, ToastContainer } from "react-toastify";
+import { grey } from "@mui/material/colors";
+import { withStyles } from "@mui/styles";
+
 
 
 
@@ -35,6 +38,16 @@ function CurrentCollection(props) {
   const [allProducts, setallProducts] = React.useState([]);
   const [favProducts, setfavProducts] = React.useState([]);
   const [favProductslocal, setfavProductslocal] = React.useState([]);
+  const [windowWidth, setwindowWidth] = React.useState();
+  // windowWidth
+
+  const [imageWidth, setimageWidth] = React.useState(600);
+
+  // const getMidImageWidth = () => {
+  //   setimageWidth(300)
+  // }
+
+
 
   console.log(allProducts.length)
 
@@ -59,7 +72,28 @@ function CurrentCollection(props) {
 
 
 
+  const getMidImageWidth = () => {
+    
+   if(windowWidth > 900){
+    return 400
+   }else{
+    return 600
+   }
+  }
 
+
+  window.addEventListener('resize',
+  ()=> setwindowWidth(window.innerWidth)
+  )
+  // console.log(windowWidth)
+ 
+ 
+
+  React.useEffect(() => {
+    setwindowWidth(window.innerWidth)
+    setimageWidth(getMidImageWidth())
+  }, [windowWidth]);
+ 
 
 
  
@@ -82,7 +116,7 @@ const FavouriteBtn = (props) => {
 
 
   return (
-    <IconButton onClick={()=>updateUserFavourite(props.id)} className= {`${favIDs.includes(props.id)? 'text-red-600':'text-blue-600'}`} >
+    <IconButton onClick={()=>updateUserFavourite(props.id)} className= {`${favIDs.includes(props.id)? 'text-red-600':'text-black'}`} >
     <FavoriteBorderOutlined/>
      </IconButton>
   )
@@ -93,35 +127,38 @@ console.log(favProducts, 'favx')
   
   const ItemCardComponent =({item, i})=>{
     return (
-      <div key={i} className="mx-auto md:mx-5  lg:mx-8 my-4  p-1 flex flex-col" style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}}> 
-          <Card variant="outlined" className="shadow-2 border-white rounded-3xl" sx={{ maxWidth: 200, minWidth: 200 ,minHeight: 150, borderRadius: 0}}>
+      <div key={i} className={`mx-auto mx-2  my-4 lg:mx-10  p-1 flex flex-col`}style={{maxWidth: imageWidth ,maxHeight: 550}}> 
+          <Card variant="outlined" className="shadow-2 border-white" sx={{ maxWidth: imageWidth ,minHeight: 150, borderRadius: 0}}>
           <Link to= {`/products/${item._id}`} >
           <CardMedia
         sx={{
-            maxHeight: 300
+            maxHeight: 500,
+            width: imageWidth,
+            objectFit: 'fill'
           }}
         component="img"
         height="80"
-        image= {`${item.image}`}
+        image= {`${item.imagearray[1]}`}
         alt="images images"
         />
           </Link>
       </Card>
        <div className="flex justify-between" >
-        <div className="w-2/3" >
-          <div className="font-bold uppercase border-b-2 border-black" >
+        <div className="w-full border-r-4 border-b-4 lg:border-b-2 lg:border-r-2  border-gray-500" >
+          <div className="font-bold uppercase border-4 border-gray-300  font-headers flex pt-1 text-lg bg-blue-600 hover:bg-black transition-all text-white items-center px-2" >
               {item.name}
+
+              <div id={item._id} productid = {item._id}     onClick={setFavourite}  className="self-center ">
+              <FavouriteBtn
+              id={item._id}/>
             </div>
-            <div className="border-b-2 border-black" >
-              {item.price}
+            </div>
+            <div className="bg-gray-300 border-black text-gray-600 font-headers px-2 " >
+              £{item.price}
             </div>
         </div>
 
-      <div id={item._id} productid = {item._id}     onClick={setFavourite}  className="self-center ">
-        <FavouriteBtn
-        id={item._id}
-        />
-     </div>
+     
         
        </div>
     </div>
@@ -190,7 +227,7 @@ console.log(favProducts, 'favx')
     const Finalproductcard  = () => {
       if(allProducts.length == 0){
         return (Array.from(new Array(22)).map((item ,i)=>
-        <div  style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}} className="mx-auto md:mx-5 w-full   lg:mx-8 my-4  p-1 "> 
+        <div  style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}} className="mx-auto md:mx-5 w-full   lg:mx-10 my-4  p-1 "> 
              <Skeleton key={i} className="bg-gray-300 " variant="rectangular" width={200} height={280} />
         </div>
         ))
@@ -218,7 +255,7 @@ console.log(favProducts, 'favx')
 
     
     return (
-        <div  className="flex flex-wrap " > 
+        <div  className="flex flex-col w-10/12 mx-auto lg:flex-row lg:flex-wrap lg:justify-center" > 
          <Finalproductcard/>
         </div>
     )
@@ -243,6 +280,49 @@ function Allitems(params) {
   
   };
 
+  const CustomSlider = withStyles({
+    root: {
+        color: "#6f8eff",
+        height: 3,
+        padding: "13px 0",
+    },
+    track: {
+        height: 2,
+        borderRadius: 2,
+        color: "gray",
+      
+    },
+    thumb: {
+        height: 20,
+        width: 20,
+        backgroundColor: "#fff",
+        border: "1px solid black",
+        marginTop: -9,
+        marginLeft: -11,
+        // boxShadow: "#ebebeb 0 2px 2px",
+        // "&:focus, &:hover, &$active": {
+        //     boxShadow: "#ccc 0 2px 3px 1px",
+        // },
+        color: "gray",
+    },
+})(Slider)
+
+  // const muiTheme = createTheme({
+  //   overrides: {
+  //     MuiSlider: {
+  //       thumb:{
+  //         color: "yellow",
+  //         },
+  //         track: {
+  //           color: 'red'
+  //         },
+  //         rail: {
+  //           color: 'black'
+  //         }
+  //     }
+  //   }
+  // })
+
 
   const handlePriceChange = (event, value) => {
     setselectedPrice(value)
@@ -251,7 +331,7 @@ function Allitems(params) {
 
   const RadioButton = ({radiovalue}) => {
     return (
-      <div className="flex items-center text-xs" >           
+      <div className="flex items-center border  border-white text-xs" >           
       <Radio 
         checked={selectedValue.includes(radiovalue)}
         onClick={handleChange}
@@ -261,13 +341,15 @@ function Allitems(params) {
         label = {radiovalue}
         size="small"
         sx={{
-          color: blue[600],
+          color: "gray",
           '&.Mui-checked': {
-            color: pink[600],
+            color: pink[400],
           },
         }}
       />
-            <div className="uppercase" >{radiovalue}</div>
+            <div style={{
+              webkitTextStroke : '1px gray'
+            }} className="capitalize text-gray-400 hover:text-black cursor-pointer transition-all font-bold  font-options  text-3xl" >{radiovalue}</div>
     </div>
     )
   }
@@ -276,16 +358,21 @@ function Allitems(params) {
    return (
     <div  >
       <Navbar/>
-      <div className="mt-12 flex px-4 lg:px-12" >
+      <div className="mt-12 flex pr-4 lg:pr-12 " >
 
                 {/* sidebar section */}
         <div  style={{
-                maxWidth: 200,
-                }} className="w-4/12 border-l border-gray-300 px-4   lg:block md:block hidden relative z-10 ">
+                maxWidth: 300,
+                // background: 'linear-gradient(to top, rgb(243, 244, 246), rgb(209, 213, 219))'
+                }} className="w-5/12  
+                lg:block hidden relative z-10 ">
                 <div className=" w-36 fixed  h-screen ">
-                    <div className="border-b border-gray-700 py-4" >
-                      <div>Price Range</div>
-                      <Slider 
+                    <div className="bg-white py-4 px-4 " style={{
+                      width: 300
+                    }}>
+                      <div className="text-white bg-gradient-to-l from-white via-blue-300 to-blue-500 font-headers uppercase font-bold  px-2 text-lg rounded" >Price Range</div>
+                      <div className="px-6" >
+                      <CustomSlider
                       // defaultValue={50} 
                       value={selectedPrice}
                       aria-label="Default" 
@@ -298,11 +385,24 @@ function Allitems(params) {
                       // value={[10, 80]}
                        onChange={handlePriceChange}
                       />
+                      </div>
+                   
                     </div>
 
-                    <div className="border-b-2 border-gray-700 py-4 " >
-                    <div  >Type</div>
+                    {/* <div className="border-b-4  border-white bg-black pb-1 border-t-4" style={{
+                      width: 300
+                    }}>
 
+                    </div> */}
+
+                    <div className="  border-gray-700  " >
+
+                    
+                    <div className="py-4 px-4 " style={{
+                      width: 300
+                    }}>
+                    <div className="px-2 bg-gradient-to-l from-white via-blue-300 to-blue-500 font-headers text-white uppercase font-bold text-lg  px-2 rounded" >Type</div>
+                    
                       <RadioButton
                         radiovalue={'gold'}
                         />
@@ -319,12 +419,19 @@ function Allitems(params) {
                         radiovalue={'emerald'}
                         />
                     
-                    
+                    </div>
                     </div>
 
-                    
-                    <div className="border-b-4 border-gray-700 py-4" >
-                    <div  >Color</div>
+                    {/* <div className="border-b-4 pb-1 border-white bg-black pb-1 border-t-4" style={{
+                      width: 300
+                    }}>
+
+                    </div> */}
+
+                    <div className="  px-4 py-4 " style={{
+                      width: 300
+                    }} >
+                    <div className="font-headers bg-gradient-to-l from-white via-blue-300 to-blue-500 text-lg text-white  rounded px-2 uppercase font-bold" >Color</div>
                     <RadioButton
                         radiovalue={'blue'}
                         />
@@ -351,22 +458,28 @@ function Allitems(params) {
                         radiovalue={'indigo'}
                         />
                     </div>
+
+                    {/* <div style={{
+                      width: 300
+                    }} className="border-y-4  bg-red-400 border-white pb-1" >
+
+                    </div> */}
                 </div>
           </div>
 
              {/* main section */}
 
-        <div className="w-8/12 flex flex-col items-center mx-auto bg-gray-100" >
+        <div className="w-10/12 flex flex-col items-center mx-auto bg-white" >
             {/* <div className="flex w-full justify-between  " >
                 <div className="cursor-pointer" onClick={()=>setcategory('earring')} >Earrings</div>
                 <div>Necklace</div>
                 <div>Rubies</div>
             </div> */}
             
-            <div className="w-full" style={{
-              maxWidth: 800
+            <div className="w-full " style={{
+              maxWidth: 1200
             }}  >
-              <div className="mx-auto lg:mx-0 md:mx-0" >
+              <div className=" lg:mx-0 md:mx-0 " >
                 <CurrentCollection
                   category = {category}
                   selectedValue = {selectedValue}

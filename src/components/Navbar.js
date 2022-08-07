@@ -84,10 +84,12 @@ function Navbar(params) {
    const Name = 'BOYISH!'
     return(
         <div>
-          <div className=" text-black bg-gray-300  fixed top-0  w-full z-20">
+          <div className=" text-black bg-white border-b fixed top-0  w-full z-20">
           <div className="flex justify-around mx-3 items-center" >   
           <div className= {`${classes.menu}`} >MENU</div>
-          <div className={`text-2xl font-gothic my-2 `} >{Name}©</div>
+          <div style={{
+            webkitTextStroke : '1px gray'
+          }} className={`text-2xl font-gothic my-2 text-white`} >{Name}©</div>
 
           <div className= {`${classes.input}`}>
           <input
