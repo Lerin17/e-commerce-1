@@ -86,7 +86,7 @@ function Newarrivalcarousel(params) {
   const [visibleItems, setvisibleItems] = React.useState();
   const totalSlides =  SortItems().length
   
-  const visibleSlides = () => {
+  const getVisibleSlides = () => {
     
     if(windowWidth <= 400 ){
       return 1
@@ -107,7 +107,7 @@ function Newarrivalcarousel(params) {
 
   React.useEffect(() => {
     setwindowWidth(window.innerWidth)
-    setvisibleItems(visibleSlides())
+    setvisibleItems(getVisibleSlides())
   }, [windowWidth]);
  
  
@@ -125,6 +125,7 @@ function Newarrivalcarousel(params) {
               naturalSlideHeight={125}
               totalSlides={totalSlides}
               visibleSlides={visibleItems}
+              infinite={true}
               currentSlide={1}
             >
 
@@ -132,9 +133,9 @@ function Newarrivalcarousel(params) {
             <div className="flex justify-between" >
            
                 <div className="self-center" ><ButtonBack className="w-10">
-                    <IconButton className="hover:bg-transparent">
+                    {/* <IconButton className="hover:bg-transparent"> */}
                     <i class="ri-arrow-left-circle-fill"></i>
-                    </IconButton>
+                    {/* </IconButton> */}
                   </ButtonBack></div>
                   <Slider style={{
                     height: '350px'
@@ -142,9 +143,9 @@ function Newarrivalcarousel(params) {
                     {<SortItems/>}      
                   </Slider>
                 <div className="self-center"><ButtonNext className="">
-                    <IconButton className="hover:bg-transparent" >
+                    {/* <IconButton className="hover:bg-transparent" > */}
                     <i class="ri-arrow-right-circle-fill"></i>
-                    </IconButton>
+                    {/* </IconButton> */}
                   </ButtonNext></div>
                 
               </div>   
