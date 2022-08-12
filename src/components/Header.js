@@ -2,7 +2,7 @@ import { Box, Button, IconButton, InputBase, Menu, MenuItem, Modal, Typography }
 import React from "react";
 import {Link} from "react-router-dom"
 
-import {makeStyles} from "@mui/styles";
+import {makeStyles, propsToClassKey} from "@mui/styles";
 import { toast, ToastContainer } from "react-toastify";
 
 import {SearchRounded, HorizontalSplitIcon, ShoppingBasketRounded, ShoppingCartRounded} from "@material-ui/icons"
@@ -13,13 +13,19 @@ import "react-toastify/dist/ReactToastify.css";
 
 import testimage from '../image/testecom.png'
 import { UserContext } from "../context/user";
+import HeaderMenu from "./HeaderMenu";
 
 
 
 function Header(params) {
 
     const {getUserNameInfo, getUserPasswordInfo, userName, userPassword, Login, notificationMessage, setnotificationMessage} = React.useContext(UserContext)
+
+    const [hiddenStyle, sethiddenStyle] = React.useState("");
     
+//    const gethidden=() => (
+//     'hidden'
+//    )
 
     const styling = (prop) => {
         return (
@@ -29,10 +35,15 @@ function Header(params) {
                menu: prop.isSearchbar? 'hidden': ' text-blue-600 self-center ',
                navbar: `${prop.Navbardark? 'bg-black text-white ':''} ${prop.isSearchbar? 'bg-black text-white':''} ${prop.isDropMenu?'bg-blue-900 text-white':''}`,
             //    navbarText: prop.Navbardark? 'text-white': 'text-white',
-               dropmenu: prop.isDropMenu? ' block':'flex hidden'
+               dropmenu: prop.isDropMenu? ' animate-slideDown':`hidden animate-slideUp `,
+               userIcon: prop.isSearchbar?'hidden':''
             }
         )
         }
+
+
+        //menu components
+  
 
 
         const style = {
@@ -59,6 +70,14 @@ function Header(params) {
     const [prevscrollheight, setprevscrollheight] = React.useState();
 
 
+    React.useEffect(() => {
+        if(!isDropMenu){
+            setTimeout(() => {
+                sethiddenStyle('hidden')
+               }, 200)
+        }
+       
+    }, [isDropMenu]);
 
 
     const states = {
@@ -68,7 +87,7 @@ function Header(params) {
        }
 
 
-   
+    //    console.log(styling(states).dropmenu)
 
     const classes = styling(states)
     
@@ -90,7 +109,7 @@ function Header(params) {
 
    function toggleDropMenu(event) {
     console.log(event)  
-    setisDropMenu(true) 
+    setisDropMenu(prev => !prev) 
     // console.log(textBoxRef.current)
    }
 
@@ -174,7 +193,10 @@ function Header(params) {
                         <ShoppingCartRounded/>
                         </IconButton>
                     </Link>
-                    MENU
+                    <span>
+                         MENU
+                    </span>
+                    
                 </div>
 
                 <div className={`text-4xl font-gothic my-2 `} >{Name}©
@@ -231,7 +253,7 @@ function Header(params) {
                    </Link>
                    
                     
-                    <Button onClick={toggleDropMenu}  className="text-blue-600" >
+                    <Button onClick={toggleDropMenu}  className="text-blue-600 font-headers" >
                     MENU</Button> 
                 </div>
 
@@ -257,7 +279,7 @@ function Header(params) {
                     </div>
 
                     <div>
-                        <IconButton onClick={toggleIsLoginModal} >
+                        <IconButton className={`${classes.userIcon}`} onClick={toggleIsLoginModal} >
                         <i className="ri-user-5-line text-blue-600"></i>
                         </IconButton>
                     
@@ -290,27 +312,10 @@ function Header(params) {
                     More
                     </MenuItem>
       </Menu> */}
-            
-             <div className={`${classes.dropmenu} bg-blue-900 h-screen text-white text-6xl font-bold flex flex-col`} >
-                <div className="ml-20 mt-10 w-full flex flex-col items-start">
-                     <Button variant="text" className="hover:bg-transparent transition-all hover:scale-110 text-white text-6xl font-bold">
-                     we are
-                    </Button>
-                    <Button variant="text" className="hover:bg-transparent transition-all hover:scale-110 text-white text-5xl font-bold">
-                    Favorite
-                    </Button>
-                    {/* <div className="hover:bg-red-500 cursor-pointer inline bg-red-300" >Favorite</div> */}
-                    <div>cart</div>
-                    <div>collections!</div>
-                    <div>campaigns!</div>
-                    <div>contact us</div>
-                    <div>Need help</div>
-                    <div>we are</div>
-                    <div>wish list</div>
-                    <div></div>
-                </div>
+            <HeaderMenu
+            open={classes.dropmenu}
+            />
 
-            </div> 
 
 
             
@@ -329,7 +334,7 @@ function Header(params) {
                <img src={testimage} alt="" /> 
                 </div>  
                  
-                <div className="text-lg pt-32 hidden font-draft  lg:block w-3/5" >
+                <div className="text-lg pt-32 hidden font-headers2 font-extralight  lg:block w-3/5" >
                     <div className="flex justify-between py-4  border-b border-gray-400 border-dotted" >
                         <div>Name</div>
                         <div>SUN SEEKER</div>
@@ -340,15 +345,15 @@ function Header(params) {
                         <div>PI'ERRE</div>
                     </div>
 
-                    <div className="flex justify-between py-4 " >
+                    <div className="flex justify-between  py-4 " >
                         <div>Description</div>
-                        <div className="ml-8 text-end uppercase text-right" > excellent platnium </div>
+                        <div className="ml-8 text-end text-sm uppercase text-right" > excellent platnium  and heritage diamonds, holographic rim diamonds and silver bracelet</div>
                     </div>           
                 </div>   
             </div>
 
            
-            <div className="hidden lg:block right-1/4 absolute text-3xl" ><Button variant="text" className="text-black text-2xl font-bold" >Enter the collection</Button></div>
+            <div className="hidden lg:block right-1/4 absolute text-3xl" ><Button variant="text" className="text-black text-2xl font-bold font-headers" >Enter the collection</Button></div>
             {/* hide the enter the collection below on lg size */}
 
             <div className="absolute ml-32 lg:hidden lg:top-60 lg:ml-60 lg:mt-16 z-10 text-2xl font-bold uppercase font-headers">

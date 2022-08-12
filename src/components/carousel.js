@@ -12,7 +12,7 @@ import { Button, Card, CardActions, CardContent, CardMedia, IconButton, Typograp
 // import new1 from '../image/new arrival/new1.png'
 
 import { Link } from "react-router-dom";
-
+import axios from 'axios'
 import Newarrivaldata from "../image/new arrival/newarrivaldata";
 // import newArrivalpage from  '../pages/newArrivalpage'
 import { ArrowLeftRounded, FavoriteBorderOutlined } from "@material-ui/icons";
@@ -20,67 +20,92 @@ import { UserItemsContext } from "../context/Items";
 
 
 
-function SortItems(params) {
-  const {Allproducts, setFavourite} = React.useContext(UserItemsContext)
-  // const [SortedItems, setSortedItems] = React.useState([]);
-
-let index = 0
-
-// console.log(Allproducts)
-
-const newArrivalDisplay = Allproducts.filter(item => item.isNewArrival == true).map((item, i) => (
-<Slide key={i} className="" index={index++}>
-        <div id={item.ProductID} productid= {item.ProductID} className="mx-auto p-1 flex flex-col" style={{maxWidth: 200, minWidth: 200 }}> 
-            <Card variant="outlined" className="shadow-2 border-none" sx={{ maxWidth: 200, minWidth: 200 , borderRadius: 0}}>
-            <Link to= {`/products/${item.ProductID}`} >
-            <CardMedia
-          sx={{
-              maxHeight: 300,
-              // backgroundColor: 'red'
-            
-            }}
-          component="img"
-          // height="80"
-          image= {`${item.image}`}
-          alt="green iguana"
-          />
-            </Link>
-    
-        </Card>
-         <div className="flex justify-between" >
-          <div className="w-2/3" >
-            <div className="font-bold uppercase border-b-2 border-black" >
-                {item.name}
-              </div>
-              <div className="border-b-2 border-black" >
-                {item.price}
-              </div>
-          </div>
-  
-          <div id={item.ProductID} productid = {item.ProductID} onClick={setFavourite}  className="self-center ">
-            <IconButton className= {`${item.isFavourite? 'text-red-600':'text-blue-600'}`} >
-              <FavoriteBorderOutlined/>
-            </IconButton>
-          </div>
-          
-         </div>
-      </div>
-  </Slide>
-))
-
-
-
-
-return (
- newArrivalDisplay
-)
-}
 
 
 // console.log(arrivaldatacards)
 
 
 function Newarrivalcarousel(params) {
+
+  const {Allproducts, setFavourite} = React.useContext(UserItemsContext)
+  const [productsData, setproductsData] = React.useState();
+
+  React.useEffect(() => {
+    const getProductData = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/products')
+        const newArrivalproducts = res.data.filter(item => item.isNewArrival)
+        setproductsData(newArrivalproducts)   
+        } catch (error) {
+          console.log(error) 
+        }
+    }
+
+    getProductData()
+  
+  }, []);
+
+  console.log(productsData)
+
+  function SortItems(params) {
+ 
+    // const [SortedItems, setSortedItems] = React.useState([]);
+  
+  let index = 0
+  
+  // console.log(Allproducts)
+  
+  const newArrivalDisplay = productsData? productsData.filter(item => item.isNewArrival == true).map((item, i) => (
+  <Slide key={i} className="" index={index++}>
+          <div id={item.ProductID} productid= {item.ProductID} className="mx-auto  p-1 flex flex-col mt-1" style={{maxWidth: 400, minWidth: 200, maxHeight: 300 }}> 
+              <Card variant="outlined" className=" border-none " sx={{ maxWidth: 400, minWidth: 200 , borderRadius: 0}}>
+              <Link to= {`/products/${item.ProductID}`} >
+              <CardMedia
+            sx={{
+                maxHeight: 300,
+                maxWidth: 400
+                // backgroundColor: 'red'
+              
+              }}
+            component="img"
+            // height="80"
+            image= {`${item.image}`}
+            alt="green iguana"
+            />
+              </Link>
+      
+          </Card>
+           {/* <div className="flex justify-between" >
+            <div className="w-2/3" >
+              <div className="font-bold uppercase border-b-2 border-black" >
+                  {item.name}
+                </div>
+                <div className="border-b-2 border-black" >
+                  {item.price}
+                </div>
+            </div>
+    
+            <div id={item.ProductID} productid = {item.ProductID} onClick={setFavourite}  className="self-center ">
+              <IconButton className= {`${item.isFavourite? 'text-red-600':'text-blue-600'}`} >
+                <FavoriteBorderOutlined/>
+              </IconButton>
+            </div>
+            
+           </div> */}
+        </div>
+    </Slide>
+  )): <div>
+    items not available
+  </div>
+  
+  
+  
+  
+  return (
+   newArrivalDisplay
+  )
+  }
+  
  
   const [windowWidth, setwindowWidth] = React.useState();
   const [visibleItems, setvisibleItems] = React.useState();
@@ -114,15 +139,15 @@ function Newarrivalcarousel(params) {
  
 
   return (
-    <div className=" lg:w-3/5 lg:mx-auto mx-8 ">
+    <div className=" lg:w-3/5 lg:mx-auto mx-8 mt-20">
 
-   <Link to= "/newarrival" ><Button className="text-blue-600 text-2xl font-bold" variant="text" >NEW ARRIVALS</Button></Link>   
+   <Link to= "/newarrival" ><Button className="text-blue-600 text-2xl font-bold font-headers" variant="text" >NEW ARRIVALS</Button></Link>   
     <div className=" relative h-full" >
       
-        <div className="mx-auto  ">
-            <CarouselProvider
+       <div className="mx-auto  bg-gradient-to-l from-white via-blue-300 to-white">
+        {productsData? <CarouselProvider
               naturalSlideWidth={100}
-              naturalSlideHeight={125}
+              naturalSlideHeight={100}
               totalSlides={totalSlides}
               visibleSlides={visibleItems}
               infinite={true}
@@ -138,7 +163,7 @@ function Newarrivalcarousel(params) {
                     {/* </IconButton> */}
                   </ButtonBack></div>
                   <Slider style={{
-                    height: '350px'
+                    height: '300px'
                   }} className=" mx-auto w-full">    
                     {<SortItems/>}      
                   </Slider>
@@ -152,7 +177,11 @@ function Newarrivalcarousel(params) {
               
    
           </div>     
-            </CarouselProvider>
+            </CarouselProvider>:
+            <div>
+              Loading.....
+              </div>}
+            
         </div>       
     </div>
 </div>

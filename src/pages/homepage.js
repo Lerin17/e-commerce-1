@@ -5,12 +5,15 @@ import Newarrival from "../components/Newarrival";
 import Camp from "../components/Camp";
 import CTA from "../components/CTA";
 import Services from "../components/services";
+import PreviousCollection from "../components/PreviousCollections";
+
 
 
 function Homepage(params) {
     return (
         <div>
            <Header/>
+           <PreviousCollection/>
            <Newarrival/>
            <Camp/>
            <CTA/>

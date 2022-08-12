@@ -348,8 +348,8 @@ function Allitems(params) {
         }}
       />
             <div style={{
-              webkitTextStroke : '1px gray'
-            }} className="capitalize text-gray-400 hover:text-black cursor-pointer transition-all font-bold  font-options  text-3xl" >{radiovalue}</div>
+              webkitTextStroke : '1px dimgray'
+            }} className="capitalize text-transparent hover:text-black cursor-pointer transition-all font-bold  font-headers2  text-3xl" >{radiovalue}</div>
     </div>
     )
   }
@@ -370,7 +370,7 @@ function Allitems(params) {
                     <div className="bg-white py-4 px-4 " style={{
                       width: 300
                     }}>
-                      <div className="text-white bg-gradient-to-l from-white via-blue-300 to-blue-500 font-headers uppercase font-bold  px-2 text-lg rounded" >Price Range</div>
+                      <div className="text-whitebg-gradient-to-l from-blue-900 via-blue-700 to-blue-900 font-headers uppercase font-bold  px-2 text-lg rounded" >Price Range</div>
                       <div className="px-6" >
                       <CustomSlider
                       // defaultValue={50} 
@@ -401,7 +401,7 @@ function Allitems(params) {
                     <div className="py-4 px-4 " style={{
                       width: 300
                     }}>
-                    <div className="px-2 bg-gradient-to-l from-white via-blue-300 to-blue-500 font-headers text-white uppercase font-bold text-lg  px-2 rounded" >Type</div>
+                    <div className="font-headers2 bg-gradient-to-l from-white via-gray-400 to-white text-md text-gray-600 flex   rounded px-4 uppercase " >Type</div>
                     
                       <RadioButton
                         radiovalue={'gold'}
@@ -431,7 +431,7 @@ function Allitems(params) {
                     <div className="  px-4 py-4 " style={{
                       width: 300
                     }} >
-                    <div className="font-headers bg-gradient-to-l from-white via-blue-300 to-blue-500 text-lg text-white  rounded px-2 uppercase font-bold" >Color</div>
+                    <div className="font-headers2 bg-gradient-to-l from-white via-gray-400 to-white text-md text-gray-600 flex   rounded px-4 uppercase " >Color</div>
                     <RadioButton
                         radiovalue={'blue'}
                         />
