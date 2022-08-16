@@ -385,7 +385,7 @@ function Header(params) {
                 !
             </div>
 
-            <Button onClick={ErrorNotify} className="capitalize cursor-pointer rounded-none bg-transparent text-black font-bold hover:text-white  rounded" >
+            <Button className="capitalize cursor-pointer rounded-none bg-transparent text-black font-bold hover:text-white  rounded" >
             sign up
             </Button>
 
@@ -418,7 +418,7 @@ function Header(params) {
 
 
   </Box>
-</Modal>
+        </Modal>
          
         </div>    
  {/* END OF IMAGE */}       

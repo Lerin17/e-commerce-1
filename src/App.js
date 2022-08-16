@@ -64,12 +64,12 @@ const classes = usestyle()
       
       <Route exact path="/" element ={<Homepage />} />
       <Route exact path = '/newarrival' element = {<NewArrivalpage/>} />
-      <Route path='products/:productID' element = {<Productdetailspage/>}/>
+      <Route path='/products/:productID' element = {<Productdetailspage/>}/>
       <Route exact path='/collection/:category' element = { <Allitems/>}/>
       <Route exact path='/checkout' element ={<Checkout/>}/>
    </Routes>
    {/* <div><Link to = '/newarrival' >new arr</Link></div> */}
-   {displayfooter && <Footer/>}
+   {/* {displayfooter && <Footer/>} */}
    </div>
    ) 
   
