@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { UserItemsContext } from "../context/Items";
 // import Newarrivaldata from "../image/new arrival/newarrivaldata";
 // import Newarrivaldata from "../image/new arrival/newarrivaldata";
+// import Navbar from "../components/Navbar";
 import Navbar from "../components/Navbar";
 import { Button, Card, CardMedia } from "@mui/material";
 import axios from 'axios'
@@ -20,6 +21,7 @@ import {
   } from "pure-react-carousel";
   import "pure-react-carousel/dist/react-carousel.es.css";
 import { IconButton } from "@material-ui/core";
+
 
 
 
@@ -55,10 +57,40 @@ const [currentColorArray, setcurrentColorArray] = React.useState([]);
 const [currentHDColorArray, setcurrentHDColorArray] = React.useState([]);
 // const [allColorsArray, setallColorsArray] = React.useState();
 
+const [windowWidth, setwindowWidth] = React.useState();
+const [windowScrollHeight, setwindowScrollHeight] = React.useState();
+// windowWidth
+
+const [imageWidth, setimageWidth] = React.useState(600);
+
+//boolean deciding when product details should animate into block
+const [isProductInformation, setisProductInformation] = React.useState(false);
+//boolean deciding when product details should animate into block END
+
 
 const getZoomImage = (imagesrc) => {
     setzoomimage(imagesrc)
 }
+
+
+//handle animation on scroll START
+// setInterval(() => {
+//     console.log(window.pageYOffset)
+// }, 1000);
+
+window.addEventListener('scroll', ()=>{
+    setwindowScrollHeight(window.pageYOffset)
+})
+
+React.useEffect(() => {
+    if(windowScrollHeight > 200){
+        setisProductInformation(true)
+    }else{
+        setisProductInformation(false)
+    }
+}, [windowScrollHeight]);
+
+//handle animation on scroll END
 
 // const clearZoomimage  = () =>{
 //     setzoomimage('')
@@ -132,6 +164,28 @@ React.useEffect(() => {
     
 }, [currentcolor]);
 
+
+const getMidImageWidth = () => {
+    
+    if(windowWidth > 640){
+     return 600
+    }else{
+     return 300
+    }
+   }
+ 
+ 
+   window.addEventListener('resize',
+   ()=> setwindowWidth(window.innerWidth)
+   )
+   // console.log(windowWidth)
+  
+  
+ 
+   React.useEffect(() => {
+     setwindowWidth(window.innerWidth)
+     setimageWidth(getMidImageWidth())
+   }, [windowWidth]);
 // console.log(currentHDColorArray)
 
 // console.log(currentColorArray, 'currentarray')
@@ -279,16 +333,16 @@ const ImgComponent = (props) => (
 const productdetailsimg = currentProduct? currentColorArray.map((item, i) => {
   return (
     <Slide key={i} className="" index={index++}>
-      <div className="mx-auto p-1" style={{maxWidth: 300, minWidth: 200 ,minHeight: 150}}> 
-          <Card variant="outlined" className="border-none" sx={{ maxWidth: 300, minWidth: 200 ,minHeight: 150}}>
+      <div className="mx-auto p-1" style={{maxWidth: imageWidth ,maxHeight: imageWidth}}> 
+          <Card variant="outlined" className="border-none" sx={{ maxWidth: imageWidth ,maxHeight: imageWidth}}>
             <CardMedia
             sx={{
-                maxHeight: 280,
-                maxWidth: 300,
+                maxHeight: imageWidth,
+                maxWidth: imageWidth,
                 // backgroundColor: 'red'
             }}
             component="img"
-            height="80"
+            height="300"
             image= {item}
             alt="green iguana"
             />     
@@ -301,17 +355,19 @@ const productdetailsimg = currentProduct? currentColorArray.map((item, i) => {
    const classesx = style()
 
 //    console.log(productdetailsimg, 'details')
-
+console.log(<Navbar/>)
  
     return currentProduct? (
         <div>
-            <Navbar/>
+          <Navbar/>
             <div>
              
-                
-            <div className="lg:flex-row md:flex-row flex flex-col  md:h-7/12  border-b-2 border-black " >
+            {/* <Navbar/> */}
+            <div style={{
+                height:1000
+            }} className="lg:flex-row  flex flex-col   border-b-2 border-black " >
               
-                <div className=" lg:block md:block mt-10  hidden flex flex-col lg:w-5/12 md:w-8/12 ">
+                <div className=" lg:block  mt-10  hidden flex flex-col lg:w-5/12 md:w-8/12 ">
                     <div className="p-10 mx-auto border lg:w-8/12">
                     <div className="text-6xl font-headers uppercase font-bold text-gray-300 text-center" >
                         {currentProduct.name}!
@@ -358,34 +414,34 @@ const productdetailsimg = currentProduct? currentColorArray.map((item, i) => {
                 </div>
 
      {/* small size below */}
-                <div className=" lg:hidden md:hidden relative" >
+                <div className=" lg:hidden  mt-10 " >
                     <div className="mx-auto  ">
                     <CarouselProvider
-                    naturalSlideWidth={100}
-                    naturalSlideHeight={125}
+                    naturalSlideWidth={300}
+                    naturalSlideHeight={325}
                     totalSlides={3}
                     visibleSlides={1}
                     infinite={true}
                     currentSlide={1}
                     >
 
-                    <div className="mx-auto">
+                    <div className="mx-auto ">
                         <div className="flex justify-between" >
-                        <ButtonBack className="">
-                            <IconButton className="hover:bg-transparent">
-                            <i class="ri-arrow-left-circle-fill"></i>
-                            </IconButton>    
+                        <ButtonBack className="px-2">
+                            {/* <IconButton className="hover:bg-transparent"> */}
+                            <i className={`ri-arrow-left-circle-fill lg:text-black ${isProductInformation?'text-white':'text-black'}`}></i>
+                            {/* </IconButton>     */}
                         </ButtonBack>  
                         <Slider style={{
-                            height: ''
-                        }} className="h-72 mx-auto w-full">    
+                            height: imageWidth
+                        }} className=" mx-auto w-full ">    
                             {productdetailsimg}      
                         </Slider>
                         
-                        <ButtonNext>
-                            <IconButton className="hover:bg-transparent">
-                            <i class="ri-arrow-right-circle-fill"></i>
-                            </IconButton>
+                        <ButtonNext className="px-2" >
+                            {/* <IconButton className="hover:bg-transparent"> */}
+                            <i className={`ri-arrow-right-circle-fill lg:text-black ${isProductInformation?'text-white':'text-black'}`}></i>
+                            {/* </IconButton> */}
                         </ButtonNext>
                         </div>   
                         
@@ -399,26 +455,37 @@ const productdetailsimg = currentProduct? currentColorArray.map((item, i) => {
                 </div>
 
  {/* product details in sidebar */}
-                <div className="lg:w-4/12 md:w-4/12 w-full lg:mx-10 md:mx-10  lg:px-0 md:px-0 flex flex-col">
+                <div style={{
+                    height:400
+                }} className={`lg:w-4/12 lg:block lg:relative  fixed lg:mx-10 md:px-5 lg:px-0 md:px-0 flex flex-col font-headers2 ${isProductInformation?'animate-slideDown block':'hidden'}`}>
+                <div className="" >
                 <div className="">
                     <div>
-                        <div className="flex lg:px-0 md:px-0 px-3 justify-between" >
-                            <div className="text-4xl lg:hidden md:hidden block uppercase font-bold text-gray-300 font-headers" >
-                                    {currentProduct.name}
-                                </div>
+                        <div 
+                        style={{
+                            backdropFilter: 'blur(2px)'
+                        }}
+                        className="flex lg:px-0 md:px-0 px-3 justify-between" >
 
                             <div className="text-2xl lg:mt-16 md:mt-16
                              uppercase font-headers font-bold" >
                                 £{currentProduct.price}
-                            </div>
-                            
+                            </div>  
+
+                          
+
+                            <div className="text-4xl font-headers uppercase font-bold text-gray-300 text-center mt-16" >
+                                    {currentProduct.name}!
+                                </div>
                         </div>
                   
 
                     <div className="w-screen lg:w-full md:w-full bg-blue-600" >
                         BOYISH BOYISH BOYISH
                     </div>
-                    <div className="px-4 lg:px-0 md:px-0" id={currentProduct.ProductID} >
+                    <div style={{
+                            backdropFilter: 'blur(2px)'
+                        }} className="px-4 lg:px-0 md:px-0" id={currentProduct.ProductID} >
                         {/* <div className="text-2xl uppercase font-bold border-black" >
                             {currentProduct.name}
                         </div> */}
@@ -433,12 +500,18 @@ const productdetailsimg = currentProduct? currentColorArray.map((item, i) => {
                             </div> */}
                         </div>
 
-                        <div className=" border-b border-black" >
-                        <div className="flex justify-between" >DESCRIPTION <div>E</div></div> 
+                        <div 
+                            style={{
+                                // WebkitTextStroke : '1px black',
+                                backdropFilter: 'blur(1px)'
+                              }}
+                       className=" border-b border-black text-xl text-black font-bold " >
+                        <div className="flex justify-between "  >DESCRIPTION <div>E</div></div> 
+                            {currentProduct.description}
                             <div >Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae iusto ex mollitia inventore suscipit, in similique molestiae </div>
                         </div>
 
-                        <div  >
+                        <div className="py-6" >
                             <Button>
                                 ADD TO CART
                             </Button>
@@ -459,6 +532,8 @@ const productdetailsimg = currentProduct? currentColorArray.map((item, i) => {
                         </div> }
                        
                     </div>
+                </div>
+ 
 
                 </div>
                

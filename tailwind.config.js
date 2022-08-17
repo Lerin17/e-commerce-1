@@ -13,7 +13,7 @@ module.exports = {
     },
     extend: {
       animation: {
-        "fade": "fadeOut .9s ease-in-out",
+        "fade": "fadeOut .3s ease-in-out",
         "slideDown": "fadeSlideDown .4s ease-in-out",
         "fadein": "fadeInOpacity .6s ease-in-out"
       },
@@ -21,8 +21,8 @@ module.exports = {
       // that is actual animation
       keyframes: (theme) => ({
         'fadeOut': {
-          "0%": { backgroundColor: theme("colors.transparent") },
-          "100%": { backgroundColor: theme("colors.blue.600") },
+          "0%": { transform: "translateX(-100%)"},
+          "100%": {   transform: "translateX(0)" },
         },
         "fadeSlideDown": {
           "0%": { transform: "translateY(-100%)",

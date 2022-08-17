@@ -12,18 +12,25 @@ import pile2 from '../image/new arrival/new3.png'
 
 function CTA(params) {
     return (
-        <div className="lg:w-3/5 mx-auto ">
-            <div className=" mt-10 shadow-2 border-4 border-black  hover:animate-fade hover:bg-blue-600 rounded-lg bg-black ">
-                <div className="flex justify-between">
+        <div className="" >
+             <div className="lg:w-3/5 mx-auto py-10">
+            <div className="  hover:scale-105  transition-all  rounded-lg  ">
+                <div className="flex justify-center">
                     <Link to={"/collection/allitems"} >
-                        <div className="6/12 ">
-                            <div className="lg:text-6xl text-3xl  md:text-5xl font-bold cursor-pointer text-white" >
-                            ~SHOP NOW!~
+                        <div className=" ">
+                            <div className="lg:text-8xl text-3xl  md:text-5xl font-bold cursor-pointer text-blue-600 font-headers p-2" >
+                            SHOP NOW
+                            <span className="pr-6 font-headers2 text-blue-500" >!</span>
+                            <span className="pr-5 font-headers2  text-blue-400" >!</span>
+                            <span className="pr-4 font-headers2  text-blue-300" >!</span>
+                            <span className="pr-3 font-headers2 text-blue-200" >!</span>
+                            <span className="pr-2 font-headers2 text-gray-200" >!</span>
+                            <span className="pr-1 font-headers2 text-gray-100" >!</span>
                             </div>
                             
-                            <Button className="px-12" >
+                            {/* <Button className="px-12" >
                                 Discover the collection 
-                            </Button>
+                            </Button> */}
                         </div> 
                     </Link>
                    
@@ -31,6 +38,8 @@ function CTA(params) {
            
             </div>
         </div>
+        </div>
+       
     )
 }
 

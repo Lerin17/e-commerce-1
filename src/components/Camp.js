@@ -13,11 +13,11 @@ function Camp(params) {
             <div className="w-full " >
                 <div className="lg:w-12/12 mx-auto " >
                     <div className="text-3xl mb-2 font-bold md:pl-2" >CAMP</div>
-                    <div  className="flex border border-8 border-blue-600">
+                    <div  className="flex border border-8 border-transparent">
 
-                    <div className="bg-blue-600 lg:w-1/4 font-gothic text-5xl flex items-center justify-center" >
+                    <div className=" lg:w-1/4 font-gothic text-5xl flex items-center justify-center" >
                             <div className="text-yellow-400">
-                                B
+                                !
                             </div>
                         </div>
 
@@ -42,7 +42,7 @@ function Camp(params) {
                             </div> */}
                         </div>
 
-                        <div className="bg-blue-600 lg:w-1/4 w-1/2 text-white  px-3 py-3" >
+                        <div className=" lg:w-1/4 w-1/2 text-white  px-3 py-3" >
 
                             <div className="text-3xl font-gothic">
                                  SYMBOLE!
@@ -80,7 +80,7 @@ function Camp(params) {
                         </div> */}
 
 
-                        <div className="bg-blue-600  hidden lg:block lg:pl-10 lg:w-2/12">
+                        <div className="  hidden lg:block lg:pl-10 lg:w-2/12">
                         <Card variant="" className="shadow-2 hover:scale-110 transition-all mx-auto" sx={{ minWidth: 100 ,minHeight: 300}}>
                                 <CardMedia
                                 className="w-full"
@@ -101,13 +101,13 @@ function Camp(params) {
 
            
 
-                 <div className="bg-blue-600   hidden lg:block lg:w-1/4 font-gothic text-8xl flex items-center justify-center " >
-                            <div className="text-yellow-500" >
+                 <div className=" hidden lg:block lg:w-1/4 font-gothic text-8xl flex items-center justify-center " >
+                            <div className="text-red-500" >
                                 B
                             </div>
                         </div>
 
-                   <div className="bg-blue-600  lg:w-1/4 w-1/2 text-white  px-3 py-3" >
+                   <div className="bg-gradient-to-l from-blue-800 via-blue-700 to-blue-600 lg:w-1/4 w-1/2 text-white  px-3 py-3" >
                         <div className="uppercase text-3xl font-gothic" >
                         persona!
                         </div>

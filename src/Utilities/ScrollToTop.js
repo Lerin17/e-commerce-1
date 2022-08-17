@@ -22,6 +22,8 @@ const {currentLocation, updateCurrentLocation} = React.useContext(Locationutilit
     // const {Allproducts, setFavourite} = React.useContext(UserItemsContext)
   const { pathname } = useLocation();
 
+  console.log(currentLocation)
+
   useEffect(() => {
     window.scrollTo(0, 0);
     updateCurrentLocation(pathname)

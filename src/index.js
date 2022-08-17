@@ -13,6 +13,8 @@ import {UserItemsContextProvider} from './context/Items';
 import ScrollToTop from './Utilities/ScrollToTop';
 import { LocationContextProvider } from './context/Location';
 import { UserContextProvider } from './context/user';
+import { MenuContextProvider } from './context/MenuContext';
+
 
 
 
@@ -26,8 +28,10 @@ root.render(
     <UserItemsContextProvider>
       <UserContextProvider>
         <LocationContextProvider>
-        <ScrollToTop/>
-        <App />
+          <MenuContextProvider>
+          <ScrollToTop/>
+          <App />
+          </MenuContextProvider>
         </LocationContextProvider>
       </UserContextProvider>
     </UserItemsContextProvider> 

@@ -57,13 +57,14 @@ function Newarrivalcarousel(params) {
   
   const newArrivalDisplay = productsData? productsData.filter(item => item.isNewArrival == true).map((item, i) => (
   <Slide key={i} className="" index={index++}>
-          <div id={item.ProductID} productid= {item.ProductID} className="mx-auto  p-1 flex flex-col mt-1" style={{maxWidth: 400, minWidth: 200, maxHeight: 300 }}> 
-              <Card variant="outlined" className=" border-none " sx={{ maxWidth: 400, minWidth: 200 , borderRadius: 0}}>
-              <Link to= {`/products/${item.ProductID}`} >
+          <div id={item._id} productid= {item._id} className="mx-auto  py-1 flex flex-col mt-1 " style={{maxWidth: 280, minWidth: 200, maxHeight: 300 }}> 
+              <Card variant="outlined" className=" border-none " sx={{ maxWidth: 280, minWidth: 200 , borderRadius: 0}}>
+              <Link to= {`/products/${item._id}`} >
               <CardMedia
             sx={{
                 maxHeight: 300,
-                maxWidth: 400
+                minWidth: 200,
+                maxWidth: 280
                 // backgroundColor: 'red'
               
               }}
@@ -139,12 +140,14 @@ function Newarrivalcarousel(params) {
  
 
   return (
-    <div className=" lg:w-3/5 lg:mx-auto mx-8 mt-20">
+    <div className=" lg:w-3/5 lg:mx-auto mx-8 my-20">
 
-   <Link to= "/newarrival" ><Button className="text-blue-600 text-2xl font-bold font-headers" variant="text" >NEW ARRIVALS</Button></Link>   
+   <Link to= "/newarrival" ><Button className="text-blue-600 text-2xl font-bold font-headers" variant="text" >NEW ARRIVALS!</Button></Link>   
     <div className=" relative h-full" >
       
-       <div className="mx-auto  bg-gradient-to-l from-white via-blue-300 to-white">
+       <div 
+      //  style={{background: 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(203,219,238,1) 37%, rgba(148,187,233,1) 48%, rgba(255,255,255,1) 64%, rgba(255,255,255,1) 100%)'}} 
+       className="mx-auto  ">
         {productsData? <CarouselProvider
               naturalSlideWidth={100}
               naturalSlideHeight={100}
@@ -157,13 +160,21 @@ function Newarrivalcarousel(params) {
          <div className="mx-auto ">
             <div className="flex justify-between" >
            
-                <div className="self-center" ><ButtonBack className="w-10">
+                <div className="self-center" ><ButtonBack className="">
                     {/* <IconButton className="hover:bg-transparent"> */}
                     <i class="ri-arrow-left-circle-fill"></i>
                     {/* </IconButton> */}
                   </ButtonBack></div>
                   <Slider style={{
-                    height: '300px'
+                    height: '300px',
+                    // margin: '0 auto',
+                    // background: 'blue',
+                    // flexDirection: 'flex-column',
+                    // alignItems: 'center',
+                    // justifyContent: 'center'
+                    
+                    
+                    // minHeight: '200px'
                   }} className=" mx-auto w-full">    
                     {<SortItems/>}      
                   </Slider>

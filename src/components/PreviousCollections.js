@@ -183,7 +183,8 @@ const voyagerDisplayComponent = <div
 
 
     return (
-        <div className="lg:w-10/12 w-8/12 mx-auto px-6 items-center " >
+        <div className="w-full " >
+            <div className="lg:w-10/12 md:w-8/12 w-11/12 mx-auto px-6  items-center " >
             
             <div className="font-headers text-3xl uppercase font-bold" >Previous Collections</div>
 
@@ -235,7 +236,7 @@ const voyagerDisplayComponent = <div
                     </div>
 
 
-                        <div  className="self-center mx-auto lg:mx-none lg:relative absolute left-1/2 -translate-x-1/2  lg:left-0 lg:-translate-x-0    w-4/6 " >
+                        <div  className="self-center mx-auto lg:mx-none lg:relative absolute left-1/2 -translate-x-1/2  lg:left-0 lg:-translate-x-0  md:w-4/6 w-full  lg:w-4/6 " >
                         <div onMouseEnter={
                        ()=>setisSwimmerDisplayCom(false)
                         } 
@@ -305,7 +306,7 @@ const voyagerDisplayComponent = <div
                      </div>
 
                      <div>
-                     <i className="ri-compass-3-line text-green-500 w-full "></i> 
+                     <svg className="fill-current text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm4.5-12.5L14 14l-6.5 2.5L10 10l6.5-2.5zM12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>
                      </div>
                  </div>
                  <div className="font-headers2" >Boyish! Season/22/A</div>
@@ -339,7 +340,7 @@ const voyagerDisplayComponent = <div
          </div>
 
 
-             <div  className="self-center mx-auto lg:mx-none lg:relative absolute left-1/2 -translate-x-1/2  lg:left-0 lg:-translate-x-0    w-4/6 " >
+             <div  className="self-center mx-auto lg:mx-none lg:relative absolute left-1/2 -translate-x-1/2  lg:left-0 lg:-translate-x-0  md:w-4/6 w-full  lg:w-4/6" >
              <div onMouseLeave={()=>{
                 setTimeout(() => {
                     setisVoyagerDisplayCom(true) 
@@ -393,6 +394,8 @@ const voyagerDisplayComponent = <div
 
         </div>
        
+        </div>
+        
     )
 }
 

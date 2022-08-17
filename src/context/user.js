@@ -11,7 +11,7 @@ const UserContextProvider = (props) => {
     const [userPassword, setuserPassword] = React.useState('');
     
 
-    const [userData, setuserData] = React.useState();
+    const [userData, setuserData] = React.useState(null);
     const [userFavourite, setuserFavourite] = React.useState([]);
 
     const [notificationMessage, setnotificationMessage] = React.useState('');
@@ -60,9 +60,14 @@ const UserContextProvider = (props) => {
 
     console.log(userName)
 const updateUserFavourite = async (productID) => {
-    const favIDs = userFavourite.map(item => item.productID)
+    if(!userData){
+        setnotificationMessage('please login or sign up')
+        return
+    }
+
+    const favIDsArray = userFavourite.map(item => item.productID)
     
-    const isItempresent = favIDs.some(item => item == productID)
+    const isItempresent = favIDsArray.some(item => item == productID)
     if(isItempresent){
         try {
             const res = await axios.delete(`http://localhost:5000/api/usersfavourite/${userData._id}/${productID}`)

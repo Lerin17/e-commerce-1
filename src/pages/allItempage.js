@@ -18,6 +18,8 @@ import { UserContext } from "../context/user";
 import { toast, ToastContainer } from "react-toastify";
 import { grey } from "@mui/material/colors";
 import { withStyles } from "@mui/styles";
+import { MenuContext } from "../context/MenuContext";
+import LoginModal from "../components/LoginModal";
 
 
 
@@ -26,9 +28,11 @@ import { withStyles } from "@mui/styles";
 
 function CurrentCollection(props) {
 
-  const { setFavourite, setCartitems,} = React.useContext   (UserItemsContext)
+  // const { setFavourite, setCartitems,} = React.useContext   (UserItemsContext)
 
   const {getUserNameInfo, getUserPasswordInfo, userName, userPassword, Login, userFavourite, updateUserFavourite } = React.useContext(UserContext)
+
+  
 
   // console.log(props.selectedValue, 'selected')
   // console.log(props.selectedValue.includes('gold'))
@@ -49,7 +53,7 @@ function CurrentCollection(props) {
 
 
 
-  console.log(allProducts.length)
+  // console.log(allProducts.length)
 
   React.useEffect(() => {
      const getProducts = async () => {
@@ -116,13 +120,13 @@ const FavouriteBtn = (props) => {
 
 
   return (
-    <IconButton onClick={()=>updateUserFavourite(props.id)} className= {`${favIDs.includes(props.id)? 'text-red-600':'text-black'}`} >
+    <IconButton onClick={()=>updateUserFavourite(props.id)} className= {`${favIDs.includes(props.id)? 'text-red-600':'text-white'}`} >
     <FavoriteBorderOutlined/>
      </IconButton>
   )
 }
 
-console.log(favProducts, 'favx')
+// console.log(favProducts, 'favx')
 
   
   const ItemCardComponent =({item, i})=>{
@@ -148,7 +152,7 @@ console.log(favProducts, 'favx')
           <div className="font-bold uppercase border-4 border-gray-300  font-headers flex pt-1 text-lg bg-blue-600 hover:bg-black transition-all text-white items-center px-2" >
               {item.name}
 
-              <div id={item._id} productid = {item._id}     onClick={setFavourite}  className="self-center ">
+              <div id={item._id} productid = {item._id}     className="self-center ">
               <FavouriteBtn
               id={item._id}/>
             </div>
@@ -166,16 +170,16 @@ console.log(favProducts, 'favx')
   )
   }
 
-  const productCards = allProducts.length? allProducts.map((item,i) => {
-    return <ItemCardComponent
-    item = {item}
-    i={i}
-    />
-  }):Array.from(new Array(22)).map((item ,i)=>
-  <div  style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}} className="mx-auto md:mx-5 w-full   lg:mx-8 my-4  p-1 "> 
-       <Skeleton key={i} className="bg-gray-300 " variant="rectangular" width={200} height={280} />
-  </div>
-  )
+  // const productCards = allProducts.length? allProducts.map((item,i) => {
+  //   return <ItemCardComponent
+  //   item = {item}
+  //   i={i}
+  //   />
+  // }):Array.from(new Array(22)).map((item ,i)=>
+  // <div  style={{maxWidth: imageWidth,maxHeight: imageWidth}} className="mx-auto md:mx-5 w-full   lg:mx-4 my-4  p-1 "> 
+  //      <Skeleton key={i} className="bg-gray-300 " variant="rectangular" width={imageWidth} height={imageWidth} />
+  // </div>
+  // )
 
   const isSelectedvalue = props.selectedValue.length == 0?false:true
   const isSelectedPrice = props.selectedPrice?true:false
@@ -227,8 +231,8 @@ console.log(favProducts, 'favx')
     const Finalproductcard  = () => {
       if(allProducts.length == 0){
         return (Array.from(new Array(22)).map((item ,i)=>
-        <div  style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}} className="mx-auto md:mx-5 w-full   lg:mx-10 my-4  p-1 "> 
-             <Skeleton key={i} className="bg-gray-300 " variant="rectangular" width={200} height={280} />
+        <div  style={{maxWidth: imageWidth ,maxHeight: imageWidth}} className="mx-auto md:mx-5 w-full border border-gray-400  lg:mx-10 my-4  p-1 "> 
+             <Skeleton key={i} className="bg-gray-300 " variant="rectangular" height={imageWidth} />
         </div>
         ))
       }
@@ -239,17 +243,7 @@ console.log(favProducts, 'favx')
           return <div className="text-2xl lg:text-4xl md:text-3xl left-1/2 top-1/2 md:ml-10   -translate-x-1/2 -translate-y-1/2 absolute my-3 text-center text-gray-400" >No items match the parameters set</div>
         }
       }
-      //   else{
-      //     if(allProducts.length > 0){
-      //       return productCards
-      //     }else{
-      //       return (Array.from(new Array(22)).map((item ,i)=>
-      //       <div  style={{maxWidth: 200, minWidth: 200 ,minHeight: 150}} className="mx-auto md:mx-5 w-full   lg:mx-8 my-4  p-1 "> 
-      //            <Skeleton key={i} className="bg-gray-300 " variant="rectangular" width={200} height={280} />
-      //       </div>
-      //       ))
-      //     }
-      // }
+      
     }
 
 
@@ -263,10 +257,13 @@ console.log(favProducts, 'favx')
 
 
 function Allitems(params) {
+  const {isAllitemMenu} = React.useContext(MenuContext)
+  const {getUserNameInfo, getUserPasswordInfo, userName, userPassword, Login, userFavourite, updateUserFavourite, notificationMessage, setnotificationMessage } = React.useContext(UserContext)
 
   const [category, setcategory] = React.useState('');
   const [selectedValue, setSelectedValue] = React.useState([]);
   const [selectedPrice, setselectedPrice] = React.useState([0, 5000]);
+
 
   const handleChange = (event) => {
     const parameter = event.target.value
@@ -279,6 +276,27 @@ function Allitems(params) {
     }
   
   };
+
+  const ErrorNotify = () => toast.error(notificationMessage, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    closeButton: true
+   })
+
+
+
+  React.useEffect(() => {
+    if(notificationMessage){
+         ErrorNotify()
+         setnotificationMessage(null)
+    }
+    
+    
+  }, [notificationMessage]);
 
   const CustomSlider = withStyles({
     root: {
@@ -307,21 +325,7 @@ function Allitems(params) {
     },
 })(Slider)
 
-  // const muiTheme = createTheme({
-  //   overrides: {
-  //     MuiSlider: {
-  //       thumb:{
-  //         color: "yellow",
-  //         },
-  //         track: {
-  //           color: 'red'
-  //         },
-  //         rail: {
-  //           color: 'black'
-  //         }
-  //     }
-  //   }
-  // })
+
 
 
   const handlePriceChange = (event, value) => {
@@ -358,14 +362,15 @@ function Allitems(params) {
    return (
     <div  >
       <Navbar/>
+      <LoginModal/>
       <div className="mt-12 flex pr-4 lg:pr-12 " >
-
+          <ToastContainer/>
                 {/* sidebar section */}
         <div  style={{
                 maxWidth: 300,
                 // background: 'linear-gradient(to top, rgb(243, 244, 246), rgb(209, 213, 219))'
-                }} className="w-5/12  
-                lg:block hidden relative z-10 ">
+                }} className={`w-5/12  
+                lg:block  ${isAllitemMenu?'block animate-fade':'hidden'} relative z-10 `}>
                 <div className=" w-36 fixed  h-screen ">
                     <div className="bg-white py-4 px-4 " style={{
                       width: 300
@@ -465,21 +470,27 @@ function Allitems(params) {
 
                     </div> */}
                 </div>
+
+            
           </div>
+
+{/*           
+          <div style={{
+                  height: 600,
+                  width: 300
+                }} className="fixed bg-blue-400 lg:hidden block" >
+                  yam
+            </div> */}
 
              {/* main section */}
 
         <div className="w-10/12 flex flex-col items-center mx-auto bg-white" >
-            {/* <div className="flex w-full justify-between  " >
-                <div className="cursor-pointer" onClick={()=>setcategory('earring')} >Earrings</div>
-                <div>Necklace</div>
-                <div>Rubies</div>
-            </div> */}
+         
+             
             
-            <div className="w-full " style={{
-              maxWidth: 1200
-            }}  >
+            <div className="w-full "  >
               <div className=" lg:mx-0 md:mx-0 " >
+               
                 <CurrentCollection
                   category = {category}
                   selectedValue = {selectedValue}

@@ -1,6 +1,7 @@
 import { AddCircleOutlined, AddCircleOutlineOutlined, AddCircleRounded } from "@material-ui/icons";
 import { Button, Card, CardMedia, IconButton } from "@mui/material";
 import React from "react";
+import Navbar from "../components/Navbar";
 
 import { UserItemsContext } from "../context/Items";
 
@@ -101,8 +102,11 @@ function Checkout(params) {
     
     return (
         <div className="" >
-            <div className="text-center text-4xl font-bold text-blue-600" >My Cart</div>
-            <div>{cartItemsDisplay}</div>
+            <Navbar/>
+            <div className="text-center mt-10 text-4xl font-bold text-blue-600" >My Cart</div>
+            <div className="text-center" >
+                or amma hit
+            </div>
              <div>
                 <Button className="mx-auto w-full text-3xl font-bold text-blue-600" >
                     Place Order
