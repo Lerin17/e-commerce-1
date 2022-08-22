@@ -463,7 +463,7 @@ console.log(<Navbar/>)
                     <div>
                         <div 
                         style={{
-                            backdropFilter: 'blur(2px)'
+                            backdropFilter: 'blur(1px)'
                         }}
                         className="flex lg:px-0 md:px-0 px-3 justify-between" >
 
@@ -484,7 +484,7 @@ console.log(<Navbar/>)
                         BOYISH BOYISH BOYISH
                     </div>
                     <div style={{
-                            backdropFilter: 'blur(2px)'
+                            backdropFilter: 'blur(1px)'
                         }} className="px-4 lg:px-0 md:px-0" id={currentProduct.ProductID} >
                         {/* <div className="text-2xl uppercase font-bold border-black" >
                             {currentProduct.name}
@@ -507,12 +507,18 @@ console.log(<Navbar/>)
                               }}
                        className=" border-b border-black text-xl text-black font-bold " >
                         <div className="flex justify-between "  >DESCRIPTION <div>E</div></div> 
+                          
+                            <div 
+                            style={{
+                                //   WebkitTextStroke : '1px orange',
+                            }} 
+                            className="text-xl text-black  bg-gradient-to-r from-white via-gray-300 to-white opacity-50" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae iusto ex mollitia inventore suscipit, in similique molestiae
                             {currentProduct.description}
-                            <div >Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae iusto ex mollitia inventore suscipit, in similique molestiae </div>
+                             </div>
                         </div>
 
                         <div className="py-6" >
-                            <Button>
+                            <Button className="font-headers" >
                                 ADD TO CART
                             </Button>
                             {/* <Button onClick={(event)=>setCartitems(event)} className={currentProduct.isCartItem?'text-red-600':'text-blue-600'} >
@@ -524,7 +530,7 @@ console.log(<Navbar/>)
                     
                 </div>
 
-                     <div className="hidden lg:block md:block self-center" >
+                     <div className="hidden lg:block  self-center" >
                         {!zoomimage?  <svg className="w-48 hover:scale-110 transition-all" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ><path fill="none" d="M0 0h24v24H0z"/><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15zM10 10V7h2v3h3v2h-3v3h-2v-3H7v-2h3z"/></svg>: <div>
                         <Imagezoom
                         imgsrc = {zoomimage}
