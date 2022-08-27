@@ -12,11 +12,13 @@ function Camp(params) {
         <div>
             <div className="w-full " >
                 <div className="lg:w-12/12 mx-auto " >
-                    <div className="text-3xl mb-2 font-bold md:pl-2" >CAMP</div>
+                    <div className="text-5xl mb-2 font-bold md:pl-2" >CAMP</div>
                     <div  className="flex border border-8 border-transparent">
 
-                    <div className=" lg:w-1/4 font-gothic text-5xl flex items-center justify-center" >
-                            <div className="text-yellow-400">
+                    <div style={{
+                        webkitTextStroke: '1px white'
+                    }} className=" lg:w-1/4 font-gothic text-5xl flex items-center justify-center" >
+                            <div className="text-transparent">
                                 !
                             </div>
                         </div>
@@ -60,7 +62,9 @@ function Camp(params) {
                           
                         </div> 
 
-                        <div className="bg-blue-600 lg:w-1/4 font-gothic text-7xl flex items-center justify-center" >
+                        <div style={{
+                        webkitTextStroke: '1px white'
+                    }} className=" lg:w-1/4 font-gothic text-7xl flex items-center justify-center text-transparent" >
                             <div>
                                 B
                             </div>
@@ -97,17 +101,17 @@ function Camp(params) {
                         </Card>
                     </div>
 
-                 <div  className="flex lg:w-8/12 mx-auto border border-8 border-blue-600">
+                 <div  className="flex lg:w-8/12 mx-auto  py-2 border-white">
 
            
 
-                 <div className=" hidden lg:block lg:w-1/4 font-gothic text-8xl flex items-center justify-center " >
-                            <div className="text-red-500" >
+                 <div className=" hidden lg:block lg:w-1/4 font-gothic text-7xl flex items-center justify-center  " >
+                            <div className="text-red-500 text-center" >
                                 B
                             </div>
                         </div>
 
-                   <div className="bg-gradient-to-l from-blue-800 via-blue-700 to-blue-600 lg:w-1/4 w-1/2 text-white  px-3 py-3" >
+                   <div className=" lg:w-1/4 w-1/2 text-white  px-3 py-3" >
                         <div className="uppercase text-3xl font-gothic" >
                         persona!
                         </div>
@@ -140,19 +144,19 @@ function Camp(params) {
                         </Card>
                     </div>
 
-                    <div className="bg-blue-600 hidden lg:block lg:w-1/4 font-gothic text-7xl flex items-center justify-center" >
-                            <div>
+                    <div className="hidden lg:block lg:w-1/4 font-gothic text-7xl flex items-center justify-center" >
+                            
                                 B
-                            </div>
+                          
                         </div>
 
                         
                  </div>
 
-                 <div className="bg-blue-600 lg:w-2/12  hidden lg:block  font-gothic text-8xl flex items-center justify-center " >
-                            <div className="text-yellow-500" >
+                 <div className=" lg:w-2/12  hidden lg:block  font-gothic text-8xl flex items-center justify-center  text-yellow-500" >
+                           
                                 B
-                            </div>
+                           
                         </div>
                 </div>
             </div>

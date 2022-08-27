@@ -3,6 +3,7 @@
 // import CursorZoom from "react-cursor-zoom/lib/cursor-zoom";
 import Zoom from "react-img-zoom";
 import React from "react";
+import { propsToClassKey } from "@mui/styles";
 
 // function Imagezoom({imgsrc}) {
 
@@ -30,6 +31,18 @@ import React from "react";
 function Imagezoom({imgsrc}){
     const [ischangeimg, setischangeimg] = React.useState(true);
 
+    const [zoomScale, setzoomScale] = React.useState(1);
+
+    React.useEffect(() => {
+        if(imgsrc){
+            setTimeout(() => {
+                setzoomScale(1.5)
+            }, 1000)    
+        }else{
+            setzoomScale(1)
+        }
+    }, [imgsrc]);
+
     React.useEffect(() => {
        setischangeimg(prev => !prev) 
     }, [imgsrc]);
@@ -39,10 +52,10 @@ function Imagezoom({imgsrc}){
     return (
             <div style={{width:300}} className='' >
                 <Zoom
-                img= {'https://cdn.shopify.com/s/files/1/0603/5688/6752/products/121605-1_1_1200x.jpg?v=1634273425'}
-                zoomScale={2}
-                width={250}
-                height={300}
+                img= {imgsrc}
+                zoomScale={zoomScale}
+                width={500}
+                height={500}
                 key={ischangeimg?1:2}
                 />
             </div>

@@ -16,7 +16,7 @@ function Homepage(params) {
            <Header/>
            <PreviousCollection/>
            <Newarrival/>
-           <div className="bg-gradient-to-b from-white via-blue-600 to-blue-600" >
+           <div className="bg-gradient-to-b from-white via-blue-600 to-gray-400" >
            <CTA/>
            <Camp/> 
            </div>

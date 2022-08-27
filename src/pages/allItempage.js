@@ -265,9 +265,9 @@ function Allitems(params) {
   const [selectedPrice, setselectedPrice] = React.useState([0, 5000]);
 
 
-  const handleChange = (event) => {
-    const parameter = event.target.value
-    console.log(selectedValue.includes(parameter))
+  const handleChange = (parameter) => {
+    // const parameter = event.target.value
+    // console.log(selectedValue.includes(parameter))
     if(selectedValue.includes(parameter)){
       setSelectedValue(prev => prev.filter(item => item !== parameter))
       return
@@ -277,26 +277,26 @@ function Allitems(params) {
   
   };
 
-  const ErrorNotify = () => toast.error(notificationMessage, {
-    position: "top-right",
-    autoClose: 3000,
-    hideProgressBar: true,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    closeButton: true
-   })
+  // const ErrorNotify = () => toast.error(notificationMessage.message, {
+  //   position: "top-right",
+  //   autoClose: 3000,
+  //   hideProgressBar: true,
+  //   closeOnClick: true,
+  //   pauseOnHover: true,
+  //   draggable: true,
+  //   closeButton: true
+  //  })
 
 
 
-  React.useEffect(() => {
-    if(notificationMessage){
-         ErrorNotify()
-         setnotificationMessage(null)
-    }
+  // React.useEffect(() => {
+  //   if(notificationMessage){
+  //        ErrorNotify()
+  //        setnotificationMessage(null)
+  //   }
     
     
-  }, [notificationMessage]);
+  // }, [notificationMessage]);
 
   const CustomSlider = withStyles({
     root: {
@@ -338,7 +338,7 @@ function Allitems(params) {
       <div className="flex items-center border  border-white text-xs" >           
       <Radio 
         checked={selectedValue.includes(radiovalue)}
-        onClick={handleChange}
+        onClick={()=>handleChange(radiovalue)}
         value= {radiovalue}
         name="radio-buttons"
         // inputProps={{ 'aria-label': 'B' }}
@@ -351,9 +351,9 @@ function Allitems(params) {
           },
         }}
       />
-            <div style={{
+            <div onClick={()=>handleChange(radiovalue)} style={{
               webkitTextStroke : '1px dimgray'
-            }} className="capitalize text-transparent hover:text-black cursor-pointer transition-all font-bold  font-headers2  text-3xl" >{radiovalue}</div>
+            }} className={`${selectedValue.includes(radiovalue)?'text-black':'text-transparent'} capitalize  hover:text-black cursor-pointer transition-all font-bold  font-headers2  text-3xl`} >{radiovalue}</div>
     </div>
     )
   }
@@ -369,13 +369,15 @@ function Allitems(params) {
         <div  style={{
                 maxWidth: 300,
                 // background: 'linear-gradient(to top, rgb(243, 244, 246), rgb(209, 213, 219))'
-                }} className={`w-5/12  
-                lg:block  ${isAllitemMenu?'block animate-fade':'hidden'} relative z-10 `}>
-                <div className=" w-36 fixed  h-screen ">
+                }} className={`w-5/12
+                lg:block bg-white md:bg-transparent
+                lg:bg-transparent  ${isAllitemMenu?'block animate-fade':'hidden'} relative z-10 `}>
+                <div className=" w-36 fixed 
+                h-screen ">
                     <div className="bg-white py-4 px-4 " style={{
                       width: 300
                     }}>
-                      <div className="text-whitebg-gradient-to-l from-blue-900 via-blue-700 to-blue-900 font-headers uppercase font-bold  px-2 text-lg rounded" >Price Range</div>
+                      <div className=" font-headers uppercase font-bold  px-2 text-lg rounded" >Price Range</div>
                       <div className="px-6" >
                       <CustomSlider
                       // defaultValue={50} 
@@ -403,7 +405,8 @@ function Allitems(params) {
                     <div className="  border-gray-700  " >
 
                     
-                    <div className="py-4 px-4 " style={{
+                    <div className="py-4 px-4 bg-white md:bg-transparent
+                lg:bg-transparent" style={{
                       width: 300
                     }}>
                     <div className="font-headers2 bg-gradient-to-l from-white via-gray-400 to-white text-md text-gray-600 flex   rounded px-4 uppercase " >Type</div>
@@ -433,7 +436,8 @@ function Allitems(params) {
 
                     </div> */}
 
-                    <div className="  px-4 py-4 " style={{
+                    <div className="bg-white md:bg-transparent
+                lg:bg-transparent  px-4 py-4 pb-32" style={{
                       width: 300
                     }} >
                     <div className="font-headers2 bg-gradient-to-l from-white via-gray-400 to-white text-md text-gray-600 flex   rounded px-4 uppercase " >Color</div>

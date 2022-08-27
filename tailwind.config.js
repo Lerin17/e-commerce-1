@@ -15,6 +15,7 @@ module.exports = {
       animation: {
         "fade": "fadeOut .3s ease-in-out",
         "slideDown": "fadeSlideDown .4s ease-in-out",
+        "slideDownSlow": 'fadeSlideDown .8s ease-in-out',
         "fadein": "fadeInOpacity .6s ease-in-out"
       },
 

@@ -140,14 +140,14 @@ function Newarrivalcarousel(params) {
  
 
   return (
-    <div className=" lg:w-3/5 lg:mx-auto mx-8 my-20">
+    <div className=" my-20 ">
 
-   <Link to= "/newarrival" ><Button className="text-blue-600 text-2xl font-bold font-headers" variant="text" >NEW ARRIVALS!</Button></Link>   
-    <div className=" relative h-full" >
+   <Link to= "/newarrival" ><Button className="text-blue-600 mx-auto text-4xl font-bold font-headers ml-48" variant="text" >NEW ARRIVALS!</Button></Link>   
+    <div className="mx-8 mt-20 mb-10 relative h-full lg:w-3/5 lg:mx-auto" >
       
        <div 
       //  style={{background: 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(203,219,238,1) 37%, rgba(148,187,233,1) 48%, rgba(255,255,255,1) 64%, rgba(255,255,255,1) 100%)'}} 
-       className="mx-auto  ">
+       className="mx-auto  my-10">
         {productsData? <CarouselProvider
               naturalSlideWidth={100}
               naturalSlideHeight={100}

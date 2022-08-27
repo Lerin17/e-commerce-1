@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router";
 import { UserItemsContext } from "../context/Items";
+import { toast, ToastContainer } from "react-toastify";
 // import Newarrivaldata from "../image/new arrival/newarrivaldata";
 // import Newarrivaldata from "../image/new arrival/newarrivaldata";
 // import Navbar from "../components/Navbar";
@@ -21,13 +22,34 @@ import {
   } from "pure-react-carousel";
   import "pure-react-carousel/dist/react-carousel.es.css";
 import { IconButton } from "@material-ui/core";
+import { ContactPhoneSharp } from "@material-ui/icons";
+import { UserContext } from "../context/user";
 
 
 
 
 
 function Productdetailspage(params) {
-const {Allproducts, setFavourite, setCartitems} = React.useContext(UserItemsContext)
+// const {Allproducts, setFavourite, setCartitems} = React.useContext(UserItemsContext)
+
+const {updateUserCart,removeUserCartItem, userCart,notificationMessage, setnotificationMessage } = React.useContext(UserContext)
+const userCartIDs = userCart.map(item => item.productID)
+
+const Titleref = React.useRef(null)
+
+const [TitleWidth, setTitleWidth] = React.useState();
+
+const getTitleMargin = () => {
+    if(TitleWidth){
+        console.log(Titleref.current.offsetWidth, 'titlerefoffest')
+        let TitleMargin = 283-(TitleWidth * 0.79)
+        TitleMargin = (TitleMargin/2) + 130
+        return TitleMargin
+    }else {
+        return 114
+    }
+}
+
 
 const style = () => (
     {
@@ -48,6 +70,7 @@ const [currentProduct, setcurrentProduct] = React.useState();
 
 
 const [allProducts, setallProducts] = React.useState([]);
+const [cartQuantityIncrement, setcartQuantityIncrement] = React.useState(1);
 
 const [zoomimage, setzoomimage] = React.useState('');
 const [altcolor, setaltcolor] = React.useState([]);
@@ -59,9 +82,17 @@ const [currentHDColorArray, setcurrentHDColorArray] = React.useState([]);
 
 const [windowWidth, setwindowWidth] = React.useState();
 const [windowScrollHeight, setwindowScrollHeight] = React.useState();
+const [windowScrollHeightLG, setwindowScrollHeightLG] = React.useState();
 // windowWidth
 
 const [imageWidth, setimageWidth] = React.useState(600);
+const [titleMargin, settitleMargin] = React.useState(getTitleMargin());
+
+
+
+
+
+
 
 //boolean deciding when product details should animate into block
 const [isProductInformation, setisProductInformation] = React.useState(false);
@@ -72,6 +103,27 @@ const getZoomImage = (imagesrc) => {
     setzoomimage(imagesrc)
 }
 
+const ErrorNotify = () => toast.error(notificationMessage.message, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    closeButton: true
+   })
+
+   
+
+React.useEffect(() => {
+    if(notificationMessage){
+         ErrorNotify()
+         setnotificationMessage(null)
+    }
+    
+    
+  }, [notificationMessage]);
+
 
 //handle animation on scroll START
 // setInterval(() => {
@@ -80,15 +132,59 @@ const getZoomImage = (imagesrc) => {
 
 window.addEventListener('scroll', ()=>{
     setwindowScrollHeight(window.pageYOffset)
+
+    if(!zoomimage){
+    // console.log('nasa')
+    setwindowScrollHeightLG(windowScrollHeight)
+    }
+    
 })
 
+console.log(windowScrollHeightLG, 'windowscroll height')
+
+
 React.useEffect(() => {
-    if(windowScrollHeight > 200){
+    console.log(Titleref.current)
+    setTimeout(() => {
+        if(Titleref.current){
+        
+            setTitleWidth(Titleref.current.offsetWidth)
+            // console.log("width", Titleref.current.offsetWidth);
+        }
+    }, 50);
+   
+   
+  }, [windowWidth, allProducts]);
+
+
+React.useEffect(() => {
+    if(TitleWidth){
+        // console.log(Titleref.current.offsetWidth)
+        settitleMargin(getTitleMargin())
+    }
+   
+    // console.log(getTitleMargin())
+}, [windowWidth, TitleWidth]);
+
+//preseve previous scroll height
+React.useEffect(() => {
+    if(!zoomimage){
+        window.scrollTo(0, windowScrollHeightLG);
+    }
+   
+}, [zoomimage]);
+
+
+console.log(titleMargin, 'titlemargin')
+
+React.useEffect(() => {
+    if(windowScrollHeight > 150){
         setisProductInformation(true)
     }else{
         setisProductInformation(false)
     }
 }, [windowScrollHeight]);
+
 
 //handle animation on scroll END
 
@@ -133,13 +229,32 @@ React.useEffect(() => {
             imagearray: [...item.altImages]
         }))
 
-       const allColorsArray = [
+        const altColorobjsHD = currentProduct.alt.map(item => ({
+            name: item.altName,
+            imagearray: [...item.altImagesHF]
+        }))
+
+        //contains the alt colors and starting color as obj in an array
+
+       const allColorsArrayHD = [
+            {name: startingColor,
+            imagearray: [...currentProduct.imagearrayHF]},
+            ...altColorobjsHD
+        ]
+
+        console.log(
+            allColorsArrayHD, 'wait'
+        )
+
+        const allColorsArray = [
             {name: startingColor,
             imagearray: [...currentProduct.imagearray]},
             ...altColorobjs
         ]
 
         const getcurrentColorobj = allColorsArray.find(item => item.name == currentcolor)
+
+        const getcurrentColorobjHD = allColorsArrayHD.find(item => item.name == currentcolor)
 
         console.log(getcurrentColorobj, 'image')
         console.log(allColorsArray, 'image')
@@ -149,10 +264,9 @@ React.useEffect(() => {
                 getcurrentColorobj.imagearray
              )
 
-         
-    
-       
-
+             setcurrentHDColorArray(
+                getcurrentColorobjHD.imagearray
+                )  
     }
      //should use callback to avoid calling everytime
 
@@ -164,6 +278,9 @@ React.useEffect(() => {
     
 }, [currentcolor]);
 
+// console.log(
+//     currentHDColorArray, 'damn'
+// )
 
 const getMidImageWidth = () => {
     
@@ -193,20 +310,29 @@ const getMidImageWidth = () => {
 //    const currentProduct = Allproducts.find(item => item.ProductID == productID)
 
    //new new
-   console.log(currentcolor, 'color')
+//    console.log(currentcolor, 'color')
+// console.log(currentColorArray, 'color')
+// console.log(currentHDColorArray)
 
  const  changecolor = (color) => {
     setcurrentcolor(color)
  }
    
- console.log(currentProduct)
- console.log(altcolor)
+//  console.log(currentProduct)
+//  console.log(altcolor)
 // console.log(currentProduct.isCartItem)
 const ColorBtnComponent = () => {
     if(altcolor.length == 0){
         return(
-        <div className="bg-gradient-to-r from-green-400 via-blue-300   to-red-400" >
-            <Button sx={{ minHeight: 0, minWidth: 0, padding: 0 }} className="w-full" >d</Button>
+        <div 
+        style={{
+            // WebkitTextStroke : '1px black',
+            backdropFilter: 'blur(1px)'
+          }}
+        className="border rounded-full py-4" >
+            <Button sx={{ minHeight: 0, minWidth: 0, padding: 0 }} className="w-full text-black font-headers2 font-bolder" >
+                {currentProduct.color}
+            </Button>
         </div>
         )
     }else{
@@ -265,8 +391,8 @@ const ColorBtnComponent = () => {
     //arrange in ascending order
     gradientpercentage = [...gradientpercentage].sort((a, b) => a - b)
 
-    console.log(gradientpercentage)
-    console.log(filteredcolors)
+    // console.log(gradientpercentage)
+    // console.log(filteredcolors)
 
     // console.log(gradientpercentage)
 
@@ -284,14 +410,20 @@ const ColorBtnComponent = () => {
         // const gradientcolors =  'jam'
 
      const colorBtn = filteredcolors.map(item => (
-        <Button  onClick={()=>changecolor(item.name)} sx={{ minHeight: 0, minWidth: 0, padding: 0 }} className={`w-1/${filteredcolors.length} text-white ${item.name == currentcolor?'opacity-100':'opacity-25'} rounded font-bold`} >{item.name}</Button>
+        <Button 
+        style={{
+            boxShadow: `10px 10px 20px 0px rgba(0,0,0,0.57) ${item.name == currentcolor?'':'inset'}`,
+        }}
+        variant="outlined" onClick={()=>changecolor(item.name)} sx={{ minHeight: 0, minWidth: 0, padding: 0 }} className={`w-1/${filteredcolors.length} text-white  ${item.name == currentcolor?'opacity-100':'opacity-25'} rounded-full mx-2 font-bold py-4 font-headers2`} >{item.name}</Button>
      ))
 
         const lingradient = `linear-gradient(90deg, ${gradientColorsStyle}`
         // console.log(lingradient)
 
         return (
-        <div className="  rounded border-y-2  border-black flex items-center" style={{background: lingradient}}  >
+        <div className="  py-2 flex items-center " style={{
+            
+            background: lingradient}}  >
              {colorBtn}
             {/* <Button sx={{ minHeight: 0, minWidth: 0, padding: 0 }} className="w-1/2" >d</Button>
             <Button sx={{ minHeight: 0, minWidth: 0, padding: 0 }} className="w-1/2" >d</Button> */}
@@ -303,7 +435,7 @@ const ColorBtnComponent = () => {
  
 const DisplayImageComponent = (props) => {
     return (
-        <div className="mx-auto" style={{width: 350}} >
+        <div className="mx-auto" onClick ={()=>getZoomImage(props.imgsrc)} style={{width: 600}} >
         <img src={props.imgsrc}
          alt = 'JEWELRY IMG'/>
     </div>
@@ -320,7 +452,7 @@ const MiniDisplayImageComponent = (props) => (
 
 
 const ImgComponent = (props) => (
-    <div style={classesx.image} onClick ={()=>getZoomImage(props.imgsrc)}>
+    <div style={classesx.image} >
     <img src={props.imgsrc}
      alt = 'JEWELRY IMG'/>
 </div>
@@ -358,27 +490,88 @@ const productdetailsimg = currentProduct? currentColorArray.map((item, i) => {
 console.log(<Navbar/>)
  
     return currentProduct? (
-        <div>
-          <Navbar/>
+        <div className="h-screen" >
+        {
+            !zoomimage &&
+            <Navbar/>
+        }
+        <ToastContainer/>
+         
             <div>
+            
              
             {/* <Navbar/> */}
             <div style={{
-                height:1000
-            }} className="lg:flex-row  flex flex-col   border-b-2 border-black " >
+                height: zoomimage? 700 :900 
+            }} className={`lg:flex-row   flex flex-col`} >
               
-                <div className=" lg:block  mt-10  hidden flex flex-col lg:w-5/12 md:w-8/12 ">
-                    <div className="p-10 mx-auto border lg:w-8/12">
-                    <div className="text-6xl font-headers uppercase font-bold text-gray-300 text-center" >
+                <div className= {`lg:block  lg:my-10 ${zoomimage?' my-0':''}  flex flex-col lg:w-7/12  md:w-8/12`}>
+
+                    <div className= {`${zoomimage?'block':'hidden'}`} >
+                        <div style={{
+                            height:640
+                        }} className="relative ml-20 my-4 border-2 border-t-black border-gray-300   animate-slideDownSlow bg-transparent" >
+                             <div className="flex justify-end bg-black z-20 relative" >
+                                <div onClick={()=>
+                                    setzoomimage(null)
+                                } className="m-2 cursor-pointer rounded-full bg-red-600 p-3" >
+                                    
+                                </div>
+
+                                <div className="m-2 rounded-full bg-white p-3" >
+                                    
+                                </div>
+                             </div>
+                        </div>
+                        <div className="absolute top-28 left-56" >
+                                        <div>
+                                        <Imagezoom
+                                        imgsrc = {zoomimage}
+                                        />
+                                        </div> 
+                        </div>
+                        
+                    </div>
+
+                    <div className={`${zoomimage?'hidden':'lg:block hidden'} lg:p-10  mx-auto  lg:w-8/12 `}>
+                    <div style={{
+                        marginLeft: titleMargin
+                    }} ref={Titleref} className="text-6xl font-headers uppercase font-bold text-gray-300 text-center  px-0 fixed " >
+                        
                         {currentProduct.name}!
-                  </div>
-                        <div className="mx-auto" >
+                                      
+                     </div>
+
+                            <div className=" py-10" >
+
+                                    <div className="mx-auto py-4" >
+                                        <DisplayImageComponent
+                                        imgsrc = {currentHDColorArray[0]}
+                                        />
+                                    </div>
+
+                                    <div className="mx-auto py-4" >
+                                        <DisplayImageComponent
+                                        imgsrc = {currentHDColorArray[1]}
+                                        />
+                                    </div>
+
+                                    <div className="mx-auto py-4" >
+                                        <DisplayImageComponent
+                                        imgsrc = {currentHDColorArray[2]}
+                                        />
+                                    </div>
+
+                                 </div>
+
+
+                        {/* <div className="mx-auto" >
                             <DisplayImageComponent
                             imgsrc = {currentHDColorArray[0]}
                             />
-                        </div>
+                        </div> */}
 
-                        <div className=" h-32 flex justify-between" >
+                        {/* <div className=" h-32 flex justify-between" >
                             <MiniDisplayImageComponent
                             imgsrc = {currentColorArray[0]}
                             />
@@ -390,7 +583,7 @@ console.log(<Navbar/>)
                             <MiniDisplayImageComponent
                             imgsrc = {currentColorArray[2]}
                             />
-                            </div>
+                        </div> */}
                         {/* <div className="flex" >
                             <ImgComponent
                             imgsrc = {currentColorArray[0]}
@@ -457,7 +650,7 @@ console.log(<Navbar/>)
  {/* product details in sidebar */}
                 <div style={{
                     height:400
-                }} className={`lg:w-4/12 lg:block lg:relative  fixed lg:mx-10 md:px-5 lg:px-0 md:px-0 flex flex-col font-headers2 ${isProductInformation?'animate-slideDown block':'hidden'}`}>
+                }} className={`lg:w-4/12  lg:right-0  md:fixed lg:mx-10 md:px-5 lg:px-0 md:px-0 flex flex-col font-headers2 ${isProductInformation?'md:animate-slideDown md:block lg:animate-none':'md:hidden block lg:block'}`}>
                 <div className="" >
                 <div className="">
                     <div>
@@ -474,18 +667,18 @@ console.log(<Navbar/>)
 
                           
 
-                            <div className="text-4xl font-headers uppercase font-bold text-gray-300 text-center mt-16" >
+                            <div  className="md:text-6xl text-xl font-headers uppercase font-bold lg:text-3xl text-black text-center mt-16" >
                                     {currentProduct.name}!
                                 </div>
                         </div>
                   
 
-                    <div className="w-screen lg:w-full md:w-full bg-blue-600" >
+                    {/* <div className="w-screen lg:w-full md:w-full bg-blue-600" >
                         BOYISH BOYISH BOYISH
-                    </div>
+                    </div> */}
                     <div style={{
                             backdropFilter: 'blur(1px)'
-                        }} className="px-4 lg:px-0 md:px-0" id={currentProduct.ProductID} >
+                        }} className="px-4 lg:px-0 md:px-0"  >
                         {/* <div className="text-2xl uppercase font-bold border-black" >
                             {currentProduct.name}
                         </div> */}
@@ -505,22 +698,61 @@ console.log(<Navbar/>)
                                 // WebkitTextStroke : '1px black',
                                 backdropFilter: 'blur(1px)'
                               }}
-                       className=" border-b border-black text-xl text-black font-bold " >
+                       className=" border-b border-black text-xl text-black font-bold lg:font-normal" >
                         <div className="flex justify-between "  >DESCRIPTION <div>E</div></div> 
                           
                             <div 
                             style={{
                                 //   WebkitTextStroke : '1px orange',
                             }} 
-                            className="text-xl text-black  bg-gradient-to-r from-white via-gray-300 to-white opacity-50" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae iusto ex mollitia inventore suscipit, in similique molestiae
+                            className="md:text-xl text-normal lg:bg-white
+                            lg:text-md  text-black opacity-50
+                            bg-gradient-to-r from-white lg:via-white via-gray-300 to-white 
+                            " >Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae iusto ex mollitia inventore suscipit, in similique molestiae
                             {currentProduct.description}
                              </div>
                         </div>
 
-                        <div className="py-6" >
-                            <Button className="font-headers" >
-                                ADD TO CART
+                        <div className="lg:py-6 py-4 flex " >
+                            
+
+                            <div>
+                                <Button onClick={()=>{
+                                    setcartQuantityIncrement(prev => prev+ 1)
+                                }} className="py-5 text-gray-600 bg-gray-300 rounded-full mx-4" >
+                                    +
+                                </Button>
+                                <div className="py-4 mx-4  text-center font-headers text-3xl text-gray-500" >
+                                {cartQuantityIncrement}
+                                </div>
+                                <Button 
+                                onClick={()=>{
+                                    if(cartQuantityIncrement > 1){
+                                        setcartQuantityIncrement(prev => prev - 1)
+                                    }
+                                    
+                                }}
+                                className="py-5 text-gray-600 bg-gray-300 rounded-full mx-4">
+                                    -
                             </Button>
+                            </div>
+                            
+                            {userCartIDs.includes(currentProduct._id)?
+                                 <Button onClick={()=>removeUserCartItem(currentProduct._id)} className="font-headers text-red-300 bg-red-500 lg:py-6  lg:my-4 my-6  sm:w-full md:w-full" >
+                                 REMOVE FROM CART
+                             </Button>:
+                              <Button onClick={()=>updateUserCart(currentProduct._id, cartQuantityIncrement)} className="font-headers bg-blue-600 lg:py-6  lg:my-4 my-6 rounded-full sm:w-full md:w-full" >
+                              ADD TO CART
+                          </Button>
+                            }
+                            {/* <Button onClick={()=>updateUserCart(currentProduct._id, cartQuantityIncrement)} className="font-headers bg-blue-600 lg:py-6  lg:my-4 my-6 rounded-full sm:w-full md:w-full" >
+                                ADD TO CART
+                            </Button> */}
+                          
+                            <div className=" ml-10 lg:block  self-center" >
+                            <svg className="lg:w-20 w-16 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ><path fill="none" d="M0 0H24V24H0z"/><path d="M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z"/></svg>
+                       
+                    </div>
                             {/* <Button onClick={(event)=>setCartitems(event)} className={currentProduct.isCartItem?'text-red-600':'text-blue-600'} >
                                 {currentProduct.isCartItem? 'REMOVE FROM CART': 'ADD TO CART'}
                             </Button> */}
@@ -530,14 +762,7 @@ console.log(<Navbar/>)
                     
                 </div>
 
-                     <div className="hidden lg:block  self-center" >
-                        {!zoomimage?  <svg className="w-48 hover:scale-110 transition-all" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ><path fill="none" d="M0 0h24v24H0z"/><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15zM10 10V7h2v3h3v2h-3v3h-2v-3H7v-2h3z"/></svg>: <div>
-                        <Imagezoom
-                        imgsrc = {zoomimage}
-                        />
-                        </div> }
-                       
-                    </div>
+               
                 </div>
  
 
