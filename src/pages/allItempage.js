@@ -43,6 +43,7 @@ function CurrentCollection(props) {
   const [favProducts, setfavProducts] = React.useState([]);
   const [favProductslocal, setfavProductslocal] = React.useState([]);
   const [windowWidth, setwindowWidth] = React.useState();
+  const [allProductsColorArray, setallProductsColorArray] = React.useState();
   // windowWidth
 
   const [imageWidth, setimageWidth] = React.useState(600);
@@ -52,6 +53,11 @@ function CurrentCollection(props) {
   // }
 
 
+  const getallColors = (data) => {
+    return (data.map(item => ({
+      color:item.color[0],
+    id:item._id})))
+  }
 
   // console.log(allProducts.length)
 
@@ -60,14 +66,20 @@ function CurrentCollection(props) {
         try {
         const res = await axios.get('http://localhost:5000/api/products')
         console.log(res)
-        setallProducts(res.data)   
+        setallProducts(res.data)
+        setallProductsColorArray(getallColors(res.data))   
         } catch (error) {
           console.log(error) 
         }
      } 
 
+     
+    console.log('repeat')
+
      getProducts()
-  }, []);
+  }, [favProductslocal]);
+
+  console.log(allProductsColorArray, 'colors4Real')
 
   React.useEffect(() => {
     console.log('damn')
@@ -100,14 +112,6 @@ function CurrentCollection(props) {
  
 
 
- 
-
-
-
-  
-
-
-  // console.log(filteredItemsPrice(), 'filtered')
 
 
 
@@ -127,9 +131,157 @@ const FavouriteBtn = (props) => {
 }
 
 // console.log(favProducts, 'favx')
+let ja = ''
+
+const changeItemcolor = (id, color, colorArray) => {
+
+  const getNewColor = () => {
+   console.log(colorArray)
+   console.log(color)
+  // const item = allProducts.find(item => (item._id == id))
+
+
+    const colorArrayx = colorArray.find(item => (item.name == color?item:''))
+
+    console.log(colorArrayx)
+    
+    return colorArrayx.images[1]
+
+    
+  }
+
+  // console.log(id)
+
+  console.log(getNewColor())
+
+  const colorx =getNewColor()
+
+  // setallProducts(prev =>  {
+  //   return   prev.map(item => (item._id == id?{image:colorx, ...item}:item))
+  // })
+
+  const rax = allProducts.map(item => item._id == id?{ image:colorx,
+    ...item}:item)
+
+    // console.log(ra)
+
+  setallProducts(prev => prev.map(item => item._id == id?{
+    ...item,image:colorx
+}:item))
+
+    console.log('eexx')
+}
+
+console.log(allProducts)
 
   
   const ItemCardComponent =({item, i})=>{
+    // console.log(item)
+
+    const rgbacolors = [
+            
+      {value :'rgba(4, 120, 87, 1)',
+      name: 'green'},
+      {value: 'rgba(96, 165, 250, 1)',
+      name: 'blue'  },
+      {value: 'rgba(239, 68, 68, 1)',
+      name: 'red'},
+      {value: 'rgba(139, 92, 246, 1)',
+      name: 'purple'},
+      {value: 'rgba(148, 163, 184, 1)',
+      name: 'platnium'},
+      {value: 'rgba(252, 211, 77, 1)',
+      name: 'emerald'},
+      {value: 'rgba(20, 184, 166, 1)',
+      name: 'cyan'},
+      {value: 'rgba(20, 184, 166, 1)',
+      name: 'teal'},
+      {value: 'rgba(236, 72, 153, 1)',
+      name: 'pink'},
+      {value: 'rgba(250, 204, 21, 1)',
+      name: 'yellow'}
+  ]
+
+  // const colorArray =  [...item.alt, ...item.color]
+
+  const getcolorArray =  () => {
+
+    const getaltColors = item.alt.map(item => (
+      {
+        name:item.altName,
+        images:item.altImages
+      }
+    ))
+
+    const organizedColors = [
+
+      {
+      name:item.color[0],
+      images:item.imagearray
+    },
+    ...getaltColors]
+
+    return (
+      organizedColors
+    )
+  }
+
+  const colorArray = getcolorArray()
+// console.log(colorArray)
+  // const cosmo = col
+
+  // const getColorStyles = rgbacolors.filter(item => {
+  //   if(colorArray().includes(item.name)){
+  //     return item
+  //   }
+  // })
+
+
+  const getImage = (color,item,colorArray) => {
+
+    const ye = colorArray.find(item => (item.name == color))
+
+    return ye.images
+
+    }
+
+
+
+
+let x =0
+
+
+      const ColorOptions = (props)=> {
+     return   colorArray.map(color => {
+          const name  = color.altName
+          
+            x++
+        const handleClick =(colorName, allProducts) => {
+          setallProductsColorArray(prev  => prev.map(item => item.id == props.id?{...item, color:colorArray[x-1].name}:item))
+        }
+
+        const singlecolor = colorArray[x-1].name
+  
+          return (
+            <div 
+            onClick={()=>{changeItemcolor(item._id, singlecolor, colorArray)}}
+            style={{
+              width:20,
+              height:20
+            }} 
+            className={`color ${colorArray[x-1].name} rounded-full border border-stone-300 border-4 cursor-pointer hover:scale-125 transition-all   mr-1 mb-1`}
+            >
+            
+          </div>
+          )
+        
+          })
+      } 
+
+
+     
+
+
     return (
       <div key={i} className={`mx-auto mx-2  my-4 lg:mx-10  p-1 flex flex-col`}style={{maxWidth: imageWidth ,maxHeight: 550}}> 
           <Card variant="outlined" className="shadow-2 border-white" sx={{ maxWidth: imageWidth ,minHeight: 150, borderRadius: 0}}>
@@ -142,11 +294,19 @@ const FavouriteBtn = (props) => {
           }}
         component="img"
         height="80"
-        image= {`${item.imagearray[1]}`}
+        image= {`${item.image}`}
         alt="images images"
         />
           </Link>
       </Card>
+
+      <div className="flex" >
+        <ColorOptions
+        id={item._id}
+        />
+     
+
+      </div>
        <div className="flex justify-between" >
         <div className="w-full border-r-4 border-b-4 lg:border-b-2 lg:border-r-2  border-gray-500" >
           <div className="font-bold uppercase border-4 border-gray-300  font-headers flex pt-1 text-lg bg-blue-600 hover:bg-black transition-all text-white items-center px-2" >

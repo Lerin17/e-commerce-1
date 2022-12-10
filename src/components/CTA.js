@@ -13,7 +13,7 @@ import pile2 from '../image/new arrival/new3.png'
 function CTA(params) {
     return (
         <div className="" >
-             <div className="lg:w-3/5 mx-auto py-10">
+             <div className="lg:w-3/5 mx-auto py-8">
             <div className="  hover:scale-105  transition-all  rounded-lg  ">
                 <div className="flex justify-center">
                     <Link to={"/collection/allitems"} >

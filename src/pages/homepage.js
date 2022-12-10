@@ -16,12 +16,17 @@ function Homepage(params) {
            <Header/>
            <PreviousCollection/>
            <Newarrival/>
-           <div className="bg-gradient-to-b from-white via-blue-600 to-gray-400" >
+           <div className="">
            <CTA/>
+           </div> 
+           <div className="bg-gradient-to-b from-black via-black to-black " >
            <Camp/> 
            </div>
         
-           <Services/>
+        <div className="">
+        <Services/>
+        </div>
+      
            <Footer/>
         </div>
         // <div className="hover:animate-fade hover:text-amber-500 mt-10" >Home page</div>
