@@ -28,7 +28,7 @@ import { propsToClassKey } from "@mui/styles";
 // }
 
 
-function Imagezoom({imgsrc}){
+function Imagezoom({imgsrc, zoomScaleValue, updateZoomScaleValue}){
     const [ischangeimg, setischangeimg] = React.useState(true);
 
     const [zoomScale, setzoomScale] = React.useState(1);
@@ -36,18 +36,25 @@ function Imagezoom({imgsrc}){
     React.useEffect(() => {
         if(imgsrc){
             setTimeout(() => {
-                setzoomScale(1.5)
+                // setzoomScale(1.5)
+                updateZoomScaleValue(1.5)
             }, 1000)    
         }else{
-            setzoomScale(1)
+            // setzoomScale(1)
+            updateZoomScaleValue(1)
         }
     }, [imgsrc]);
 
     React.useEffect(() => {
+        setzoomScale(zoomScaleValue)
+        console.log(zoomScaleValue, 'zoomvalue')
+    }, [zoomScaleValue]);
+
+    console.log(zoomScale, 'zoomscale')
+
+    React.useEffect(() => {
        setischangeimg(prev => !prev) 
     }, [imgsrc]);
-
-
 
     return (
             <div style={{width:300}} className='' >

@@ -90,6 +90,11 @@ const [titleMargin, settitleMargin] = React.useState(getTitleMargin());
 
 
 
+const [zoomScaleValue, setzoomScaleValue] = React.useState(1);
+
+const updateZoomScaleValue = (number) => {
+    setzoomScaleValue(number)
+}
 
 
 
@@ -514,12 +519,20 @@ console.log(<Navbar/>)
                              <div className="flex justify-end bg-black z-20 relative" >
                                 <div onClick={()=>
                                     setzoomimage(null)
-                                } className="m-2 cursor-pointer rounded-full bg-red-600 p-3" >
+                                } className="m-2 cursor-pointer  rounded-full bg-red-600 p-2 w-8 h-8" >
                                     
                                 </div>
 
-                                <div className="m-2 rounded-full bg-white p-3" >
-                                    
+                                <div onClick={() => {
+                                    if(zoomScaleValue === 2){
+                                        setzoomScaleValue(1.5)}
+                                        else if(zoomScaleValue === 1.5){
+                                            setzoomScaleValue(1.75)
+                                        }else if(zoomScaleValue === 1.75){
+                                            setzoomScaleValue(2)
+                                        }
+                                }} className="m-2 rounded-full bg-white text-xs w-8 h-8 justify-center cursor-pointer flex p-2" >
+                                    {zoomScaleValue}
                                 </div>
                              </div>
                         </div>
@@ -527,6 +540,8 @@ console.log(<Navbar/>)
                                         <div>
                                         <Imagezoom
                                         imgsrc = {zoomimage}
+                                        zoomScaleValue = {zoomScaleValue}
+                                        updateZoomScaleValue = {updateZoomScaleValue}
                                         />
                                         </div> 
                         </div>
