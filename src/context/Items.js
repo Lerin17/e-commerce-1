@@ -1,7 +1,7 @@
 import { propsToClassKey } from "@mui/styles";
 import axios from "axios";
 import React, { createContext } from "react";
-import Alldata from "../image/new arrival/newarrivaldata";
+// import Alldata from "../image/new arrival/newarrivaldata";
 
 
 const UserItemsContext = createContext()
@@ -10,7 +10,7 @@ const UserItemsContext = createContext()
 
 function UserItemsContextProvider(props) {
     // console.log(Alldata())
-    const allproductx = Alldata()
+    const allproductx =  [''] // previously Alldata()//
     const [Allproducts, setAllproducts] = React.useState(allproductx);
     const [FavouriteItems, setFavouriteItems] = React.useState([]);
     const [CartItems, setCartItems] = React.useState([]);

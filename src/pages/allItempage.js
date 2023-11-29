@@ -52,6 +52,21 @@ function CurrentCollection(props) {
   //   setimageWidth(300)
   // }
 
+  const colorOptionsStyles = [
+    'green_linear-gradient(-45deg, #9dd53a 0%, #a1d54f 50%, #80c217 51%, #7cbc0a 100%)' ,
+    'blue_linear-gradient(-45deg, #6db3f2 0%, #54a3ee 50%, #3690f0 51%, #1e69de 100%)',
+    'red_linear-gradient(-45deg, #f85032 0%, #f16f5c 50%, #f6290c 51%, #f02f17 71%, #e73827 100%)',
+    'purple_linear-gradient(-45deg, #cb60b3 0%, #c146a1 50%, #a80077 51%, #db36a4 100%)',
+    'platnium_linear-gradient(-45deg, #ffffff 0%, #f1f1f1 50%, #e1e1e1 51%, #f6f6f6 100%)',
+    'emerald_linear-gradient(-45deg, #b4ddb4 0%, #83c783 17%, #52b152 33%, #008a00 67%, #005700 83%, #002400 100%)',
+    'cyan_linear-gradient(-45deg, #20d4e8 0%, #bfe8f9 50%, #9fd8ef 51%, #2cdff7 100%)',
+    'teal_linear-gradient(-45deg, #3fe2bc 0%, #a1d54f 50%, #80c217 51%, #0eefa0 100%)',
+    'pink_linear-gradient(-45deg, #fcecfc 0%, #fba6e1 50%, #fd89d7 51%, #ff7cd8 100%)',
+   'yellow_linear-gradient(-45deg, #fceabb 0%, #fccd4d 50%, #f8b500 51%, #fbdf93 100%)',
+   'silver_linear-gradient(-45deg, #ffffff 0%, #f1f1f1 50%, #e1e1e1 51%, #848484 100%)',
+  'black_linear-gradient(-45deg, #aebcbf 0%, #6e7774 50%, #0a0e0a 51%, #0a0809 100%)',
+  'indigo_linear-gradient(-45deg, #cb60b3 0%, #ad1283 50%, #dd92c4 100%)'
+  ]
 
   const getallColors = (data) => {
     return (data.map(item => ({
@@ -248,7 +263,7 @@ console.log(allProducts)
 
 
 
-let x =0
+    let x =0
 
 
       const ColorOptions = (props)=> {
@@ -261,15 +276,28 @@ let x =0
         }
 
         const singlecolor = colorArray[x-1].name
+
+        console.log(singlecolor, 'singlecolor')
+
+        const getColorStylesBtn = colorOptionsStyles.find(item => {
+          if(  item.split('_')[0] === singlecolor){
+            return item
+          }
+        })
+
+        const backgroundStyle = getColorStylesBtn? getColorStylesBtn.split('_')[1]:''
+
+        console.log(getColorStylesBtn, 'getColorStyles')
   
           return (
             <div 
             onClick={()=>{changeItemcolor(item._id, singlecolor, colorArray)}}
             style={{
-              width:20,
-              height:20
-            }} 
-            className={`color ${colorArray[x-1].name} rounded-full border border-stone-300 border-4 cursor-pointer hover:scale-125 transition-all   mr-1 mb-1`}
+              width:24,
+              height:24,
+              background: backgroundStyle
+            }}
+            className={`color ${colorArray[x-1].name}  border-l border-b border-stone-300  cursor-pointer hover:scale-125 transition-all   mr-1 mb-1`}
             >
             
           </div>
